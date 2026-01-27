@@ -25,5 +25,9 @@ Thumbs.db
 logs/
 *.log
 
+!.env.example
+!**/.env.example
+
+
 # Optional: keep reports private if they contain sensitive info
 # REPORT/

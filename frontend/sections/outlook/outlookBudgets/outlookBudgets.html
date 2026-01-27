@@ -1,0 +1,371 @@
+<!-- Outlook Budgets Root
+     This is the main container for the Outlook "Budgets" card. All selectors in outlookBudgets.js are scoped inside this root. -->
+<div id="outlk-budgets-root" class="outlk-bud">
+
+  <!-- Top Bar Tabs
+       This area lets the user switch between "Categories" (budget analytics) and "Cards" (account analytics). -->
+  <div class="outlk-bud-topbar">
+    <div class="outlk-bud-tabs" role="tablist">
+      <!-- Categories Tab
+           Shows the budget-focused view: monthly performance chart, category details, top 5, and AI analysis. -->
+      <button id="outlk-bud-tab-categories" class="outlk-bud-tab active" type="button">
+        <i class="fas fa-stream"></i> Categories
+      </button>
+
+      <!-- Cards Tab
+           Shows the account-focused view: credit and checking tiles, then allows drilling into account details. -->
+      <button id="outlk-bud-tab-cards" class="outlk-bud-tab" type="button">
+        <i class="fas fa-credit-card"></i> Cards
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Body
+       Holds both views (Categories and Cards). JS toggles which view is visible by adding/removing "active". -->
+  <section class="outlk-bud-body">
+
+    <!-- Categories View
+         This is the default view for budgets. It uses budgets data + activity counts for the selected month/year. -->
+    <section id="outlk-bud-view-categories" class="outlk-bud-view active">
+      <div class="outlk-bud-grid">
+
+        <!-- Monthly Performance Panel
+             Displays the 12-month chart (Spent, Limit, Net). The year dropdown opens the Select Year modal. -->
+        <section class="outlk-panel outlk-bud-left">
+          <div class="outlk-panel-head">
+            <div class="outlk-panel-title">
+              <i class="fas fa-chart-bar"></i> Monthly Performance
+            </div>
+
+            <!-- Year Button
+                 Shows the currently selected year and opens the year picker modal. -->
+            <button id="outlk-bud-yearbtn" class="outlk-pill" type="button">
+              <span id="outlk-bud-year">2025</span> <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+
+          <!-- Chart Canvas Wrapper
+               The bar chart is rendered into this canvas using Chart.js. -->
+          <div class="outlk-panel-body" style="padding: 10px;">
+            <div class="outlk-chart-wrap outlk-chart-fixed">
+              <canvas id="outlk-bud-line"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <!-- Details Panel
+             Shows category breakdown for the selected month and a summary banner (goal met / exceeded). -->
+        <section class="outlk-panel outlk-bud-right">
+          <div class="outlk-panel-head">
+            <div class="outlk-panel-title">
+              <i class="fas fa-list-ul"></i> Details
+            </div>
+
+            <!-- Month Navigation
+                 Moves between months that have transactions for the selected year (based on JS logic). -->
+            <div class="outlk-bud-right-controls">
+              <div class="outlk-monthnav">
+                <button id="outlk-bud-prev" class="outlk-nav" type="button">
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+
+                <!-- Current Month Label
+                     JS updates this to show the currently selected month name. -->
+                <div id="outlk-bud-month" class="outlk-monthlabel">Dec</div>
+
+                <button id="outlk-bud-next" class="outlk-nav" type="button">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Details Content
+               Category list is rendered here, and the summary banner appears under it when available. -->
+          <div class="outlk-panel-body outlk-panel-body-tight flex-col-spread">
+            <!-- Category List Target
+                 JS injects the category rows here for the selected month. -->
+            <div id="outlk-bud-catlist" class="outlk-catlist"></div>
+
+            <!-- Summary Banner Target
+                 JS shows/hides this and sets the message depending on limits and spending. -->
+            <div id="outlk-bud-summary" class="outlk-summary" style="display:none"></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Top 5 Spending Categories Panel
+           Displays the stacked horizontal bar chart for the top 5 spending categories in the selected month. -->
+      <section class="outlk-panel outlk-bud-wide">
+        <div class="outlk-panel-head">
+          <div class="outlk-panel-title">
+            <i class="fas fa-chart-pie"></i> Top 5 Spending Categories
+          </div>
+        </div>
+        <div class="outlk-panel-body">
+          <div class="outlk-chart-wrap outlk-chart-bar-single">
+            <canvas id="outlk-bud-top5"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Budgets AI Analyst Panel Wrapper
+           This wrapper is shown only for the Categories (budget) view. -->
+      <div id="outlk-bud-ai-wrap">
+      <!-- AI Analyst Panel
+           Produces a simple narrative summary about the selected month. Output appears in the terminal window. -->
+      <section class="outlk-panel outlk-ai-panel">
+        <div class="outlk-panel-head">
+          <div class="outlk-panel-title">
+            <i class="fas fa-robot"></i> AI Analyst <span class="ai-badge">BETA</span>
+          </div>
+
+          <!-- Generate Analysis Button
+               Triggers budget AI analysis in Categories view, or account AI analysis in Cards view. -->
+          <button id="outlk-bud-ai-btn" class="outlk-btn primary glow-effect" type="button">
+            <i class="fas fa-magic"></i> Generate Analysis
+          </button>
+        </div>
+
+        <!-- Terminal Output Window
+             JS writes the output into the <pre> element with a typewriter effect. -->
+        <div class="outlk-panel-body">
+          <div class="ai-terminal-window">
+            <div class="terminal-header">
+              <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+              <span class="terminal-title">ai_analysis.exe</span>
+            </div>
+            <div class="terminal-content">
+              <pre id="outlk-bud-ai-out" class="typewriter-text"></pre>
+              <span class="cursor-blink">_</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      </div>
+
+      <!-- Card AI Analyst Panels
+           These panels are only shown when the user drills into a specific card (Checking or Credit). -->
+      <div id="outlk-card-ai-wrap" style="display:none;">
+
+        <!-- Checking AI Analyst Panel
+             This panel appears only when the user is viewing the Checking card details. -->
+        <section id="outlk-card-ai-checking" class="outlk-panel outlk-ai-panel" style="display:none;">
+          <div class="outlk-panel-head">
+            <div class="outlk-panel-title">
+              <i class="fas fa-robot"></i> AI Analyst <span class="ai-badge">BETA</span> <span class="outlk-ai-subtitle">Checking</span>
+            </div>
+
+            <button id="outlk-check-ai-btn" class="outlk-btn primary glow-effect" type="button">
+              <i class="fas fa-magic"></i> Generate Analysis
+            </button>
+          </div>
+
+          <div class="outlk-panel-body">
+            <div class="ai-terminal-window">
+              <div class="terminal-header">
+                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                <span class="terminal-title">ai_analysis.exe</span>
+              </div>
+              <div class="terminal-content">
+                <pre id="outlk-check-ai-out" class="typewriter-text"></pre>
+                <span class="cursor-blink">_</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Credit AI Analyst Panel
+             This panel appears only when the user is viewing the Credit card details. -->
+        <section id="outlk-card-ai-credit" class="outlk-panel outlk-ai-panel" style="display:none;">
+          <div class="outlk-panel-head">
+            <div class="outlk-panel-title">
+              <i class="fas fa-robot"></i> AI Analyst <span class="ai-badge">BETA</span> <span class="outlk-ai-subtitle">Credit</span>
+            </div>
+
+            <button id="outlk-credit-ai-btn" class="outlk-btn primary glow-effect" type="button">
+              <i class="fas fa-magic"></i> Generate Analysis
+            </button>
+          </div>
+
+          <div class="outlk-panel-body">
+            <div class="ai-terminal-window">
+              <div class="terminal-header">
+                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                <span class="terminal-title">ai_analysis.exe</span>
+              </div>
+              <div class="terminal-content">
+                <pre id="outlk-credit-ai-out" class="typewriter-text"></pre>
+                <span class="cursor-blink">_</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </section>
+
+    <!-- Cards View
+         This view shows a quick account snapshot for connected Checking and Credit accounts and lets the user drill in. -->
+    <section id="outlk-bud-view-cards" class="outlk-bud-view">
+      <div class="outlk-bud-grid">
+
+        <!-- Empty State
+             Shown when no accounts are connected. JS toggles display based on connection status. -->
+        <div id="outlk-cards-empty" class="outlk-cards-empty" style="display:none;">
+          <div class="empty-icon"><i class="fas fa-link"></i></div>
+          <div class="outlk-cards-empty-title">No cards connected</div>
+          <div class="outlk-cards-empty-sub">Go to Settings and connect your accounts.</div>
+        </div>
+
+        <!-- Credit Card Tile
+             Shows debt, deposits, and spending for the selected month. Clicking opens card analytics mode. -->
+        <section class="outlk-card-select outlk-card-credit" id="outlk-card-cc" data-account="credit">
+          <div class="outlk-card-bg-glow"></div>
+          <div class="outlk-card-inner">
+
+            <!-- Card Header
+                 The label and icon area for the credit tile. -->
+            <div class="outlk-card-top">
+              <div class="outlk-card-meta">
+                <div class="outlk-card-name">Freedom Credit</div>
+                <div class="outlk-card-type">Credit Line</div>
+              </div>
+              <div class="outlk-card-logo"><i class="fas fa-credit-card"></i></div>
+            </div>
+
+            <!-- Main Amount
+                 "Current Debt" is computed from Freedom Bank activity and shown here. -->
+            <div class="outlk-card-mid">
+              <div class="outlk-card-lbl">Current Debt</div>
+              <div class="outlk-card-big" id="outlk-card-cc-amount">$0.00</div>
+            </div>
+
+            <!-- Month Stats
+                 Deposits and spent values for the currently selected month (Freedom Bank only). -->
+            <div class="outlk-card-stats">
+              <div class="outlk-stat-col">
+                <span class="lbl">Deposits</span>
+                <span class="val" id="outlk-card-cc-deposits">$0.00</span>
+              </div>
+              <div class="outlk-stat-col">
+                <span class="lbl">Spent</span>
+                <span class="val" id="outlk-card-cc-spent">$0.00</span>
+              </div>
+            </div>
+
+            <!-- Visual Meter
+                 A simple progress bar, where JS sets the --p variable based on a rough risk heuristic. -->
+            <div class="outlk-card-bar-bg">
+              <span id="outlk-card-cc-bar" class="outlk-card-bar-fill" style="--p:0%"></span>
+            </div>
+
+            <!-- Footer Row
+                 Shows last transaction label and a "Details" CTA. -->
+            <div class="outlk-card-bot">
+              <div id="outlk-card-cc-last">Last: —</div>
+              <div class="outlk-cta">Details <i class="fas fa-arrow-right"></i></div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Checking Card Tile
+             Shows balance, income, and expenses for the selected month. Clicking opens card analytics mode. -->
+        <section class="outlk-card-select outlk-card-checking" id="outlk-card-chk" data-account="checking">
+          <div class="outlk-card-bg-glow"></div>
+          <div class="outlk-card-inner">
+
+            <!-- Card Header
+                 The label and icon area for the checking tile. -->
+            <div class="outlk-card-top">
+              <div class="outlk-card-meta">
+                <div class="outlk-card-name">Freedom Checking</div>
+                <div class="outlk-card-type">Debit Account</div>
+              </div>
+              <div class="outlk-card-logo"><i class="fas fa-university"></i></div>
+            </div>
+
+            <!-- Main Amount
+                 "Available Balance" is computed from Freedom Bank activity and shown here. -->
+            <div class="outlk-card-mid">
+              <div class="outlk-card-lbl">Available Balance</div>
+              <div class="outlk-card-big" id="outlk-card-chk-amount">$0.00</div>
+            </div>
+
+            <!-- Month Stats
+                 Income and expenses totals for the currently selected month (Freedom Bank only). -->
+            <div class="outlk-card-stats">
+              <div class="outlk-stat-col">
+                <span class="lbl">Income</span>
+                <span class="val" id="outlk-card-chk-income">$0.00</span>
+              </div>
+              <div class="outlk-stat-col">
+                <span class="lbl">Expenses</span>
+                <span class="val" id="outlk-card-chk-expenses">$0.00</span>
+              </div>
+            </div>
+
+            <!-- Visual Meter
+                 A simple progress bar, where JS sets the --p variable based on a rough balance heuristic. -->
+            <div class="outlk-card-bar-bg">
+              <span id="outlk-card-chk-bar" class="outlk-card-bar-fill" style="--p:0%"></span>
+            </div>
+
+            <!-- Footer Row
+                 Shows last transaction label and a "Details" CTA. -->
+            <div class="outlk-card-bot">
+              <div id="outlk-card-chk-last">Last: —</div>
+              <div class="outlk-cta">Details <i class="fas fa-arrow-right"></i></div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+    </section>
+  </section>
+
+  <!-- Select Year Modal
+       This modal lets the user choose a year (only years that have transactions). Apply updates the view and refreshes data. -->
+  <div id="outlk-bud-yearmodal" class="outlk-modal" aria-hidden="true">
+    <!-- Backdrop
+         Clicking outside the modal can close it (JS checks data-close and backdrop clicks). -->
+    <div class="outlk-modal-backdrop" data-close="1"></div>
+
+    <!-- Modal Card
+         The year picker panel. JS updates the big year label and enables/disables prev/next buttons. -->
+    <div class="outlk-modal-wide">
+      <div class="outlk-modal-wide-head">
+        <div class="outlk-modal-wide-title">Select Year</div>
+
+        <!-- Close Button
+             Closes the modal without applying changes. -->
+        <button class="outlk-x icon-btn-close" type="button" data-close="1">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Year Picker Controls
+           Prev/Next step through valid years, and the middle label shows the temporary selection. -->
+      <div class="outlk-modal-wide-body">
+        <button id="outlk-bud-yearprev" class="outlk-yearnav" type="button">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <div id="outlk-bud-yearbig" class="outlk-yearbig">2025</div>
+
+        <button id="outlk-bud-yearnext" class="outlk-yearnav" type="button">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <!-- Modal Actions
+           Cancel closes without saving, Apply commits the year selection and refreshes the charts and lists. -->
+      <div class="outlk-modal-wide-actions">
+        <button id="outlk-bud-yearcancel" class="outlk-btn ghost" type="button">Cancel</button>
+        <button id="outlk-bud-yearapply" class="outlk-btn primary" type="button">Apply</button>
+      </div>
+    </div>
+  </div>
+</div>

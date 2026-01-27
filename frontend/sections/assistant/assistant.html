@@ -1,0 +1,122 @@
+<!-- frontend/sections/assistant/assistant.html -->
+
+<section class="assistant-section">
+  <!-- Hero header -->
+  <header class="assistant-head">
+    <div class="assistant-hero">
+      <div class="assistant-hero-content">
+        <div class="assistant-hero-icon">
+          <i class="fas fa-robot"></i>
+        </div>
+        <div class="assistant-hero-text">
+          <h2>AI Assistant</h2>
+          <p>Get personalized financial advice and insights powered by AI.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mode selector row -->
+  <div class="assistant-modes">
+    <button class="mode-card is-active" data-mode="advisor" type="button">
+      <div class="mode-card-main">
+        <div class="mode-card-icon advisor">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="mode-card-text">
+          <h3>Financial Advisor</h3>
+          <p>Get personalized financial advice</p>
+        </div>
+      </div>
+      <div class="mode-card-pill">
+        <i class="fas fa-bolt"></i>
+      </div>
+    </button>
+
+    <button class="mode-card" data-mode="budget" type="button">
+      <div class="mode-card-main">
+        <div class="mode-card-icon budget">
+          <i class="fas fa-piggy-bank"></i>
+        </div>
+        <div class="mode-card-text">
+          <h3>Budget Helper</h3>
+          <p>Optimize your spending</p>
+        </div>
+      </div>
+      <div class="mode-card-pill">
+        <i class="fas fa-bolt"></i>
+      </div>
+    </button>
+
+    <button class="mode-card" data-mode="goals" type="button">
+      <div class="mode-card-main">
+        <div class="mode-card-icon goals">
+          <i class="fas fa-bullseye"></i>
+        </div>
+        <div class="mode-card-text">
+          <h3>Goal Planner</h3>
+          <p>Plan and track your goals</p>
+        </div>
+      </div>
+      <div class="mode-card-pill">
+        <i class="fas fa-bolt"></i>
+      </div>
+    </button>
+  </div>
+
+  <div class="assistant-divider"></div>
+
+  <!-- Chat container -->
+  <div class="chat-container">
+    <div id="ai-chat-window" class="chat-window">
+      <div class="chat-message ai-message">
+        <div class="message-bubble">
+          Hello! I'm your financial assistant. How can I help you analyze your
+          finances today? You can ask things like “How much did I spend on
+          groceries this month?” or “Am I on track with my budgets?”
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-input-area">
+      <input
+        type="text"
+        id="ai-chat-input"
+        placeholder="Ask your question..."
+        autocomplete="off"
+      />
+      <button id="ai-send-btn" class="send-btn" aria-label="Send Message" type="button">
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </div>
+
+<!-- Pending Actions Bar
+     Shows when the backend requires a confirm step before creating an assistant transaction. -->
+<div id="ai-pending-actions" class="ai-pending-actions" style="display:none;">
+  <div class="ai-pending-text" id="ai-pending-text"></div>
+
+  <div class="ai-pending-buttons">
+    <button id="ai-confirm-btn" type="button" class="ai-confirm-btn">Confirm</button>
+    <button id="ai-cancel-btn" type="button" class="ai-cancel-btn">Cancel</button>
+  </div>
+</div>
+  </div>
+
+  <!-- Quick Questions -->
+  <section class="assistant-quick">
+    <div class="quick-card">
+      <div class="quick-card-head">
+        <div class="quick-card-icon">
+          <i class="fas fa-magic"></i>
+        </div>
+        <div class="quick-card-title">Quick Questions</div>
+      </div>
+      <div id="ai-suggestion-chips" class="suggestion-chips">
+        <button class="chip" type="button">How can I save more money this month?</button>
+        <button class="chip" type="button">Analyze my spending patterns.</button>
+        <button class="chip" type="button">What's my biggest expense category?</button>
+        <button class="chip" type="button">Help me create a budget for vacation.</button>
+      </div>
+    </div>
+  </section>
+</section>

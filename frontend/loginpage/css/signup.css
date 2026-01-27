@@ -1,0 +1,187 @@
+/* Signup Page Styles */
+body {
+  background-color: #0f172a;
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 4.5rem 4.5rem;
+  background: linear-gradient(135deg, #2563eb 0%, #1e293b 100%);
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.signup-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.6rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+  width: 100%;
+  padding: 0.9rem;
+  border: 1px solid #6d00fc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #fff;
+}
+
+.terms {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.btn-signup {
+  width: 100%;
+  padding: 1rem;
+  background: #3a67af;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+.btn-signup:hover {
+  background: #054c99;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  color: #fff;
+}
+.login-link a {
+  font-weight: bold;
+  color: #02ff6b;
+  text-decoration: none;
+}
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Success Section */
+.signup-success {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  width: 100%;
+}
+
+/* Background Image */
+.signup-success::before {
+  content: "";
+  display: block;
+  width: 700px;
+  height: 350px;
+  background: url('/assets/images/background1.jpg') center/cover no-repeat;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+  margin-bottom: 1rem;
+}
+
+/* Success Message Card */
+.signup-success .success-message {
+  width: 600px;
+  background-color: #23405f;
+  color: #fff;
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.btn-login {
+  display: block;
+  margin: 1rem auto 0;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  padding: 0.9rem 2rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.btn-login:hover {
+  background-color: #0056b3;
+}
+
+/* Password requirement list                          */
+
+.st-pass-req-list {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: #e5e7eb; /* default light gray */
+}
+
+/* hidden by default, JS will set display:block when typing */
+.signup-pass-req-list {
+  display: none;
+}
+
+.req-item {
+  margin: 0.15rem 0;
+  color: #e5e7eb;
+  transition: color 0.2s ease;
+}
+
+/* JS adds .valid when a rule is satisfied */
+.req-item.valid {
+  color: #22c55e; /* green */
+}
+
+/* Optional if you ever add .invalid in JS */
+.req-item.invalid {
+  color: #f97373; /* soft red */
+}
+
+/* Availability + error messages     */
+
+.availability-message {
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  min-height: 1.1rem;
+}
+
+.error-message {
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  color: #f97373;
+  min-height: 1.1rem; /* keeps layout from jumping */
+}
+
+/* If you ever choose to use classes instead of inline color */
+.availability-message.valid {
+  color: #22c55e;
+}
+.availability-message.invalid {
+  color: #f97373;
+}

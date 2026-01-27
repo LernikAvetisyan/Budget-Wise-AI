@@ -1,0 +1,147 @@
+<div id="dash-root" class="dash-wrapper">
+  
+  <header class="dash-header">
+    <div class="dash-welcome">
+      <div class="dash-title-row">
+        <h1 class="dash-h1">Budget-Wise-AI</h1>
+        <div class="elite-badge-animated">
+          <div class="elite-icon"><i class="fas fa-crown"></i></div>
+            <div class="elite-text">
+              <span class="lvl" id="dash-level-label">Level —</span>
+              <span class="status" id="dash-level-title">—</span>
+            </div>
+          <div class="elite-shine"></div>
+        </div>
+      </div>
+      <p class="dash-date" id="dash-current-date">—</p>
+    </div>
+
+    <div class="dash-header-right">
+      <div class="dash-header-cards">
+        <div class="dash-mini-card card-checking horizontal">
+          <div class="mini-card-bg"></div>
+          <div class="mini-card-left">
+            <span class="mini-card-name">Checking</span>
+            <div class="mini-card-bal">—</div>
+          </div>
+          <div class="mini-card-right">
+            <i class="fas fa-university card-icon"></i>
+            <span class="mini-card-num">—</span>
+          </div>
+        </div>
+
+        <div class="dash-mini-card card-credit horizontal">
+          <div class="mini-card-bg"></div>
+          <div class="mini-card-left">
+            <span class="mini-card-name">Credit</span>
+            <div class="mini-card-bal">—</div>
+          </div>
+          <div class="mini-card-right">
+            <i class="fas fa-credit-card card-icon"></i>
+            <span class="mini-card-num">—</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="dash-icon-btn large" id="dash-notif-btn">
+        <i class="fas fa-bell"></i>
+        <span class="dash-dot"></span>
+      </button>
+    </div>
+  </header>
+
+  <section class="dash-overview-panel" id="dash-overview-container">
+    <div class="dash-orb-layer">
+      <div class="d-orb orb-1"></div>
+      <div class="d-orb orb-2"></div>
+      <div class="d-orb orb-3"></div>
+    </div>
+
+    <div class="dash-overview-inner">
+      <div class="dash-overview-head">
+        <div class="dash-overview-title">
+          <i class="fas fa-chart-pie"></i> Financial Overview
+        </div>
+        <div class="dash-toggle-pill">
+          <button class="toggle-btn active" data-tab="transactions">Activity</button>
+          <button class="toggle-btn" data-tab="budgets">Budgets</button>
+          <button class="toggle-btn" data-tab="goals">Goals</button>
+        </div>
+      </div>
+
+      <div class="dash-overview-meta">
+        <div class="meta-left">
+          <span class="meta-label" id="main-label">Available Balance</span>
+          <div class="meta-flex">
+            <h1 class="meta-amount" id="main-amount">—</h1>
+          </div>
+        </div>
+        <div id="dash-meta-right"></div>
+      </div>
+
+      <div id="dash-overview-content" class="dash-overview-content"></div>
+    </div>
+  </section>
+
+  <div class="dash-mid-grid">
+    <section class="dash-panel dash-alerts-panel">
+      <div class="dash-panel-head">
+        <h3 class="dash-panel-title"><i class="fas fa-bell"></i> Financial Alerts</h3>
+        <span class="dash-badge warning" id="dash-alerts-badge">—</span>
+      </div>
+      <div class="dash-alerts-list" id="dash-alerts-list"></div>
+    </section>
+
+    <section class="dash-panel dash-activity-panel">
+      <div class="dash-panel-head">
+        <h3 class="dash-panel-title"><i class="fas fa-list"></i> Recent Transactions</h3>
+      </div>
+      <div class="dash-table-wrapper">
+        <table class="dash-table">
+          <thead>
+            <tr>
+              <th>Transaction</th>
+              <th>Category</th>
+              <th>Date</th>
+              <th class="text-right">Amount</th>
+              <th class="text-center">Status</th>
+            </tr>
+          </thead>
+          <tbody id="dash-activity-rows"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <div class="dash-btm-grid">
+    <section class="dash-panel terminal-theme">
+<div class="terminal-head">
+  <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+  <span id="assistantNextUpdate" class="term-nextupdate">Next update in --:--:--</span>
+  <span class="term-title">assistant.exe</span>
+</div>
+      <div class="terminal-body">
+        <div id="dash-ai-output" class="typewriter-text"></div><span class="cursor-blink">_</span>
+      </div>
+    </section>
+  </div>
+
+  <div id="dash-notif-modal" class="dash-modal" aria-hidden="true">
+    <div class="dash-modal-backdrop" data-close="1"></div>
+    <div class="dash-modal-content">
+      <div class="dash-modal-head">
+        <div class="dm-title"><i class="fas fa-bell"></i> Notification Preferences</div>
+        <button class="dash-icon-btn close-btn" data-close="1"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="dash-modal-body">
+        <p class="dm-sub">Manage your financial alerts.</p>
+        <div class="notif-settings-list" id="dash-notif-settings"></div>
+      </div>
+      <div class="dash-modal-foot">
+        <button class="dash-btn-ghost" data-close="1">Cancel</button>
+        <button class="dash-btn-primary" data-close="1">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+</div>

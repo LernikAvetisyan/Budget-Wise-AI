@@ -1,0 +1,112 @@
+<section id="outlk-activity-root" class="outlook-section">
+  
+  <header class="ol-header">
+    <div class="ol-header-content">
+      <div class="ol-icon-box">
+        <i class="fas fa-chart-line"></i>
+      </div>
+      <div class="ol-header-text">
+        <h2 class="shine-title">Spending Outlook</h2>
+        <p>AI-powered insights and yearly trends.</p>
+      </div>
+    </div>
+    
+    <button id="outlk-act-yearbtn" class="ol-year-btn" type="button">
+      <i class="far fa-calendar-alt"></i> <span id="year-display">2026</span>
+    </button>
+  </header>
+
+  <div class="ol-grid">
+    
+    <article class="ol-card ol-chart-card">
+      <div class="ol-card-head">
+        <h3><i class="fas fa-chart-bar"></i> Yearly Overview</h3>
+        <span class="ol-tag">Live Data</span>
+      </div>
+      <div class="ol-card-body">
+        <div class="ol-chart-wrap">
+          <canvas id="outlk-act-year"></canvas>
+        </div>
+      </div>
+    </article>
+
+    <article class="ol-card ol-cat-card">
+      <div class="ol-card-head">
+        <h3><i class="fas fa-layer-group"></i> Categories</h3>
+        <div class="ol-month-nav">
+          <button id="outlk-act-prev" class="nav-icon-btn"><i class="fas fa-chevron-left"></i></button>
+          <div class="ol-month-label">
+            <span id="outlk-act-month">Jan</span> <span id="outlk-act-yeartext">2026</span>
+          </div>
+          <button id="outlk-act-next" class="nav-icon-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+
+      <div class="ol-card-body">
+        <div id="outlk-act-catrows" class="ol-cat-list">
+          </div>
+
+        <div class="ol-summary-row">
+          <div id="outlk-act-income-pill" class="ol-stat-pill green">
+            <div class="pill-icon"><i class="fas fa-arrow-up"></i></div>
+            <div class="pill-info">
+              <span class="pill-val outlk-pillval">0</span>
+              <span class="pill-lbl">Income Tx</span>
+            </div>
+          </div>
+          <div id="outlk-act-expense-pill" class="ol-stat-pill red">
+            <div class="pill-icon"><i class="fas fa-arrow-down"></i></div>
+            <div class="pill-info">
+              <span class="pill-val outlk-pillval">0</span>
+              <span class="pill-lbl">Expense Tx</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <article class="ol-card ol-ai-card">
+    <div class="ol-card-head">
+      <div class="ol-ai-title">
+        <i class="fas fa-robot"></i> AI Analyst <span class="ai-badge">BETA</span>
+      </div>
+      <button id="outlk-act-ai-btn" class="btn primary glow-effect" type="button">
+        <i class="fas fa-magic"></i> Generate Analysis
+      </button>
+    </div>
+    <div class="ol-card-body">
+      <div class="ai-terminal-window">
+        <div class="terminal-header">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          <span class="terminal-title">ai_analysis.exe</span>
+        </div>
+        <div class="terminal-content">
+          <pre id="outlk-act-ai-out" class="typewriter-text outlk-hidden"></pre>
+          <span class="cursor-blink">_</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <dialog id="outlk-act-year-modal" class="ol-modal">
+    <form method="dialog" class="ol-modal-form">
+      <div class="ol-modal-header">
+        <h3>Select Year</h3>
+        <button id="outlk-act-year-close" class="icon-btn-close" type="button"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="ol-modal-body">
+        <div class="year-selector">
+          <button id="outlk-act-year-dec" class="nav-arrow" type="button"><i class="fas fa-chevron-left"></i></button>
+          <div id="outlk-act-year-value" class="year-display-large">2026</div>
+          <button id="outlk-act-year-inc" class="nav-arrow" type="button"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div id="outlk-act-year-list" class="year-grid"></div>
+      </div>
+      <div class="ol-modal-footer">
+        <button id="outlk-act-year-apply" class="btn primary" type="button">Apply Year</button>
+        <button id="outlk-act-year-cancel" class="btn secondary" type="button">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+</section>

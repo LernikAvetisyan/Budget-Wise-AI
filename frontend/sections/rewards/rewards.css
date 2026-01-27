@@ -1,0 +1,638 @@
+/* =========================================
+   REWARDS SECTION - CYBER SLEEK
+   Matches activity.css variables
+========================================= */
+
+:root {
+  --bg: #0e1621;
+  --panel: #101a27;
+  --panel-2: #0f1925;
+  --border: #1e2a3a;
+  --text: #e6eef7;
+  --muted: #90a6bc;
+  --color-primary: #3b82f6;
+  --color-accent: #8b5cf6;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--bg);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.rewards-section {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding: 24px 32px;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+  color: var(--text);
+
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+}
+
+/* Full-viewport background layer */
+.rewards-section::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(56,189,248,0.12), transparent 40%),
+    radial-gradient(circle at 80% 100%, rgba(139,92,246,0.12), transparent 40%),
+    var(--bg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* --- 1. HERO SECTION --- */
+.rw-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(139,92,246,0.15));
+  border: 1px solid rgba(139,92,246,0.3);
+  border-radius: 20px;
+  padding: 24px 30px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.rw-hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(139,92,246,0.8), transparent);
+}
+
+.rw-hero-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.rw-hero-icon-box {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+}
+
+.rw-hero-title {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #fff, #93c5fd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.rw-hero-sub {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.rw-hero-stats {
+  display: flex;
+  gap: 12px;
+}
+
+.rw-badge-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 50px;
+  background: rgba(15,23,42,0.6);
+  border: 1px solid rgba(59,130,246,0.4);
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.rw-badge-pill i { color: #facc15; }
+.rw-badge-pill.secondary i { color: #f97316; }
+
+/* --- 2. GRID LAYOUT (Level + Chart) --- */
+.rw-dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 992px) {
+  .rw-dashboard-grid { grid-template-columns: 1fr; }
+}
+
+.rw-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- Current Status Header Animation --- */
+.rw-card-header h3 {
+  margin: 0 0 16px;
+  font-size: 1.1rem;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rw-card-header h3 i {
+  color: var(--color-primary);
+  transition: transform 0.3s;
+}
+
+.rw-level-card .rw-card-header h3 i.fa-crown {
+  color: #fbbf24;
+  animation: floatCrown 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.5));
+}
+
+@keyframes floatCrown {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-3px) scale(1.1); }
+}
+
+/* --- Circular Progress Style (Enhanced) --- */
+.rw-level-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.circular-progress-container {
+  position: relative;
+  width: 160px;
+  height: 160px;
+}
+
+.progress-ring__circle-bg { stroke: rgba(255,255,255,0.05); }
+
+.progress-ring__circle {
+  stroke: var(--color-accent);
+  stroke-dasharray: 440;
+  stroke-dashoffset: 440;
+  transition: stroke-dashoffset 1s ease-in-out;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.6));
+}
+
+.level-indicator-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.lvl-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 1px; }
+
+.lvl-num {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  background: linear-gradient(180deg, #ffffff, #a78bfa);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.3));
+}
+
+.level-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.level-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.text-bold { font-weight: 700; color: #fff; }
+
+.xp-bar-container {
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  margin: 8px 0;
+  overflow: hidden;
+}
+
+.xp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  width: 0%;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 10px var(--color-accent);
+}
+
+.xp-remain-text {
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: right;
+}
+
+/* Chart Card */
+.chart-container-inner {
+  position: relative;
+  height: 200px;
+  width: 100%;
+}
+
+/* --- 3. TASKS GRID --- */
+.rw-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+
+.section-title { font-size: 1.5rem; margin: 0; color: #fff; }
+.section-sub { margin: 4px 0 0; color: var(--muted); }
+
+.rw-earn-badge {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.rw-tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+/* Default Task Card */
+.rw-task-card {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Hover effect for normal cards */
+.rw-task-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  background: linear-gradient(135deg, var(--panel-2), rgba(59,130,246,0.05));
+}
+
+/* -------------------------------------------------
+   ANIMATIONS for States (Completed & Claimable) 
+   -------------------------------------------------
+*/
+
+/* 1. COMPLETED: Moving Shine Effect */
+@keyframes taskShine {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.rw-task-card.completed {
+  background: linear-gradient(
+    110deg,
+    rgba(34, 197, 94, 0.05) 30%,
+    rgba(34, 197, 94, 0.3) 50%, 
+    rgba(34, 197, 94, 0.05) 70%
+  );
+  background-size: 200% 100%;
+  animation: taskShine 3s linear infinite;
+  border-color: #22c55e;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.25);
+  opacity: 1;
+}
+
+.rw-task-card.bonus-card.completed {
+  background: linear-gradient(
+    110deg,
+    rgba(245, 158, 11, 0.1) 30%,
+    rgba(251, 191, 36, 0.4) 50%,
+    rgba(245, 158, 11, 0.1) 70%
+  );
+  background-size: 200% 100%;
+  animation: taskShine 3s linear infinite;
+  border-color: #f59e0b;
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.4);
+  transform: scale(1.02);
+}
+
+/* 2. CLAIMABLE: Pulse Effect (Attention Grabber) */
+@keyframes claimPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+    border-color: rgba(59, 130, 246, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 15px 0 rgba(59, 130, 246, 0.4);
+    border-color: rgba(59, 130, 246, 1);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+    border-color: rgba(59, 130, 246, 0.6);
+  }
+}
+
+.rw-task-card.claimable {
+  pointer-events: auto;
+  opacity: 1;
+  /* Distinct Blue Tint Background */
+  background: linear-gradient(135deg, rgba(16, 26, 39, 1), rgba(37, 99, 235, 0.15));
+  /* Animation */
+  animation: claimPulse 2s infinite ease-in-out;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.rw-task-card.claimable:hover {
+  transform: translateY(-3px) scale(1.02);
+  background: linear-gradient(135deg, rgba(16, 26, 39, 1), rgba(37, 99, 235, 0.25));
+}
+
+/* 3. LOCKED: Faded */
+.rw-task-card.locked {
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+/* Icons Styles */
+.task-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  color: #fff;
+}
+.task-icon.green { background: rgba(34,197,94,0.2); color: #4ade80; }
+.task-icon.cyan { background: rgba(6,182,212,0.2); color: #22d3ee; }
+.task-icon.purple { background: rgba(139,92,246,0.2); color: #a78bfa; }
+.task-icon.orange { background: rgba(249,115,22,0.2); color: #fb923c; }
+.task-icon.pink { background: rgba(236,72,153,0.2); color: #f472b6; }
+.task-icon.blue { background: rgba(59,130,246,0.2); color: #60a5fa; }
+.task-icon.red { background: rgba(239,68,68,0.2); color: #f87171; }
+.task-icon.gold { background: linear-gradient(135deg, #f59e0b, #b45309); color: #fff; box-shadow: 0 4px 10px rgba(245,158,11,0.3); }
+
+.task-info { flex: 1; }
+.task-head { display: flex; justify-content: space-between; margin-bottom: 4px; }
+.task-head h4 { margin: 0; font-size: 1rem; color: #fff; }
+
+.xp-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  background: rgba(59,130,246,0.1);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+.xp-tag.gold { color: #fbbf24; background: rgba(245,158,11,0.15); }
+
+.task-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.rw-tag {
+  font-size: 0.7rem;
+  background: rgba(255,255,255,0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.rw-tag.gold { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+
+.task-info p { margin: 0; font-size: 0.8rem; color: var(--muted); }
+
+/* Task Status Circle */
+.task-status {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  transition: all 0.2s;
+}
+
+.rw-task-card.completed .task-status {
+  background: var(--color-success);
+  border-color: var(--color-success);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(34,197,94,0.6);
+}
+
+.rw-task-card.bonus-card.completed .task-status {
+  background: var(--color-warning);
+  border-color: var(--color-warning);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+}
+
+/* --- 4. ADVANCED MILESTONES (RPG STYLE) --- */
+.rw-milestones-track {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 30px 10px 10px;
+  overflow-x: auto;
+  gap: 20px;
+}
+
+.rw-milestones-track::before {
+  content: "";
+  position: absolute;
+  top: 55px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--border);
+  z-index: 0;
+  border-radius: 4px;
+}
+
+.milestone-item {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 60px;
+}
+
+.ms-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--panel);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: var(--muted);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.ms-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.7;
+  transition: all 0.3s;
+}
+
+.milestone-item.unlocked .ms-circle {
+  background: var(--panel-2);
+  border-color: var(--color-primary);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(59,130,246,0.4);
+}
+
+.milestone-item.unlocked .ms-label {
+  color: #fff;
+  opacity: 1;
+}
+
+.milestone-item.current .ms-circle {
+  transform: scale(1.3) translateY(-5px);
+  border-width: 3px;
+  z-index: 2;
+  animation: floatIcon 3s ease-in-out infinite;
+}
+
+.milestone-item.current .ms-label {
+  color: var(--color-accent);
+  margin-top: 4px;
+  text-shadow: 0 0 10px rgba(139,92,246,0.6);
+}
+
+.milestone-item[data-level="1"].unlocked .ms-circle,
+.milestone-item[data-level="1"].current .ms-circle,
+.milestone-item[data-level="2"].unlocked .ms-circle,
+.milestone-item[data-level="2"].current .ms-circle,
+.milestone-item[data-level="3"].unlocked .ms-circle,
+.milestone-item[data-level="3"].current .ms-circle {
+  background: linear-gradient(135deg, #1e293b, #0e7490);
+  border-color: #22d3ee;
+  color: #cffafe;
+}
+
+.milestone-item[data-level="4"].unlocked .ms-circle,
+.milestone-item[data-level="4"].current .ms-circle,
+.milestone-item[data-level="5"].unlocked .ms-circle,
+.milestone-item[data-level="5"].current .ms-circle,
+.milestone-item[data-level="6"].unlocked .ms-circle,
+.milestone-item[data-level="6"].current .ms-circle {
+  background: linear-gradient(135deg, #312e81, #7c3aed);
+  border-color: #a78bfa;
+  color: #ede9fe;
+}
+
+.milestone-item[data-level="7"].unlocked .ms-circle,
+.milestone-item[data-level="7"].current .ms-circle,
+.milestone-item[data-level="8"].unlocked .ms-circle,
+.milestone-item[data-level="8"].current .ms-circle,
+.milestone-item[data-level="9"].unlocked .ms-circle,
+.milestone-item[data-level="9"].current .ms-circle {
+  background: linear-gradient(135deg, #451a03, #d97706);
+  border-color: #fbbf24;
+  color: #fffbeb;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+}
+
+.milestone-item[data-level="10"].unlocked .ms-circle,
+.milestone-item[data-level="10"].current .ms-circle {
+  background: linear-gradient(135deg, #7f1d1d, #ef4444);
+  border-color: #fca5a5;
+  color: #fff;
+  box-shadow: 0 0 30px rgba(239, 68, 68, 0.7);
+}
+
+@keyframes floatIcon {
+  0% { transform: scale(1.3) translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
+  50% { transform: scale(1.3) translateY(-12px); box-shadow: 0 15px 25px rgba(0,0,0,0.2); }
+  100% { transform: scale(1.3) translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
+}
+
+.milestone-item.unlocked:not(.current) .ms-circle:hover {
+  transform: translateY(-3px) scale(1.1);
+  filter: brightness(1.2);
+}
+
+.rw-milestones-track::-webkit-scrollbar { height: 6px; }
+.rw-milestones-track::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.5); border-radius: 4px; }
+.rw-milestones-track::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+/* Flash Animation for newly unlocked tasks */
+.rw-task-card.rw-flash {
+  animation: rwFlash 0.7s ease-out 1;
+}
+@keyframes rwFlash {
+  0% { box-shadow: 0 0 0 rgba(139,92,246,0); transform: translateY(0); }
+  30% { box-shadow: 0 0 22px rgba(139,92,246,0.55); transform: translateY(-2px); }
+  100% { box-shadow: 0 0 0 rgba(139,92,246,0); transform: translateY(0); }
+}

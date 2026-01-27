@@ -1,0 +1,271 @@
+<section class="activity-section">
+  <header class="act-head">
+    <div class="head-left">
+      <div class="act-title-row">
+        <h2>Activity Feed</h2>
+        <div class="kpi-range-switcher">
+          <button class="range-btn active" data-range="month">This Month</button>
+          <button class="range-btn" data-range="year">This Year</button>
+          <button class="range-btn" data-range="overall">Overall</button>
+        </div>
+      </div>
+
+      <p>Your complete transaction history, beautifully organized.</p>
+    </div>
+
+    <div class="head-right">
+      <button id="act-filter" class="btn filter-btn">
+        <i class="fas fa-filter"></i> Filters
+      </button>
+      <button id="act-review" class="btn review-btn">
+        <i class="fas fa-clock-rotate-left"></i> Review Recent
+      </button>
+      <button id="act-add" class="btn add-btn">
+        <i class="fas fa-plus"></i> Add Transaction
+      </button>
+    </div>
+  </header>
+
+  <section class="kpis">
+    <div class="kpi balance">
+      <div class="kpi-icon"><i class="fas fa-wallet"></i></div>
+      <div class="kpi-info">
+        <div class="label">Available Balance</div>
+        <div id="act-balance" class="value">$0.00</div>
+      </div>
+    </div>
+
+    <div class="kpi income">
+      <div class="kpi-icon"><i class="fas fa-arrow-up"></i></div>
+      <div class="kpi-info">
+        <div id="kpi-income-label" class="label">Income (This Month)</div>
+        <div id="act-total-income" class="value">$0.00</div>
+      </div>
+    </div>
+
+    <div class="kpi expense">
+      <div class="kpi-icon"><i class="fas fa-arrow-down"></i></div>
+      <div class="kpi-info">
+        <div id="kpi-spent-label" class="label">Spent (This Month)</div>
+        <div id="act-total-spent" class="value">$0.00</div>
+      </div>
+    </div>
+
+    <div class="kpi net">
+      <div class="kpi-icon"><i class="fas fa-receipt"></i></div>
+      <div class="kpi-info">
+        <div id="kpi-net-label" class="label">Net Change (This Month)</div>
+        <div id="act-net" class="value">$0.00</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="activity-body">
+    <div class="timeline-container">
+      <div class="timeline-header">
+        <h3>Transactions</h3>
+        <div class="view-switcher" id="act-view-switcher">
+          <button class="switcher-btn active" data-type="all">All</button>
+          <button class="switcher-btn" data-type="income">Income</button>
+          <button class="switcher-btn" data-type="expense">Expenses</button>
+          <span class="active-light"></span>
+        </div>
+      </div>
+
+      <div id="act-timeline" class="timeline"></div>
+
+      <div id="load-more-container" class="load-more-container" style="display:none;">
+        <button id="load-more-btn" class="btn secondary">Load More</button>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <h3>Spending Breakdown</h3>
+      <p>A visual look at where your money goes.</p>
+      <canvas id="spending-chart"></canvas>
+    </div>
+  </div>
+
+  <!-- Add Transaction Modal -->
+  <dialog id="add-modal" class="modal">
+    <div class="modal-form recent-modal">
+      <div class="modal-header">
+        <h3 id="add-modal-title">Add Transaction</h3>
+        <button type="button" id="add-close" class="icon-btn"><i class="fas fa-times"></i></button>
+      </div>
+
+      <div class="modal-tabs">
+        <button class="tab-btn active" data-tab="ai"><i class="fas fa-robot"></i> Add via AI</button>
+        <button class="tab-btn" data-tab="manual"><i class="fas fa-edit"></i> Add Manually</button>
+      </div>
+
+      <div id="ai-content" class="modal-body">
+        <div id="chat-window" class="chat-window">
+          <div class="chat-message ai-message">
+            <div class="message-bubble">
+              Hello! Just tell me about your transaction. For example: “$25.50 at Starbucks for coffee and a sandwich.”
+            </div>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <input type="text" id="chat-input" placeholder="Type your transaction here..." autocomplete="off" />
+          <button id="chat-send-btn" class="send-btn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+      </div>
+
+      <div id="manual-content" class="modal-body" style="display:none;">
+        <form id="add-form">
+          <div class="form-grid">
+            <div class="form-row">
+              <label>Date</label>
+              <input id="add-date" type="date" required />
+            </div>
+            <div class="form-row">
+              <label>Time (optional)</label>
+              <input id="add-time" type="time" />
+            </div>
+
+            <div class="form-row full-width">
+              <label>Merchant / Source</label>
+              <input id="add-merchant" type="text" placeholder="e.g., Coffee Shop" required />
+            </div>
+            <div class="form-row full-width">
+              <label>Category</label>
+              <input id="add-category" type="text" placeholder="e.g., Groceries" required />
+            </div>
+
+            <div class="form-row">
+              <label>Amount (USD)</label>
+              <input id="add-amount" type="number" step="0.01" min="0.01" required />
+            </div>
+            <div class="form-row">
+              <label>Type</label>
+              <select id="add-type" required>
+                <option value="expense">Expense</option>
+                <option value="income">Income</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" id="add-cancel" class="btn secondary">Cancel</button>
+            <button type="submit" class="btn primary" id="add-submit-label">Save Transaction</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Filter Modal -->
+  <dialog id="filter-modal" class="modal">
+    <form id="filter-form" class="modal-form">
+      <div class="modal-header">
+        <h3>Advanced Filters</h3>
+        <button type="button" id="filter-close" class="icon-btn"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="form-row">
+            <label>Start Date</label>
+            <input id="flt-from" type="date" />
+          </div>
+          <div class="form-row">
+            <label>End Date</label>
+            <input id="flt-to" type="date" />
+          </div>
+          <div class="form-row full-width">
+            <label>Category</label>
+            <input id="flt-category" type="text" placeholder="e.g., Groceries" />
+          </div>
+          <div class="form-row full-width">
+            <label>Transaction Type</label>
+            <select id="flt-type">
+              <option value="all">Any</option>
+              <option value="income">Income Only</option>
+              <option value="expense">Expense Only</option>
+            </select>
+          </div>
+
+          <!-- NEW: Account filter inside Advanced Filters -->
+          <div class="form-row full-width">
+            <label>Account</label>
+            <div class="flt-account-group" id="flt-account-group">
+              <button
+                type="button"
+                class="chip-btn active"
+                data-account="all"
+              >
+                All
+              </button>
+              <button
+                type="button"
+                class="chip-btn"
+                data-account="checking"
+              >
+                Checking Account
+              </button>
+              <button
+                type="button"
+                class="chip-btn"
+                data-account="credit"
+              >
+                Credit Card
+              </button>
+            </div>
+            <!-- hidden field where JS stores selected account filter -->
+            <input id="flt-account" type="hidden" value="all" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="filter-reset" class="btn secondary">Reset</button>
+        <button type="submit" class="btn primary">Apply Filters</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Review Recent Transactions Modal -->
+  <dialog id="review-modal" class="modal review-modal">
+    <div class="modal-form recent-modal">
+      <div class="modal-header">
+        <h3>Recent Transactions (last 24 hours)</h3>
+        <button type="button" id="review-close" class="icon-btn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div id="review-empty" class="review-empty">
+          No recent transactions to review.
+        </div>
+
+        <!-- JS fills this with .recent-item rows that contain Edit/Delete -->
+        <div id="review-list" class="review-list"></div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Balance Warning Modal -->
+  <dialog id="balance-warning-modal" class="modal">
+    <div class="modal-form">
+      <div class="modal-header">
+        <h3>Insufficient Balance</h3>
+        <button type="button" id="balance-warning-close" class="icon-btn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p id="balance-warning-text">
+          You cannot add an expense larger than your available balance.
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn primary" id="balance-warning-ok">
+          Got it
+        </button>
+      </div>
+    </div>
+  </dialog>
+</section>

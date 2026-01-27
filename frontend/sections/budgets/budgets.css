@@ -1,0 +1,1109 @@
+/* ===== Budgets (dark) — aligned with Activity section ===== */
+:root{
+  --bg:#0e1621;
+  --panel:#101a27;
+  --panel-2:#0f1925;
+  --panel-3:#0c1420;
+  --muted:#90a6bc;
+  --text:#e6eef7;
+  --border:#1e2a3a;
+  --ring:#25374f;
+
+  --kpi-blue:#3b82f6;
+  --kpi-green:#22c55e;
+  --kpi-red:#ef4444;
+  --kpi-violet:#8b5cf6;
+
+  --pill-blue:#60a5fa;
+  --pill-green:#34d399;
+  --pill-red:#fb7185;
+  --pill-cyan:#22d3ee;
+
+  --shadow-sm:0 4px 12px rgba(0,0,0,.25);
+  --shadow-md:0 8px 26px rgba(0,0,0,.35);
+}
+
+.dashboard-content{padding:0 !important;background:var(--bg) !important}
+
+/* ===== Section shell ===== */
+.budgets-section{
+  width:100%;
+  min-height:100vh;
+  padding:20px 24px 40px;
+  box-sizing:border-box;
+
+  /* full-page premium gradient background */
+  background:
+    radial-gradient(circle at 20% 0%,
+      rgba(56,189,248,0.16),
+      rgba(15,23,42,0.97) 60%),
+    radial-gradient(circle at 80% 100%,
+      rgba(139,92,246,0.12),
+      rgba(15,23,42,0.99) 70%),
+    #0e1621;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+
+/* ===== Header ===== */
+.budgets-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.head-left{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.head-left h2{margin:0;font-size:22px;font-weight:800;color:var(--text);letter-spacing:.2px}
+.countdown-badge{font-weight:700;font-size:12px;color:#9ddcff}
+
+/* ===== KPI cards (a little bigger + hover like Activity) ===== */
+.budgets-section .kpis{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(255px,1fr));
+  gap:18px;
+  margin-bottom:18px;
+}
+.budgets-section .kpi-card{
+  position:relative;background:linear-gradient(180deg,var(--panel),var(--panel-2));
+  border:1px solid var(--border);border-radius:14px;padding:28px 24px;
+  box-shadow:var(--shadow-sm);transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease
+}
+.budgets-section .kpi-card:hover{transform:scale(1.015);border-color:#2a3a55;box-shadow:0 10px 28px rgba(0,0,0,.45)}
+.kpi-row{display:flex;justify-content:space-between;align-items:center}
+.kpi-left{display:flex;align-items:center;gap:12px}
+.kpi-icon{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;color:#fff}
+.kpi-blue{background:linear-gradient(135deg,#243b55,#406090)}
+.kpi-green{background:linear-gradient(135deg,#1d3b28,#2c7a4b)}
+.kpi-red{background:linear-gradient(135deg,#3b1d21,#8b2b2f)}
+.kpi-violet{background:linear-gradient(135deg,#2b2550,#5632a8)}
+.kpi-label{color:#9fb0c7;font-size:12px}
+.kpi-value{color:var(--text);font-weight:800;font-size:18px}
+
+ 
+/* ===== Overall Budget Summary ===== */
+.summary-card{
+  background:
+    radial-gradient(circle at 0% 0%,
+      rgba(56,189,248,0.18),
+      rgba(15,23,42,0.96) 55%),
+    linear-gradient(180deg,var(--panel),var(--panel-2));
+  border: 1px solid rgba(148,163,184,0.35);
+  border-radius: 20px;
+  padding: 28px 30px 26px;
+  margin-bottom: 24px;
+  box-shadow: 0 14px 32px rgba(15,23,42,0.9);
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    border-color 0.12s ease,
+    background 0.12s ease;
+}
+
+.summary-card:hover{
+  transform: translateY(-1px);
+  border-color: rgba(96,165,250,0.9);
+  box-shadow: 0 20px 46px rgba(15,23,42,1);
+  background:
+    radial-gradient(circle at 0% 0%,
+      rgba(59,130,246,0.24),
+      rgba(15,23,42,0.99) 60%),
+    linear-gradient(180deg,var(--panel),var(--panel-2));
+}
+
+
+/* top row */
+.summary-header-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:32px;
+  margin-bottom:18px;
+}
+
+.summary-title{
+  font-size:26px;
+  font-weight:900;
+  color:var(--text);
+}
+.summary-sub{
+  font-size:13px;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+/* legend on the right */
+.summary-legend{
+  display:flex;
+  align-items:flex-start;
+  gap:32px;
+}
+
+.legend-item{
+  display:flex;
+  align-items:flex-start;   /* top-align dot with text stack */
+  gap:10px;
+}
+
+.legend-item .dot{
+  margin-top:5px;           /* tiny nudge so it sits nicely by “Total Budget” */
+}
+
+.legend-text{
+  display:flex;
+  flex-direction:column;
+}
+.legend-label{
+  font-size:11px;
+  color:var(--muted);
+}
+.legend-value{
+  font-size:20px;
+  font-weight:900;
+}
+
+/* colored dots + amounts */
+.dot{width:8px;height:8px;border-radius:999px}
+.dot-total{background:#ffffff}
+.dot-spent{background:#fb7185}
+.dot-net{background:#22c55e}
+
+/* spent red, net green */
+#sum-spent{color:#fb7185}
+#sum-net{color:#22c55e}
+
+/* middle row: text above bar */
+.summary-bar-meta{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  font-size:20px;
+  margin-top:100px;        /* <<< ADDED — pushes the meta row downward */
+  margin-bottom:20px;     /* <<< slightly increased for cleaner spacing */
+}
+
+.summary-left{
+  font-weight:600;
+  color:var(--text);
+}
+.summary-right{
+  font-weight:700;
+  color:#cfe3ff;
+  white-space:nowrap;
+}
+
+.summary-bar{
+  position:relative;
+  width:100%;
+  height:22px;
+  background:#0b1220;
+  border:2px solid var(--ring);
+  border-radius:999px;
+  overflow:hidden;
+
+  /* how much is already used – set from JS */
+  --summary-used:0%;
+}
+
+/* solid USED part (0 → used%) */
+.summary-fill{
+  position:absolute;
+  inset:0;
+  width:var(--summary-used);
+  background:#8b5cf6;
+  border-radius:inherit;
+  transition:width .35s ease;
+}
+
+/* small moving highlight ONLY in the remaining part */
+.summary-bar::after{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+
+  /* make the glow a narrower strip that slides smoothly */
+  left:-30%;
+  width:60%;
+
+  /* only show it on the UNUSED part of the bar */
+  clip-path: inset(0 0 0 var(--summary-used));
+
+  background:linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(96,165,250,0) 25%,
+    rgba(96,165,250,0.75) 45%,
+    rgba(168,85,247,0.95) 55%,
+    rgba(96,165,250,0.75) 65%,
+    rgba(96,165,250,0) 75%,
+    transparent 100%
+  );
+
+  pointer-events:none;
+  animation:summaryHighlightMove 3s linear infinite;
+}
+
+@keyframes summaryHighlightMove{
+  0%   { transform:translateX(0%); }
+  100% { transform:translateX(150%); }
+}
+
+
+
+ 
+/* ===== Generic panels (Categories + Connected Cards) ===== */
+.card-panel{
+  background:
+    radial-gradient(circle at 10% 0%,
+      rgba(15,23,42,0.75),
+      rgba(15,23,42,0.98));
+  border: 1px solid rgba(15,23,42,0.95);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 18px;
+}
+
+/* main Categories panel – upgraded like Completed Goals */
+.card-panel.card-panel-cats{
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(56,189,248,0.18),
+      rgba(15,23,42,0.96) 55%),
+    radial-gradient(circle at 90% 100%,
+      rgba(139,92,246,0.18),
+      rgba(15,23,42,0.99) 70%);
+  border: 1px solid rgba(148,163,184,0.35);
+  box-shadow: 0 14px 32px rgba(15,23,42,0.9);
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    border-color 0.12s ease,
+    background 0.12s ease;
+}
+
+.card-panel.card-panel-cats:hover{
+  transform: translateY(-2px);
+  border-color: rgba(96,165,250,0.9);
+  box-shadow: 0 22px 52px rgba(15,23,42,1);
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(59,130,246,0.26),
+      rgba(15,23,42,0.99) 60%),
+    radial-gradient(circle at 90% 100%,
+      rgba(139,92,246,0.22),
+      rgba(15,23,42,1) 70%);
+}
+
+.card-panel-cats:hover{
+  transform: translateY(-1px);
+  border-color: rgba(96,165,250,0.85);
+  box-shadow: 0 20px 46px rgba(15,23,42,1);
+  background: radial-gradient(circle at top left,
+    rgba(59,130,246,0.24),
+    rgba(15,23,42,0.99));
+}
+
+/* header */ 
+.card-panel .panel-head{
+  padding: 16px 20px 12px;
+  background: transparent;
+  border-bottom: 1px solid rgba(15,23,42,0.85);
+}
+.panel-title{
+  color: var(--text);
+  font-weight: 800;
+  font-size: 18px;
+}
+.panel-sub{
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+
+#txlist-summary{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #e6eef7;
+  letter-spacing: .25px;
+  margin-bottom: 14px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(56,189,248,0.16),
+      rgba(15,23,42,0.96));
+  border: 1px solid rgba(148,163,184,0.40);
+}
+
+#txlist-summary strong{
+  color: #38bdf8;
+}
+
+
+/* TxList modal scrollbar – dark theme */
+#txlist-modal .modal-body{
+  scrollbar-width: thin;
+  scrollbar-color: #4b5563 transparent;
+}
+
+#txlist-modal .modal-body::-webkit-scrollbar{
+  width: 8px;
+}
+
+#txlist-modal .modal-body::-webkit-scrollbar-track{
+  background: transparent;
+}
+
+#txlist-modal .modal-body::-webkit-scrollbar-thumb{
+  background: linear-gradient(180deg,#4b5563,#111827);
+  border-radius: 999px;
+}
+
+#txlist-modal .modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 20px;
+  border-bottom:1px solid var(--border);
+  background:linear-gradient(180deg,var(--panel),var(--panel-2));
+}
+
+#txlist-modal .txrow{
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0,1fr));
+  align-items:center;
+  gap:24px;
+  padding:14px 18px;
+  margin-bottom:10px;
+
+  /* same card look as Manage Budget Categories */
+  background:
+    radial-gradient(circle at top left,
+      rgba(56,189,248,0.16),
+      rgba(15,23,42,0.95)) !important;
+  border:1px solid rgba(148,163,184,0.25) !important;
+  border-radius:16px;
+
+  box-shadow:0 10px 24px rgba(15,23,42,0.75);
+  color:var(--text);
+
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    border-color 0.12s ease,
+    background 0.12s ease;
+}
+
+
+
+#txlist-modal .txrow:hover{
+  transform:translateY(-1px);
+  border-color:rgba(96,165,250,0.85);
+  box-shadow:0 14px 30px rgba(15,23,42,0.9);
+  background:
+    radial-gradient(circle at top left,
+      rgba(59,130,246,0.22),
+      rgba(15,23,42,0.98)) !important;
+}
+
+
+
+.table{width:100%;border-collapse:separate;border-spacing:0}
+.table thead th{text-align:left;font-size:12px;color:#87a0bb;font-weight:700;padding:12px 18px;border-bottom:1px solid var(--border)}
+.table tbody td{
+  padding:14px 18px;
+  color:var(--text);
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+  background:transparent !important;   /* <<< new */
+}
+
+
+.cat-cell{display:flex;align-items:center;gap:10px}
+.cat-dot{width:24px;height:24px;border-radius:999px;display:grid;place-items:center;background:#27364b;color:#cfd8e3;font-size:11px}
+.col-cat{width:30%}.col-spent{width:16%}.col-budget{width:16%}.col-progress{width:38%}.col-actions{width:96px;text-align:right}
+.prog-wrap{display:flex;align-items:center;gap:12px}
+.prog-bar{flex:1;height:10px;background:#0c1420;border:1px solid var(--ring);border-radius:999px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,#60a5fa,#8b5cf6);width:0%;transition:width .35s ease}
+.prog-pct{min-width:44px;text-align:right;color:#9fd3ff;font-size:12px;font-weight:800}
+
+/* actions */
+.icon-btn{background:transparent;border:1px solid var(--border);color:#b5c6da;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;cursor:pointer}
+.icon-btn:hover{border-color:#355071;color:#eaf2ff;background:#0f1b2a}
+
+/* ===== Connected Cards (rectangular 2-up) ===== */
+.cards-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(520px,1fr));
+  gap:20px; padding:22px;
+}
+
+
+.bank-card{
+  background:
+    radial-gradient(circle at 0% 0%,
+      rgba(56,189,248,0.20),
+      rgba(20,30,48,0.85) 75%),
+    linear-gradient(180deg,
+      rgba(32,46,65,0.85),
+      rgba(22,32,48,0.85));
+      
+  border:1px solid rgba(148,163,184,0.28);
+  border-radius:16px;
+  padding:20px 22px;
+  box-shadow:0 12px 30px rgba(15,23,42,0.9);
+  min-height:210px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    border-color 0.12s ease,
+    background 0.12s ease;
+}
+
+
+
+
+.bank-card:hover{
+  transform: translateY(-2px);
+  border-color: rgba(96,165,250,0.85);
+  box-shadow: 0 22px 48px rgba(15,23,42,1);
+  background:
+    radial-gradient(circle at 0% 0%,
+      rgba(59,130,246,0.22),
+      rgba(15,23,42,0.99) 60%),
+    linear-gradient(180deg,var(--panel),var(--panel-2));
+}
+
+/* Freedom Credit card – make it same bright style as Savings */
+/* Brighten only the Freedom Credit card */
+#card-credit{
+  background:
+    radial-gradient(circle at 15% 0%,
+      rgba(56,189,248,0.30),
+      rgba(20,30,48,0.80) 70%),
+    linear-gradient(180deg,
+      rgba(46,64,99,0.90),
+      rgba(30,48,80,0.90));
+  box-shadow:0 16px 38px rgba(15,23,42,0.85);
+}
+
+
+/* RESET header background to clean dark */
+#txlist-modal .modal-head{
+  background:linear-gradient(180deg,#0f1925,#0c1420) !important;
+  border-bottom:1px solid rgba(148,163,184,0.20) !important;
+}
+
+/* Keep the title clean, not glowing */
+#txlist-modal .modal-title{
+  color:#e6eef7 !important;
+  font-weight:800 !important;
+}
+
+/* Close button alignment fix */
+#txlist-close{
+  margin-left:auto;
+}
+
+
+
+
+.bank-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.bank-left{display:flex;align-items:center;gap:12px}
+.cc-icon{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#3b82f6,#8b5cf6)}
+.bank-name{font-weight:700;color:var(--text)}
+.badge-ok{font-size:11px;color:#34d399;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);padding:4px 8px;border-radius:999px}
+.bank-rows{display:flex;justify-content:space-between;gap:12px;color:#9fb0c7;font-size:13px}
+.bank-rows strong{display:block;color:var(--text);font-size:16px}
+.bank-foot{display:flex;justify-content:space-between;margin-top:12px;color:#9fb0c7;font-size:12px}
+
+/* ===== Modals ===== */
+.modal{
+  border:none;
+  background:transparent;
+  padding:0;
+}
+
+.modal::backdrop{
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(4px);
+}
+
+/* Gradient shell + glowing border ring (matches Goals modals) */
+.modal-surface{
+  position:relative;
+  width:100%;
+  max-width:560px;
+  border-radius:20px;
+  padding:0;
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(56,189,248,0.18),
+      rgba(15,23,42,0.96) 55%),
+    radial-gradient(circle at 90% 100%,
+      rgba(139,92,246,0.18),
+      rgba(15,23,42,0.99) 70%),
+    #020617;
+  box-shadow:0 18px 40px rgba(15,23,42,0.9);
+  overflow:hidden;
+}
+
+.modal-surface::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  padding:1px;
+  border-radius:20px;
+  background:linear-gradient(135deg,
+    rgba(56,189,248,0.95),
+    rgba(139,92,246,0.95),
+    rgba(59,130,246,0.90));
+
+  -webkit-mask-image:linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+  -webkit-mask-origin:border-box, border-box;
+  -webkit-mask-clip:content-box, border-box;
+  -webkit-mask-composite:xor;
+
+  mask-image:linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+  mask-origin:border-box, border-box;
+  mask-clip:content-box, border-box;
+  mask-composite:exclude;
+
+  pointer-events:none;
+  opacity:0.85;
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 22px 14px 18px; /* extra space on the right */
+  background:rgba(15,23,42,0.96);
+  border-bottom:1px solid rgba(148,163,184,0.35);
+}
+
+.modal-head .icon-btn{
+  margin-left:12px;
+}
+
+
+
+.modal-title{
+  margin:0;
+  color:#e5e7eb;
+  font-weight:800;
+  letter-spacing:0.02em;
+}
+
+/* Prevent long category names from stretching the header */
+#txlist-modal .modal-title{
+  max-width:calc(100% - 80px);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.modal-body{
+  padding:18px 18px 16px;
+  max-height:72vh;
+  overflow:auto;
+  background:transparent;
+}
+
+.modal-foot{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  padding:12px 18px 16px;
+  background:rgba(6,10,20,0.98);
+  border-top:1px solid rgba(148,163,184,0.35);
+}
+
+.btn{
+  border:none;
+  border-radius:12px;
+  padding:10px 18px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.btn-primary{
+  background:linear-gradient(90deg,#3b82f6,#8b5cf6);
+  color:#fff;
+  border:1px solid rgba(191,219,254,0.85);
+  box-shadow:
+    0 10px 26px rgba(15,23,42,0.9),
+    0 0 0 1px rgba(59,130,246,0.45);
+}
+
+.btn-secondary{
+  background:rgba(15,23,42,0.96);
+  border:1px solid rgba(148,163,184,0.65);
+  color:#e5e7eb;
+  box-shadow:0 8px 22px rgba(15,23,42,0.9);
+}
+
+.btn-danger{
+  background:linear-gradient(90deg,#ef4444,#fb7185);
+  color:#fff;
+  border:1px solid rgba(255,120,120,0.65);
+  box-shadow:
+    0 10px 26px rgba(15,23,42,0.9),
+    0 0 18px rgba(239,68,68,0.25);
+}
+
+.form-row{margin-bottom:14px}
+.form-row label{display:block;color:#9fb0c7;font-size:12px;margin-bottom:6px}
+.form-row input{
+  width:100%;
+  background:rgba(15,23,42,0.96);
+  border:1px solid rgba(148,163,184,0.55);
+  border-radius:12px;
+  padding:12px;
+  color:#e5e7eb;
+}
+.form-row input:focus{
+  outline:none;
+  border-color:rgba(96,165,250,0.95);
+  box-shadow:0 0 0 2px rgba(96,165,250,0.22);
+}
+
+
+/* Bigger Manage + TxList */
+#manage-modal .modal-surface{max-width:1100px}
+#txlist-modal   .modal-surface{max-width:920px}
+
+.manage-list{
+  display: grid;
+  gap: 14px;
+}
+
+/* Manage Budget Categories rows – same style as Completed Goals cards */
+.manage-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: radial-gradient(circle at top left,
+    rgba(56,189,248,0.16),
+    rgba(15,23,42,0.95));
+  border: 1px solid rgba(148,163,184,0.25);
+  box-shadow: 0 10px 24px rgba(15,23,42,0.75);
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    border-color 0.12s ease,
+    background 0.12s ease;
+}
+.manage-row:hover{
+  transform: translateY(-1px);
+  border-color: rgba(96,165,250,0.85);
+  box-shadow: 0 14px 30px rgba(15,23,42,0.9);
+  background: radial-gradient(circle at top left,
+    rgba(59,130,246,0.22),
+    rgba(15,23,42,0.98));
+}
+
+.manage-left{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+.toggle{position:relative;width:64px;height:32px;border-radius:999px;border:1px solid #2a3a4f;background:#172233;cursor:pointer}
+.toggle .knob{position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:999px;background:#e8f2ff;transition:left .18s ease}
+.toggle[aria-pressed="true"]{background:#103322;border-color:#1e5a3b}
+.toggle[aria-pressed="true"] .knob{left:35px}
+
+/* ===== Transactions modal (strict single-line order) ===== */
+/* Header row */
+/* ===================== TRANSACTIONS MODAL — CLEAN RESET ===================== */
+/* Delete your old txlist rules and paste this entire block */
+
+/* Bigger TxList modal – same width for all categories */
+#txlist-modal .modal-surface{
+  width: min(920px, 90vw);  /* fixed by viewport, not by text */
+  max-width: 920px;
+}
+
+
+/* header row */
+.txlist-head{
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0,1fr)); /* equal columns */
+  gap:24px;
+  align-items:center;
+  padding:6px 10px 10px;
+  margin-bottom:8px;
+  color:#9fb0c7;
+  font-size:12px;
+  border-bottom:1px dashed var(--border);
+}
+.txlist-head > :last-child{
+  text-align:right;
+}
+
+/* rows container */
+#txlist-modal .txlist-rows{
+  display:grid;
+  gap:12px;
+}
+
+.txlist-rows {
+  margin-top: 8px;
+  max-height: 360px; /* about 5 rows visible */
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* one transaction row: Date | Merchant | Category | Price */
+#txlist-modal .txrow{
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0,1fr)); /* equal columns */
+  align-items:center;
+  gap:24px;
+  padding:14px 16px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--panel-3);
+  color:var(--text);
+}
+
+/* Date */
+.tx-date{
+  white-space:nowrap;
+}
+
+/* Merchant */
+.tx-merchant{
+  white-space:nowrap;
+  font-weight:600;
+  color:var(--text);
+}
+
+/* Category (now also white) */
+.tx-category{
+  white-space:nowrap;
+  color:var(--text);
+}
+
+/* Amount */
+.tx-amount{
+  white-space:nowrap;
+  text-align:right;
+  font-weight:800;
+  color:#fb7185;
+}
+
+/* small screens: still equal columns, just tighter */
+@media (max-width:720px){
+  #txlist-modal .txrow,
+  .txlist-head{
+    grid-template-columns:repeat(4, minmax(0,1fr));
+    gap:12px;
+  }
+}
+
+/* hero card container */
+.budgets-hero{
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(56,189,248,0.18),
+      rgba(15,23,42,0.96) 55%),
+    radial-gradient(circle at 90% 100%,
+      rgba(139,92,246,0.18),
+      rgba(15,23,42,0.99) 70%);
+  border:1px solid rgba(148,163,184,0.35);
+  border-radius:22px;
+  padding:20px 24px 24px;
+  margin-bottom:22px;
+  box-shadow:0 14px 32px rgba(15,23,42,0.9);
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    border-color 0.12s ease,
+    background 0.12s ease;
+}
+
+.budgets-hero:hover{
+  transform: translateY(-2px);
+  border-color: rgba(96,165,250,0.9);
+  box-shadow: 0 22px 52px rgba(15,23,42,1);
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(59,130,246,0.26),
+      rgba(15,23,42,0.99) 60%),
+    radial-gradient(circle at 90% 100%,
+      rgba(139,92,246,0.22),
+      rgba(15,23,42,1) 70%);
+}
+
+/* header layout */
+.budgets-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:18px;
+  margin-bottom:18px;
+}
+
+.budgets-icon-circle{
+  width:44px;
+  height:44px;
+  border-radius:16px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#22c55e,#3b82f6);
+  color:#fff;
+}
+
+/* animated “Budgets” title – same style as Activity Feed */
+.budgets-title{
+  margin:0;
+  font-size:28px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  gap:6px;
+
+  background:linear-gradient(90deg,#0b1220,#06b6d4,#6f42c1,#0b1220);
+  background-size:300% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent;
+
+  animation:budgetsTitleMove 6s linear infinite;
+  letter-spacing:.2px;
+}
+
+
+.budgets-subtitle{
+  margin:4px 0 0;
+  font-size:13px;
+  color:var(--muted);
+}
+
+
+.head-right{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:8px;
+}
+ 
+/* Clickable budget rows */
+tr.row-click{
+  cursor:pointer;
+}
+
+/* base borders for each category row */
+.table tbody tr.row-click td{
+  position:relative;
+  background:transparent;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  transition:
+    background 0.12s ease,
+    border-color 0.12s ease,
+    box-shadow 0.12s ease,
+    transform 0.12s ease;
+}
+
+/* hover effect: glow + colored border around the whole row */
+tr.row-click:hover{
+  background:
+    radial-gradient(circle at 20% 50%,
+      rgba(59,130,246,0.18),
+      rgba(15,23,42,0.88) 80%);
+  box-shadow:0 10px 26px rgba(15,23,42,0.9);
+  transform:translateY(-1px);
+}
+
+
+.table tbody tr.row-click:hover td{
+  background: radial-gradient(circle at 0% 50%,
+    rgba(59,130,246,0.16),
+    rgba(15,23,42,0.96));
+  border-color: rgba(96,165,250,0.85);
+}
+
+
+
+@keyframes budgetsTitleMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+/* === Budgets modal close button – glowing white X like Goals === */
+/* === Budgets modal close button (match Goals exactly) === */
+.budgets-section .icon-btn{
+  background: rgba(15,23,42,0.95);
+  border: 1px solid rgba(148,163,184,0.45);
+  color: #9fb0c7;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  transition: all .18s ease;
+  box-shadow: 0 8px 22px rgba(15,23,42,0.9);
+}
+
+.budgets-section .icon-btn i{
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.budgets-section .icon-btn:hover{
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(59,130,246,0.22),
+      rgba(15,23,42,0.98));
+  border-color: rgba(96,165,250,0.95);
+  box-shadow:
+    0 10px 24px rgba(15,23,42,1),
+    0 0 0 1px rgba(96,165,250,0.9);
+  color: #e5e7eb;
+}
+
+.budgets-section .icon-btn:active{
+  transform: scale(.96);
+}
+
+
+/* X icon size */
+.budgets-section .modal-head .icon-btn i {
+  font-size: 0.9rem;
+}
+
+/* Hover: brighter glow */
+/* Modal header close (X) hover should match Goals: subtle ring, not a big glow */
+.budgets-section .modal-head .icon-btn:hover{
+  background: rgba(15,23,42,0.95);
+  border-color: rgba(96,165,250,0.85);
+  box-shadow:
+    0 8px 22px rgba(15,23,42,0.9),
+    0 0 0 2px rgba(96,165,250,0.22);
+  color:#e5e7eb;
+}
+
+
+/* Pressed */
+.budgets-section .modal-head .icon-btn:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow:
+    0 0 0 1px rgba(15,23,42,1),
+    0 0 12px rgba(248,250,252,0.20);
+}
+
+.badge-cc-good,
+.badge-cc-elevated,
+.badge-cc-danger,
+.badge-cc-critical {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  border: 1px solid transparent;
+  box-shadow:
+    0 0 0 1px rgba(15,23,42,0.9),
+    0 0 18px rgba(15,23,42,0.7);
+}
+
+/* Good (<= 2,000) – green */
+.badge-cc-good {
+  background: linear-gradient(135deg, rgba(34,197,94,0.25), rgba(22,163,74,0.10));
+  border-color: rgba(34,197,94,0.85);
+  color: #bbf7d0;
+}
+
+/* Elevated (2,000–10,000) – amber warning */
+.badge-cc-elevated {
+  background: linear-gradient(135deg, rgba(250,204,21,0.28), rgba(250,204,21,0.08));
+  border-color: rgba(250,204,21,0.9);
+  color: #fef3c7;
+}
+
+/* Danger (10,000–25,000) – orange */
+.badge-cc-danger {
+  background: linear-gradient(135deg, rgba(249,115,22,0.30), rgba(249,115,22,0.10));
+  border-color: rgba(249,115,22,0.9);
+  color: #ffedd5;
+}
+
+/* Critical (25,000+) – red */
+.badge-cc-critical {
+  background: linear-gradient(135deg, rgba(239,68,68,0.32), rgba(239,68,68,0.10));
+  border-color: rgba(239,68,68,0.95);
+  color: #fee2e2;
+}
+
+/* Checking Account Status Badges */
+.badge-chk-good,
+.badge-chk-low,
+.badge-chk-critical {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  border: 1px solid transparent;
+  box-shadow:
+    0 0 0 1px rgba(15,23,42,0.9),
+    0 0 18px rgba(15,23,42,0.7);
+}
+
+/* Good balance */
+.badge-chk-good {
+  background: linear-gradient(135deg, rgba(34,197,94,0.25), rgba(22,163,74,0.10));
+  border-color: rgba(34,197,94,0.85);
+  color: #bbf7d0;
+}
+
+/* Low balance warning */
+.badge-chk-low {
+  background: linear-gradient(135deg, rgba(250,204,21,0.28), rgba(250,204,21,0.10));
+  border-color: rgba(250,204,21,0.9);
+  color: #fef3c7;
+}
+
+/* Critical (dangerously low) */
+.badge-chk-critical {
+  background: linear-gradient(135deg, rgba(239,68,68,0.28), rgba(239,68,68,0.10));
+  border-color: rgba(239,68,68,0.9);
+  color: #fee2e2;
+}
+
+
+/* Hide number input spinners (Monthly Limit) */
+#budget-modal input[type="number"]::-webkit-outer-spin-button,
+#budget-modal input[type="number"]::-webkit-inner-spin-button{
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#budget-modal input[type="number"]{
+  -moz-appearance: textfield;
+  appearance: textfield;
+}

@@ -1,0 +1,243 @@
+<!-- frontend/sections/budgets/budgets.html -->
+<section class="budgets-section">
+
+  <!-- HEADER / HERO -->
+  <section class="budgets-hero">
+    <header class="budgets-head">
+      <div class="head-left">
+        <div class="budgets-icon-circle">
+          <i class="fas fa-wallet"></i>
+        </div>
+
+        <div>
+          <h2 class="budgets-title">
+            <span class="budgets-title-gradient">Budgets</span>
+          </h2>
+          <p class="budgets-subtitle">
+            Manage your spending categories and track your cards
+          </p>
+        </div>
+      </div>
+
+      <div class="head-right">
+        <span id="month-countdown" class="countdown-badge">…</span>
+        <button id="bud-manage-btn" class="btn btn-primary">Add Budget</button>
+      </div>
+    </header>
+  </section>
+
+  <!-- OVERALL SUMMARY -->
+  <section class="summary-card">
+    <div class="summary-header-row">
+      <div>
+        <div class="summary-title">Overall Budget Summary</div>
+        <div class="summary-sub">Track your total budget, spent, and net change</div>
+      </div>
+
+      <div class="summary-legend">
+        <div class="legend-item">
+          <span class="dot dot-total"></span>
+          <div class="legend-text">
+            <div class="legend-label">Total Budget</div>
+            <div id="sum-total" class="legend-value">$0</div>
+          </div>
+        </div>
+
+        <div class="legend-item">
+          <span class="dot dot-spent"></span>
+          <div class="legend-text">
+            <div class="legend-label">Spent</div>
+            <div id="sum-spent" class="legend-value">$0</div>
+          </div>
+        </div>
+
+        <div class="legend-item">
+          <span class="dot dot-net"></span>
+          <div class="legend-text">
+            <div class="legend-label">Net Change</div>
+            <div id="sum-net" class="legend-value">$0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-bar-meta">
+      <div id="summary-left" class="summary-left">$0 of $0 used</div>
+      <div id="summary-right" class="summary-right">0% used</div>
+    </div>
+
+    <div class="summary-bar">
+      <div id="summary-fill" class="summary-fill"></div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES TABLE -->
+  <section class="card-panel card-panel-cats">
+    <div class="panel-head">
+      <div class="panel-title">Categories</div>
+      <div class="panel-sub">Track spending across different categories</div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="col-cat">Category</th>
+            <th class="col-spent">Spent</th>
+            <th class="col-budget">Budget</th>
+            <th class="col-progress">Progress</th>
+            <th class="col-actions" style="text-align:right">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="bud-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- CONNECTED CARDS -->
+  <section class="card-panel card-panel-cats">
+    <div class="panel-head">
+      <div class="panel-title">Connected Cards</div>
+      <div class="panel-sub">Track your credit and savings cards</div>
+    </div>
+
+    <div class="cards-grid">
+      <!-- CREDIT CARD -->
+      <div class="bank-card" id="card-credit">
+        <div class="bank-top">
+          <div class="bank-left">
+            <div class="cc-icon"><i class="fas fa-credit-card"></i></div>
+            <div>
+              <div class="bank-name">Freedom Credit Card</div>
+              <div id="cc-mask" class="panel-sub">Credit •••• —</div>
+            </div>
+          </div>
+          <span id="cc-status" class="status-pill"></span>
+        </div>
+
+        <div class="bank-rows">
+          <div><span>Current Debt</span><strong id="cc-balance">$0</strong></div>
+          <div><span>Credit Limit</span><strong id="cc-limit">No Preset Limit</strong></div>
+        </div>
+
+        <div class="usage-wrap">
+          <div class="usage-bar">
+            <div id="cc-usage" class="usage-fill"></div>
+          </div>
+        </div>
+
+        <div class="bank-foot">
+          <div>Last Transaction <strong id="cc-last">—</strong></div>
+          <div>Monthly Spending <strong id="cc-spend">$0</strong></div>
+        </div>
+      </div>
+
+      <!-- CHECKING ACCOUNT -->
+      <div class="bank-card" id="card-savings">
+        <div class="bank-top">
+          <div class="bank-left">
+            <div class="cc-icon"><i class="fas fa-piggy-bank"></i></div>
+            <div>
+              <div class="bank-name">Freedom Checking Account</div>
+              <div id="sv-mask" class="panel-sub">Checking •••• —</div>
+            </div>
+          </div>
+          <span id="sv-status" class="status-pill"></span>
+        </div>
+
+        <div class="bank-rows">
+          <div><span>Current Balance</span><strong id="sv-balance">$0</strong></div>
+          <div><span>—</span><strong>&nbsp;</strong></div>
+        </div>
+
+        <div class="usage-wrap">
+          <div class="usage-bar">
+            <div id="sv-growth" class="usage-fill"></div>
+          </div>
+        </div>
+
+        <div class="bank-foot">
+          <div>Last Transaction <strong id="sv-last">—</strong></div>
+          <div>Monthly Spending <strong id="sv-spend">$0</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDIT BUDGET MODAL -->
+  <dialog id="budget-modal" class="modal">
+    <form id="bud-form" class="modal-surface">
+      <div class="modal-head">
+        <h3 id="bud-modal-title" class="modal-title">Edit Budget</h3>
+        <button type="button" id="bud-modal-close" class="icon-btn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="bud-id" />
+        <div class="form-row">
+          <label for="bud-category">Category</label>
+          <input id="bud-category" type="text" disabled />
+        </div>
+        <div class="form-row">
+          <label for="bud-limit">Monthly Limit (USD)</label>
+          <input
+            id="bud-limit"
+            type="number"
+            step="0.01"
+            min="0"
+            placeholder="0.00"
+            required
+          />
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" id="bud-cancel" class="btn btn-secondary">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- MANAGE CATEGORIES MODAL -->
+  <dialog id="manage-modal" class="modal">
+    <div class="modal-surface">
+      <div class="modal-head">
+        <h3 class="modal-title">Manage Budget Categories</h3>
+        <button type="button" id="manage-close" class="icon-btn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="manage-list" class="manage-list"></div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" id="manage-done" class="btn btn-primary">Done</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- CATEGORY TRANSACTIONS MODAL -->
+  <dialog id="txlist-modal" class="modal">
+    <div class="modal-surface">
+      <div class="modal-head">
+        <h3 id="txlist-title" class="modal-title">Category</h3>
+        <button type="button" id="txlist-close" class="icon-btn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="txlist-summary"></div>
+
+        <div class="txlist-head">
+          <div>Date</div>
+          <div>Merchant</div>
+          <div>Category</div>
+          <div style="text-align:right">Price</div>
+        </div>
+
+        <div id="txlist-rows" class="txlist-rows"></div>
+      </div>
+    </div>
+  </dialog>
+
+</section>

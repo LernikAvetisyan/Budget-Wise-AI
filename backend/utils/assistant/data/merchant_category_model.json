@@ -1,0 +1,1488 @@
+{
+  "merchants": {
+    "7 eleven": {
+      "categories": {
+        "Transportation": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Transportation"
+      }
+    },
+    "adidas": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "adjustment deposit": {
+      "categories": {
+        "Cash Deposit": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Cash Deposit"
+      }
+    },
+    "adobe creative cloud": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "advance auto parts": {
+      "categories": {
+        "Transportation": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Transportation"
+      }
+    },
+    "albertsons": {
+      "categories": {
+        "Groceries": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Groceries"
+      }
+    },
+    "aldi": {
+      "categories": {
+        "Groceries": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Groceries"
+      }
+    },
+    "amazon": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "amazon prime": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "amc theatres": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "apple music": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "apple store": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "arcade": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "arco": {
+      "categories": {
+        "Transportation": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Transportation"
+      }
+    },
+    "audible": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "autozone": {
+      "categories": {
+        "Transportation": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Transportation"
+      }
+    },
+    "best buy": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "bookstore": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "bowling": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "bp": {
+      "categories": {
+        "Transportation": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Transportation"
+      }
+    },
+    "buffalo wild wings": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "burger king": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "cable satellite tv": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "canva pro": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "car wash": {
+      "categories": {
+        "Transportation": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Transportation"
+      }
+    },
+    "chevron": {
+      "categories": {
+        "Transportation": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Transportation"
+      }
+    },
+    "chick fil a": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "chipotle": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "cloud storage": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "comedy show": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "concert tickets": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "cost plus world market": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "costco": {
+      "categories": {
+        "Groceries": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Groceries"
+      }
+    },
+    "costco gasoline": {
+      "categories": {
+        "Transportation": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Transportation"
+      }
+    },
+    "device protection plan": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "disney": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "domain renewal": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "domino s": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "dropbox": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "dunkin": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "ebay": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "electric utility": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "enterprise rent a car": {
+      "categories": {
+        "Transportation": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Transportation"
+      }
+    },
+    "escape room": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "etsy": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "ev charging": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "evernote": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "exxon": {
+      "categories": {
+        "Transportation": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Transportation"
+      }
+    },
+    "fandango": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "five guys": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "food lion": {
+      "categories": {
+        "Groceries": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Groceries"
+      }
+    },
+    "fresh thyme market": {
+      "categories": {
+        "Groceries": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Groceries"
+      }
+    },
+    "game store": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "gas utility": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "giant food": {
+      "categories": {
+        "Groceries": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Groceries"
+      }
+    },
+    "github": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "google one": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "google store": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "h and m": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "h e b": {
+      "categories": {
+        "Groceries": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Groceries"
+      }
+    },
+    "hertz": {
+      "categories": {
+        "Transportation": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Transportation"
+      }
+    },
+    "home depot": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "home security": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "hulu": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "icloud": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "ikea": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "imax": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "internet service": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "jiffy lube": {
+      "categories": {
+        "Transportation": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Transportation"
+      }
+    },
+    "karaoke": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "kfc": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "kroger": {
+      "categories": {
+        "Groceries": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Groceries"
+      }
+    },
+    "landline service": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "lidl": {
+      "categories": {
+        "Groceries": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Groceries"
+      }
+    },
+    "live nation": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "lowe s": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "lyft": {
+      "categories": {
+        "Transportation": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Transportation"
+      }
+    },
+    "macy s": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "manual deposit car": {
+      "categories": {
+        "Goals": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Goals"
+      }
+    },
+    "max": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "mcdonald s": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "meijer": {
+      "categories": {
+        "Groceries": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Groceries"
+      }
+    },
+    "microsoft 365": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "mini golf": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "mobil": {
+      "categories": {
+        "Transportation": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Transportation"
+      }
+    },
+    "mobile phone service": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "museum admission": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "neighborhood cafe": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "netflix": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "nike": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "nordstrom": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "notion": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "olive garden": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "panda express": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "panera bread": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "papa johns": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "paramount": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "parking": {
+      "categories": {
+        "Transportation": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Transportation"
+      }
+    },
+    "payment received thank you": {
+      "categories": {
+        "Credit Card Payment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Credit Card Payment"
+      }
+    },
+    "peacock": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "performing arts tickets": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "pizza hut": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "propane refill": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "publix": {
+      "categories": {
+        "Groceries": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Groceries"
+      }
+    },
+    "ralphs": {
+      "categories": {
+        "Groceries": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Groceries"
+      }
+    },
+    "record store": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "regal cinemas": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "safeway": {
+      "categories": {
+        "Groceries": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Groceries"
+      }
+    },
+    "salary": {
+      "categories": {
+        "Payroll": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Payroll"
+      }
+    },
+    "sephora": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "sewer service": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "shake shack": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "smart home service": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "solar service": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "sporting event tickets": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "spotify": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "sprouts farmers market": {
+      "categories": {
+        "Groceries": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Groceries"
+      }
+    },
+    "starbucks": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "starting balance": {
+      "categories": {
+        "Cash Deposit": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Cash Deposit"
+      }
+    },
+    "streaming bundle": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "subway": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "taco bell": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "target": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "the cheesecake factory": {
+      "categories": {
+        "Food & Dining": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Food & Dining"
+      }
+    },
+    "theme park tickets": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "toll charges": {
+      "categories": {
+        "Transportation": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Transportation"
+      }
+    },
+    "trader joe s": {
+      "categories": {
+        "Groceries": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Groceries"
+      }
+    },
+    "transit fare": {
+      "categories": {
+        "Transportation": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Transportation"
+      }
+    },
+    "transit pass reload": {
+      "categories": {
+        "Transportation": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Transportation"
+      }
+    },
+    "trash service": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "uber": {
+      "categories": {
+        "Transportation": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Transportation"
+      }
+    },
+    "ulta beauty": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "vons": {
+      "categories": {
+        "Groceries": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Groceries"
+      }
+    },
+    "vpn service": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "walmart": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "walmart supercenter": {
+      "categories": {
+        "Groceries": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Groceries"
+      }
+    },
+    "water utility": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "web hosting": {
+      "categories": {
+        "Utilities": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Utilities"
+      }
+    },
+    "wegmans": {
+      "categories": {
+        "Groceries": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Groceries"
+      }
+    },
+    "whole foods market": {
+      "categories": {
+        "Groceries": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Groceries"
+      }
+    },
+    "work": {
+      "categories": {
+        "Salary": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Salary"
+      }
+    },
+    "youtube premium": {
+      "categories": {
+        "Subscriptions": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Subscriptions"
+      }
+    },
+    "zara": {
+      "categories": {
+        "Shopping": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Shopping"
+      }
+    },
+    "zoo admission": {
+      "categories": {
+        "Entertainment": 1
+      },
+      "total": 1,
+      "users": {
+        "0de0573b6c311845f0092829": "Entertainment"
+      }
+    },
+    "7-eleven": {
+      "total": 1,
+      "categories": {
+        "Transportation": {
+          "count": 1,
+          "users": {
+            "assdd": 1
+          }
+        }
+      }
+    },
+    "cable/satellite tv": {
+      "total": 1,
+      "categories": {
+        "Utilities": {
+          "count": 1,
+          "users": {
+            "assdd": 1
+          }
+        }
+      }
+    },
+    "chick-fil-a": {
+      "total": 1,
+      "categories": {
+        "Food & Dining": {
+          "count": 1,
+          "users": {
+            "assdd": 1
+          }
+        }
+      }
+    },
+    "disney+": {
+      "total": 1,
+      "categories": {
+        "Subscriptions": {
+          "count": 1,
+          "users": {
+            "assdd": 1
+          }
+        }
+      }
+    },
+    "domino's": {
+      "total": 1,
+      "categories": {
+        "Food & Dining": {
+          "count": 1,
+          "users": {
+            "assdd": 1
+          }
+        }
+      }
+    },
+    "dunkin'": {
+      "total": 1,
+      "categories": {
+        "Food & Dining": {
+          "count": 1,
+          "users": {
+            "assdd": 1
+          }
+        }
+      }
+    },
+    "enterprise rent-a-car": {
+      "total": 1,
+      "categories": {
+        "Transportation": {
+          "count": 1,
+          "users": {
+            "assdd": 1
+          }
+        }
+      }
+    },
+    "h-e-b": {
+      "total": 1,
+      "categories": {
+        "Groceries": {
+          "count": 1,
+          "users": {
+            "assdd": 1
+          }
+        }
+      }
+    },
+    "h&m": {
+      "total": 1,
+      "categories": {
+        "Shopping": {
+          "count": 1,
+          "users": {
+            "assdd": 1
+          }
+        }
+      }
+    },
+    "icloud+": {
+      "total": 1,
+      "categories": {
+        "Subscriptions": {
+          "count": 1,
+          "users": {
+            "assdd": 1
+          }
+        }
+      }
+    },
+    "lowe's": {
+      "total": 1,
+      "categories": {
+        "Shopping": {
+          "count": 1,
+          "users": {
+            "assdd": 1
+          }
+        }
+      }
+    },
+    "macy's": {
+      "total": 1,
+      "categories": {
+        "Shopping": {
+          "count": 1,
+          "users": {
+            "assdd": 1
+          }
+        }
+      }
+    },
+    "manual deposit: car": {
+      "total": 1,
+      "categories": {
+        "Goals": {
+          "count": 1,
+          "users": {
+            "assdd": 1
+          }
+        }
+      }
+    },
+    "mcdonald's": {
+      "total": 1,
+      "categories": {
+        "Food & Dining": {
+          "count": 1,
+          "users": {
+            "assdd": 1
+          }
+        }
+      }
+    },
+    "paramount+": {
+      "total": 1,
+      "categories": {
+        "Subscriptions": {
+          "count": 1,
+          "users": {
+            "assdd": 1
+          }
+        }
+      }
+    },
+    "payment received - thank you": {
+      "total": 1,
+      "categories": {
+        "Credit Card Payment": {
+          "count": 1,
+          "users": {
+            "assdd": 1
+          }
+        }
+      }
+    },
+    "trader joe's": {
+      "total": 1,
+      "categories": {
+        "Groceries": {
+          "count": 1,
+          "users": {
+            "assdd": 1
+          }
+        }
+      }
+    }
+  },
+  "v": 1
+}

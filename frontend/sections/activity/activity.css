@@ -1,0 +1,1259 @@
+/* =========================================
+   1. ROOT PALETTE / SHARED COLORS
+========================================= */
+:root{
+  /* Budgets palette */
+  --bg:#0e1621;
+  --panel:#101a27;
+  --panel-2:#0f1925;
+  --panel-3:#0c1420;
+  --muted:#90a6bc;
+  --text:#e6eef7;
+  --border:#1e2a3a;
+  --ring:#25374f;
+
+  --shadow-sm:0 4px 12px rgba(0,0,0,.25);
+  --shadow-md:0 8px 26px rgba(0,0,0,.35);
+
+  /* Activity aliases */
+  --color-bg:var(--bg);
+  --color-surface:var(--panel);
+  --color-surface-2:var(--panel-2);
+  --color-border:var(--border);
+  --color-text-primary:var(--text);
+  --color-text-secondary:var(--muted);
+  --color-primary:#3b82f6;
+  --color-primary-light:#60a5fa;
+  --color-accent:#8b5cf6;
+  --color-income:#22c55e;
+  --color-expense:#ef4444;
+  --color-warning:#f59e0b;
+}
+
+/* =========================================
+   2. PAGE LAYOUT + HEADER
+========================================= */
+.dashboard-content{
+  padding:0 !important;
+  background:var(--bg) !important;
+}
+
+.activity-section{
+  width:100%;
+  min-height:100vh;
+  padding:24px 32px;
+  box-sizing:border-box;
+  overflow-y:auto;
+  background:
+    radial-gradient(circle at 20% 0%,
+      rgba(56,189,248,0.16),
+      rgba(15,23,42,0.97) 60%),
+    radial-gradient(circle at 80% 100%,
+      rgba(139,92,246,0.12),
+      rgba(15,23,42,0.99) 70%),
+    var(--bg);
+  background-attachment:fixed;
+  background-size:cover;
+}
+
+.act-head{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  margin-bottom:24px;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+.head-left{
+  flex:0 0 auto;
+  display:flex;
+  flex-direction:column;
+}
+
+.act-title-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.head-left h2{
+  font-size:2rem;
+  font-weight:700;
+  margin:0;
+  display:inline-block;
+  background:linear-gradient(90deg,#0b1220,#06b6d4,#6f42c1,#0b1220);
+  background-size:300% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent;
+  animation:actTitleMove 6s linear infinite;
+  letter-spacing:.2px;
+}
+
+.head-left p{
+  margin:4px 0 0;
+  color:var(--color-text-secondary);
+}
+
+.head-right{
+  display:flex;
+  gap:12px;
+  margin-left:auto;
+}
+
+/* =========================================
+   3. BUTTONS (HEADER / PRIMARY / SECONDARY)
+========================================= */
+.btn{
+  border:1px solid transparent;
+  border-radius:10px;
+  padding:10px 16px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all .2s ease;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+
+.btn.add-btn{
+  background:var(--color-accent);
+  color:#07141a;
+  box-shadow:0 8px 20px rgba(20,184,166,.25);
+}
+
+.btn.add-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 12px 28px rgba(20,184,166,.35);
+}
+
+.btn.filter-btn,
+.btn.review-btn{
+  background:rgba(15,23,42,0.92);
+  color:var(--color-text-primary);
+  border:1px solid rgba(148,163,184,0.45);
+  box-shadow:0 6px 16px rgba(15,23,42,0.8);
+}
+
+.btn.filter-btn:hover,
+.btn.review-btn:hover{
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(59,130,246,0.22),
+      rgba(15,23,42,0.98));
+  border-color:rgba(96,165,250,0.95);
+  box-shadow:
+    0 10px 24px rgba(15,23,42,1),
+    0 0 0 1px rgba(96,165,250,0.9);
+}
+
+.btn.primary{
+  background:var(--color-primary);
+  color:#03161a;
+  border-color:transparent;
+}
+
+.btn.primary:hover{
+  filter:brightness(1.07);
+}
+
+.btn.secondary{
+  background:transparent;
+  color:var(--color-text-primary);
+  border:1px solid var(--color-border);
+}
+
+.btn.secondary:hover{
+  background:var(--color-surface-2);
+}
+
+/* =========================================
+   4. KPIs STRIP
+========================================= */
+.kpis{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  margin-bottom:24px;
+}
+
+.kpi{
+  position:relative;
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(56,189,248,0.22),
+      rgba(15,23,42,0.92) 55%),
+    radial-gradient(circle at 90% 100%,
+      rgba(139,92,246,0.20),
+      rgba(15,23,42,0.98) 70%);
+  border:1px solid rgba(148,163,184,0.45);
+  border-radius:16px;
+  padding:18px;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  box-shadow:0 14px 32px rgba(15,23,42,0.9);
+  overflow:hidden;
+  isolation:isolate;
+  transition:transform .18s ease,
+    box-shadow .18s ease,
+    border-color .18s ease,
+    background .18s ease;
+}
+
+.kpi::before{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background:
+    radial-gradient(circle at 0% 0%,
+      rgba(59,130,246,0.32),
+      transparent 55%);
+  opacity:0;
+  transition:opacity .18s ease,transform .18s ease;
+  z-index:0;
+}
+
+.kpi:hover{
+  transform:translateY(-2px);
+  border-color:rgba(96,165,250,0.9);
+  box-shadow:0 20px 46px rgba(15,23,42,1);
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(59,130,246,0.30),
+      rgba(15,23,42,0.99) 60%),
+    radial-gradient(circle at 90% 100%,
+      rgba(139,92,246,0.26),
+      rgba(15,23,42,1) 70%);
+}
+
+.kpi:hover::before{
+  opacity:1;
+  transform:translateX(10px);
+}
+
+.kpi > *{
+  position:relative;
+  z-index:1;
+}
+
+.kpi-icon{
+  width:46px;
+  height:46px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  font-size:1.15rem;
+  background:rgba(255,255,255,.06);
+  color:var(--color-text-primary);
+}
+
+.kpi.balance .kpi-icon{
+  background:linear-gradient(135deg,#22c55e,#3b82f6);
+  color:#fff;
+}
+
+.kpi.income .kpi-icon{
+  background:rgba(34,197,94,.18);
+  color:var(--color-income);
+}
+
+.kpi.expense .kpi-icon{
+  background:rgba(239,68,68,.18);
+  color:var(--color-expense);
+}
+
+.kpi.net .kpi-icon{
+  background:rgba(139,92,246,.18);
+  color:var(--color-accent);
+}
+
+.kpi-info .label{
+  font-size:.85rem;
+  color:var(--color-text-secondary);
+  letter-spacing:.2px;
+}
+
+.kpi-info .value{
+  font-size:1.5rem;
+  font-weight:800;
+  color:var(--color-text-primary);
+}
+
+/* =========================================
+   5. MAIN PANELS (TIMELINE + CHART)
+========================================= */
+.activity-body{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:24px;
+  align-items:start;
+}
+
+.timeline-container,
+.chart-container{
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(56,189,248,0.18),
+      rgba(15,23,42,0.96) 55%),
+    radial-gradient(circle at 90% 100%,
+      rgba(139,92,246,0.18),
+      rgba(15,23,42,0.99) 70%);
+  border:1px solid rgba(148,163,184,0.35);
+  border-radius:18px;
+  padding:24px;
+  box-shadow:0 14px 32px rgba(15,23,42,0.9);
+  transition:transform .12s ease,
+    box-shadow .12s ease,
+    border-color .12s ease,
+    background .12s ease;
+}
+
+.timeline-container:hover,
+.chart-container:hover{
+  transform:translateY(-2px);
+  border-color:rgba(96,165,250,0.9);
+  box-shadow:0 22px 52px rgba(15,23,42,1);
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(59,130,246,0.26),
+      rgba(15,23,42,0.99) 60%),
+    radial-gradient(circle at 90% 100%,
+      rgba(139,92,246,0.22),
+      rgba(15,23,42,1) 70%);
+}
+
+.timeline-header,
+.chart-container h3{
+  font-size:1.2rem;
+  color:var(--color-text-primary);
+}
+
+.timeline-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:16px;
+  border-bottom:1px solid rgba(15,23,42,0.85);
+  padding-bottom:16px;
+}
+
+.chart-container h3{
+  margin:0 0 8px 0;
+}
+
+.chart-container p{
+  margin:0 0 16px 0;
+  color:var(--color-text-secondary);
+}
+
+.chart-container{
+  min-height: 420px;
+}
+
+#spending-chart{
+  height: 320px !important;
+  max-height: 320px !important;
+}
+
+
+/* =========================================
+   6. VIEW SWITCHER (All / Income / Expenses)
+========================================= */
+.view-switcher{
+  position:relative;
+  display:inline-flex;
+  padding:4px;
+  border-radius:12px;
+  border:1px solid rgba(148,163,184,0.25);
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(59,130,246,0.12),
+      rgba(15,23,42,0.92));
+  box-shadow:0 10px 26px rgba(15,23,42,0.85);
+}
+
+.switcher-btn{
+  background:transparent;
+  border:none;
+  padding:6px 18px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  color:var(--color-text-secondary);
+  position:relative;
+  z-index:2;
+  transition:all .18s ease;
+}
+
+.switcher-btn:hover{
+  color:#dce1e6;
+}
+
+.switcher-btn.active{
+  color:#e5e7eb;
+}
+
+.active-light{
+  position:absolute;
+  top:4px;
+  bottom:4px;
+  left:0;
+  width:0;
+  border-radius:10px;
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(96,165,250,0.25),
+      rgba(15,23,42,0.98));
+  border:1px solid rgba(96,165,250,0.8);
+  box-shadow:
+    0 10px 24px rgba(15,23,42,1),
+    0 0 0 1px rgba(96,165,250,0.8);
+  transition:left .25s ease,width .25s ease;
+  z-index:1;
+}
+
+/* =========================================
+   7. TIMELINE ROWS
+========================================= */
+.timeline{
+  display:grid;
+  gap:8px;
+  min-height:120px;
+}
+
+.day-group .day-header{
+  font-size:.78rem;
+  font-weight:700;
+  color:var(--color-text-secondary);
+  text-transform:uppercase;
+  padding:12px 0 6px;
+}
+
+.tx-row{
+  display:flex;
+  align-items:center;
+  padding:12px 16px;
+  border-radius:14px;
+  gap:12px;
+  border:1px solid rgba(148,163,184,0.32);
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(59,130,246,0.14),
+      rgba(15,23,42,0.94));
+  box-shadow:0 10px 26px rgba(15,23,42,0.85);
+  transition:background .14s ease,
+    border-color .14s ease,
+    box-shadow .14s ease,
+    transform .12s ease;
+}
+
+.tx-row:hover{
+  transform:translateY(-1px);
+  border-color:rgba(96,165,250,0.95);
+  box-shadow:0 18px 42px rgba(15,23,42,0.98);
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(96,165,250,0.24),
+      rgba(15,23,42,0.98));
+}
+
+.tx-icon{
+  width:42px;
+  height:42px;
+  flex-shrink:0;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  background:#27364b;
+  color:#cfd8e3;
+  font-size:1rem;
+}
+
+.tx-details{
+  flex-grow:1;
+  min-width:0;
+}
+
+.tx-details .merchant{
+  font-weight:700;
+  color:var(--color-text-primary);
+}
+
+.tx-details .category{
+  margin-top:4px;
+  font-size:.8rem;
+  color:var(--color-primary);
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:rgba(6,182,212,.12);
+  border:1px solid rgba(6,182,212,.25);
+  padding:2px 8px;
+  border-radius:999px;
+}
+
+.tx-amount{
+  text-align:right;
+}
+
+.tx-amount .amount{
+  font-weight:800;
+  font-size:1rem;
+}
+
+.amount.income{
+  color:var(--color-income);
+}
+
+.amount.expense{
+  color:var(--color-expense);
+}
+
+.tx-amount .date{
+  font-size:.76rem;
+  color:var(--color-text-secondary);
+}
+
+.empty{
+  padding:48px 24px;
+  text-align:center;
+  color:var(--color-text-secondary);
+}
+
+.load-more-container{
+  text-align:center;
+  padding-top:18px;
+}
+
+/* =========================================
+   8. MODALS – SHARED (Filters, Add, Review)
+========================================= */
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(-10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.activity-section .modal{
+  border:none;
+  background:transparent;
+}
+
+.activity-section .modal::backdrop{
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(4px);
+}
+
+.activity-section .modal-form{
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(56,189,248,0.18),
+      rgba(15,23,42,0.96) 55%),
+    radial-gradient(circle at 90% 100%,
+      rgba(139,92,246,0.18),
+      rgba(15,23,42,0.99) 70%);
+  border-radius:18px;
+  width:100%;
+  max-width:580px;
+  box-shadow:0 14px 32px rgba(15,23,42,0.9);
+  border:1px solid rgba(148,163,184,0.35);
+  padding:0;
+  animation:fadeIn .25s ease-out;
+  color:var(--color-text-primary);
+}
+
+.activity-section .modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 20px;
+  border-bottom:1px solid rgba(15,23,42,0.9);
+  background:rgba(15,23,42,0.95);
+  border-top-left-radius:18px;
+  border-top-right-radius:18px;
+}
+
+.activity-section .modal-header h3{
+  margin:0;
+  font-size:1.1rem;
+  color:var(--color-text-primary);
+}
+
+/* Close buttons (Filters / Review / Add) */
+.activity-section .icon-btn{
+  background:rgba(15,23,42,0.95);
+  border:1px solid rgba(148,163,184,0.45);
+  color:var(--color-text-secondary);
+  width:36px;
+  height:36px;
+  border-radius:999px;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  transition:all .18s ease;
+}
+
+.activity-section .icon-btn:hover{
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(59,130,246,0.22),
+      rgba(15,23,42,0.98));
+  border-color:rgba(96,165,250,0.95);
+  box-shadow:
+    0 10px 24px rgba(15,23,42,1),
+    0 0 0 1px rgba(96,165,250,0.9);
+  color:var(--color-text-primary);
+}
+
+.activity-section .modal-body{
+  padding:20px;
+}
+
+.activity-section .modal-footer{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  padding:14px 20px;
+  background:var(--panel-3);
+  border-top:1px solid var(--color-border);
+  border-bottom-left-radius:18px;
+  border-bottom-right-radius:18px;
+}
+
+/* form layout inside modals */
+.activity-section .form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.activity-section .form-row.full-width{
+  grid-column:span 2;
+}
+
+.activity-section .form-row label{
+  display:block;
+  font-size:.9rem;
+  font-weight:600;
+  margin-bottom:8px;
+  color:var(--color-text-secondary);
+}
+
+.activity-section .form-row input,
+.activity-section .form-row select{
+  width:100%;
+  background:var(--color-surface-2);
+  border:1px solid var(--color-border);
+  border-radius:10px;
+  padding:12px;
+  color:var(--color-text-primary);
+  transition:border-color .15s,box-shadow .15s,background .15s;
+}
+
+.activity-section .form-row input::placeholder{
+  color:var(--color-text-secondary);
+}
+
+.activity-section .form-row input:focus,
+.activity-section .form-row select:focus{
+  outline:none;
+  border-color:#155e6f;
+  box-shadow:0 0 0 3px rgba(6,182,212,.18);
+  background:#07141f;
+}
+
+/* =========================================
+   9. ADD TRANSACTION – TABS + AI CHAT
+========================================= */
+.activity-section .modal-tabs{
+  display:flex;
+  gap:8px;
+  padding:8px;
+  background:var(--color-surface-2);
+  border-bottom:1px solid var(--color-border);
+}
+
+.activity-section .tab-btn{
+  flex:1;
+  padding:10px;
+  background:transparent;
+  border:1px solid var(--color-border);
+  border-radius:10px;
+  font-weight:700;
+  color:var(--color-text-secondary);
+  cursor:pointer;
+  transition:all .18s ease;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+
+.activity-section .tab-btn:hover{
+  border-color:rgba(96,165,250,0.8);
+  box-shadow:0 8px 20px rgba(15,23,42,0.9);
+}
+
+.activity-section .tab-btn.active{
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(96,165,250,0.25),
+      rgba(15,23,42,0.98));
+  color:var(--color-primary-light);
+  border-color:rgba(96,165,250,0.95);
+  box-shadow:
+    0 10px 24px rgba(15,23,42,1),
+    0 0 0 1px rgba(96,165,250,0.9);
+}
+
+/* AI chat window */
+.activity-section .chat-window{
+  height:300px;
+  overflow-y:auto;
+  padding:14px;
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(59,130,246,0.16),
+      rgba(15,23,42,0.96));
+  border-radius:12px;
+  margin-bottom:14px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  border:1px solid rgba(148,163,184,0.35);
+  box-shadow:0 10px 26px rgba(15,23,42,0.85);
+}
+
+.activity-section .chat-message{
+  display:flex;
+  max-width:82%;
+}
+
+.activity-section .ai-message{
+  justify-content:flex-start;
+}
+
+.activity-section .user-message{
+  justify-content:flex-end;
+  align-self:flex-end;
+}
+
+.activity-section .message-bubble{
+  padding:10px 14px;
+  border-radius:14px;
+  line-height:1.5;
+  border:1px solid rgba(16,56,70,0.7);
+  background:#0e2230;
+  color:var(--color-text-primary);
+  transition:border-color .18s ease,box-shadow .18s ease,background .18s ease;
+}
+
+.activity-section .user-message .message-bubble{
+  background:linear-gradient(135deg,#3b82f6,#6366f1);
+  color:#03161a;
+  border-color:transparent;
+}
+
+.activity-section .message-bubble:hover{
+  border-color:rgba(96,165,250,0.95);
+  box-shadow:0 10px 24px rgba(15,23,42,1);
+}
+
+/* chat input row */
+.activity-section .chat-input-area{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.activity-section #chat-input{
+  flex-grow:1;
+  border:1px solid var(--color-border);
+  border-radius:12px;
+  padding:12px;
+  font-size:1rem;
+  background:var(--color-surface-2);
+  color:var(--color-text-primary);
+}
+
+.activity-section #chat-input::placeholder{
+  color:var(--color-text-secondary);
+}
+
+.activity-section #chat-input:focus{
+  outline:none;
+  border-color:#155e6f;
+  box-shadow:0 0 0 3px rgba(6,182,212,.18);
+  background:#07141f;
+}
+
+.activity-section .send-btn{
+  flex-shrink:0;
+  width:46px;
+  height:46px;
+  border-radius:12px;
+  border:1px solid transparent;
+  background:var(--color-accent);
+  color:#031a17;
+  font-size:1.1rem;
+  cursor:pointer;
+  transition:filter .18s ease,box-shadow .18s ease,transform .18s ease;
+}
+
+.activity-section .send-btn:hover{
+  filter:brightness(1.07);
+  box-shadow:0 10px 22px rgba(88,28,135,0.55);
+  transform:translateY(-1px);
+}
+
+/* typing dots */
+@keyframes typing{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-3px)}
+  100%{transform:translateY(0)}
+}
+
+.typing-indicator span{
+  display:inline-block;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#5b738a;
+  margin:0 2px;
+  animation:typing 1s infinite;
+}
+
+.typing-indicator span:nth-child(2){animation-delay:.2s}
+.typing-indicator span:nth-child(3){animation-delay:.4s}
+
+/* =========================================
+   10. KPI RANGE SWITCHER (Month / Year / Overall)
+========================================= */
+.kpi-range-switcher{
+  display:flex;
+  padding:4px;
+  border-radius:12px;
+  border:1px solid rgba(148,163,184,0.25);
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(59,130,246,0.12),
+      rgba(15,23,42,0.92));
+  box-shadow:0 10px 26px rgba(15,23,42,0.85);
+  margin-left:0;
+}
+
+.range-btn{
+  background:transparent;
+  border:none;
+  padding:6px 16px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  color:var(--color-text-secondary);
+  transition:all .18s ease;
+}
+
+.range-btn:hover{
+  color:#dce1e6;
+}
+
+.range-btn.active{
+  color:#e5e7eb;
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(96,165,250,0.25),
+      rgba(15,23,42,0.98));
+  border:1px solid rgba(96,165,250,0.9);
+  box-shadow:
+    0 10px 24px rgba(15,23,42,1),
+    0 0 0 1px rgba(96,165,250,0.8);
+}
+
+/* =========================================
+   11. REVIEW RECENT MODAL – LIST STYLING
+   (JS uses review-list / review-row / review-main / review-right)
+========================================= */
+
+/* ================================
+   REVIEW RECENT MODAL
+   (card + rows + buttons)
+=================================*/
+
+/* Main Review Recent card */
+.modal-form.recent-modal{
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(56,189,248,0.18),
+      rgba(15,23,42,0.96) 55%),
+    radial-gradient(circle at 90% 100%,
+      rgba(139,92,246,0.18),
+      rgba(15,23,42,0.99) 70%);
+  border-radius:18px;
+  border:1px solid rgba(148,163,184,0.35);
+  box-shadow:0 14px 32px rgba(15,23,42,0.9);
+  padding:0;
+  overflow:hidden;
+  max-height:80vh; /* keep card inside viewport */
+}
+
+/* Header row (title + X) */
+.modal-form.recent-modal .modal-header{
+  padding:18px 20px;
+  border-bottom:1px solid rgba(148,163,184,0.22);
+  background:transparent;
+}
+
+.modal-form.recent-modal .modal-header h3{
+  margin:0;
+  color:var(--color-text-primary);
+}
+
+/* Close button – glow ring on hover */
+.modal-form.recent-modal .icon-btn{
+  color:var(--color-text-secondary);
+  border-color:rgba(148,163,184,0.45);
+}
+.modal-form.recent-modal .icon-btn:hover{
+  background:var(--color-surface-2);
+  color:var(--color-text-primary);
+  border-color:rgba(96,165,250,0.9);
+  box-shadow:0 0 0 1px rgba(96,165,250,0.8);
+}
+
+/* Body + list container */
+.modal-form.recent-modal .modal-body{
+  padding:18px 20px 20px;
+  color:var(--color-text-primary);
+  max-height:calc(80vh - 72px); /* header height approx */
+  overflow-y:auto;
+
+  /* Firefox scrollbar */
+  scrollbar-width:thin;
+  scrollbar-color:rgba(148,163,184,0.7) rgba(15,23,42,0.96);
+}
+
+/* WebKit scrollbar (Chrome / Edge / Safari) */
+.modal-form.recent-modal .modal-body::-webkit-scrollbar{
+  width:8px;
+}
+
+.modal-form.recent-modal .modal-body::-webkit-scrollbar-track{
+  background:rgba(15,23,42,0.96);
+  border-radius:999px;
+}
+
+.modal-form.recent-modal .modal-body::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,#64748b,#94a3b8);
+  border-radius:999px;
+}
+
+.modal-form.recent-modal .modal-body::-webkit-scrollbar-thumb:hover{
+  background:linear-gradient(180deg,#9ca3af,#e5e7eb);
+}
+
+.review-list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.recent-timer{
+  margin-top:4px;
+  font-size:.78rem;
+  color:var(--color-text-secondary);
+}
+
+.recent-timer.expired{
+  color:var(--color-warning);
+}
+
+
+/* Each row card
+   (works for either .review-row or .recent-item) */
+.review-list > .review-row,
+.review-list > .recent-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:16px;
+  padding:12px 14px;
+  border-radius:16px;
+
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(59,130,246,0.18),
+      rgba(15,23,42,0.94));
+  border:1px solid rgba(148,163,184,0.32);
+  box-shadow:0 10px 26px rgba(15,23,42,0.85);
+
+  transition:
+    background 0.14s ease,
+    border-color 0.14s ease,
+    box-shadow 0.14s ease,
+    transform 0.12s ease;
+}
+
+.review-list > .review-row:hover,
+.review-list > .recent-item:hover{
+  transform:translateY(-1px);
+  border-color:rgba(96,165,250,0.95);
+  box-shadow:0 18px 42px rgba(15,23,42,0.98);
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(96,165,250,0.24),
+      rgba(15,23,42,0.98));
+}
+
+/* Left side text – works for both class names */
+.review-main,
+.recent-main{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.review-merchant,
+.recent-merchant{
+  font-weight:700;
+  color:var(--color-text-primary);
+}
+
+.review-meta,
+.recent-meta{
+  font-size:.85rem;
+  color:var(--color-text-secondary);
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.review-category{
+  padding:2px 8px;
+  border-radius:999px;
+  border:1px solid rgba(6,182,212,.25);
+  background:rgba(6,182,212,.10);
+  color:var(--color-primary);
+}
+
+/* Right side: amount + buttons */
+.review-right,
+.recent-right{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:8px;
+  flex-shrink:0;
+}
+
+.review-amount,
+.recent-amount{
+  font-weight:800;
+  font-size:.95rem;
+}
+
+.review-amount.expense,
+.recent-amount.expense{
+  color:var(--color-expense);
+}
+
+.review-amount.income,
+.recent-amount.income{
+  color:var(--color-income);
+}
+
+/* Buttons inline on the right
+   (works for .review-actions or .recent-actions) */
+.review-actions,
+.recent-actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+/* Style ALL buttons inside review list
+   so Edit/Delete never look like plain HTML */
+.review-list button{
+  padding:6px 14px;
+  font-size:.85rem;
+  border-radius:8px;
+  border:1px solid var(--color-border);
+  background:var(--color-surface-2);
+  color:var(--color-text-primary);
+  cursor:pointer;
+  transition:all .18s ease;
+  white-space:nowrap;
+}
+
+.review-list button:hover{
+  background:#0f2630;
+  border-color:#1d4ed8;
+  box-shadow:0 8px 18px rgba(15,23,42,0.9);
+}
+
+/* Delete button – danger style (by class) */
+.review-list button.review-delete,
+.review-list button.delete{
+  border-color:rgba(248,113,113,0.7);
+  color:#fecaca;
+}
+.review-list button.review-delete:hover,
+.review-list button.delete:hover{
+  background:rgba(248,113,113,0.16);
+  box-shadow:0 8px 18px rgba(127,29,29,0.9);
+}
+
+
+
+/* =========================================
+   12. CHART CANVAS
+========================================= */
+#spending-chart{
+  width:100%;
+  height:320px;
+  max-height:320px;
+}
+
+/* =========================================
+   13. RESPONSIVE BREAKPOINTS
+========================================= */
+@media (max-width:1200px){
+  .activity-body{
+    grid-template-columns:1fr;
+  }
+  .chart-container{
+    order:-1;
+    margin-bottom:24px;
+  }
+}
+
+@media (max-width:992px){
+  .kpi-range-switcher{
+    order:3;
+    width:100%;
+    justify-content:center;
+    margin-left:0;
+  }
+  .head-right{
+    display:flex;
+    gap:12px;
+    margin-left:auto;
+  }
+  .head-left{
+    order:1;
+    width:100%;
+    text-align:center;
+  }
+}
+
+@media (max-width:768px){
+  .activity-section{
+    padding:16px;
+  }
+  .timeline-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:12px;
+  }
+}
+
+/* =========================================
+   14. SMALL SHARED ANIMATIONS
+========================================= */
+@keyframes actTitleMove{
+  0%{background-position:0% 50%}
+  100%{background-position:300% 50%}
+}
+
+/* FORCE: Make all Activity modal X buttons bright & glowing like Goals */
+.activity-section .modal-header .icon-btn {
+  background: rgba(15,23,42,0.96) !important;
+  border: 1px solid rgba(148,163,184,0.65) !important;
+  color: var(--color-text-primary) !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 999px !important;
+  box-shadow: 0 10px 22px rgba(15,23,42,0.95) !important;
+}
+
+/* Hover glow — identical to Goals */
+.activity-section .modal-header .icon-btn:hover {
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(96,165,250,0.25),
+      rgba(15,23,42,1)) !important;
+  border-color: rgba(96,165,250,0.95) !important;
+  color: #fff !important;
+  box-shadow:
+    0 14px 34px rgba(15,23,42,1),
+    0 0 0 1px rgba(96,165,250,0.95) !important;
+}
+
+/* -------------------------------------------
+   Activity – Advanced Filters "Account" chips
+------------------------------------------- */
+.activity-section .chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.activity-section .chip-btn {
+  position: relative;
+  padding: 0.35rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(9, 15, 40, 0.75);
+  color: #c7d2ff;
+  font-size: 0.8rem;
+  line-height: 1;
+  cursor: pointer;
+  white-space: nowrap;
+
+  box-shadow: 0 0 0 0 rgba(63, 131, 248, 0);
+  transition:
+    background 0.16s ease,
+    color 0.16s ease,
+    border-color 0.16s ease,
+    box-shadow 0.16s ease,
+    transform 0.12s ease;
+}
+
+.activity-section .chip-btn:hover {
+  border-color: rgba(99, 102, 241, 0.8);
+  background: radial-gradient(circle at top left,
+    rgba(99, 102, 241, 0.25),
+    rgba(15, 23, 42, 0.9)
+  );
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.55);
+  transform: translateY(-1px);
+}
+
+/* Active (selected) state – bright pill with glow */
+.activity-section .chip-btn.active {
+  border-color: transparent;
+  color: #ffffff;
+  background: linear-gradient(
+    135deg,
+    var(--color-primary, #6f4df6),
+    var(--color-primary-b, #3ac6ff)
+  );
+  box-shadow:
+    0 0 0 1px rgba(15, 23, 42, 0.9),
+    0 0 16px rgba(79, 70, 229, 0.85);
+  transform: translateY(-1px);
+}
+
+/* Keyboard focus ring */
+.activity-section .chip-btn:focus-visible {
+  outline: 2px solid rgba(56, 189, 248, 0.85);
+  outline-offset: 2px;
+}
+
+/* Slightly dim “All” when not active so the selected chip stands out */
+.activity-section .chip-btn[data-account="all"]:not(.active) {
+  opacity: 0.85;
+}

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- 
+       1) META
+ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Budget-Wise-AI</title>
+
+  <!-- 
+       2) FAVICON
+-->
+  <link rel="icon" type="image/png" href="/assets/icons/favicon.png" />
+
+  <!-- 
+       3) STYLES
+       - Keep only one global.css include
+       - Font Awesome now served locally to remove Edge warnings
+-->
+  <link rel="stylesheet" href="/loginpage/css/global.css" />
+  <link rel="stylesheet" href="/assets/vendor/fontawesome/css/all.min.css" />
+
+  <!-- 
+       4) VENDOR SCRIPTS (LOCAL)
+       - Served from localhost to remove Tracking Prevention warnings
+       - Defer to avoid blocking initial render
+  -->
+  <script defer src="/assets/vendor/chartjs/chart.umd.min.js"></script>
+  <script defer src="/assets/vendor/lottie/lottie.min.js"></script>
+
+  <!--
+       5) PAGE SCRIPT
+       - Login page behavior (your existing file)
+  -->
+  <script defer src="/loginpage/js/login.js"></script>
+</head>
+
+<body class="login-screen">
+  <!-- 
+       6) LOGIN UI
+  -->
+<div id="login-page">
+    <div class="hero-header">
+      <h1 id="bwTitle" class="bw-title" aria-label="Budget Wise AI">
+        <span class="bw-word">Budget</span>
+        <span class="bw-word">Wise</span>
+        <span class="bw-word">AI</span>
+      </h1>
+    </div>
+
+    <div class="login-visual">
+      <div id="welcomeAnim" class="login-lottie" aria-hidden="true"></div>
+    </div>
+
+    <div class="login-box inside-anim">
+      <h2>Account Login</h2>
+
+      <form id="loginForm">
+        <input type="text" id="identifier" placeholder="Username" required />
+        
+        <div class="password-wrapper">
+          <input type="password" id="password" placeholder="Password" required />
+          <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+        </div>
+
+        <div class="links">
+          <a href="/loginpage/html/signup.html">Sign Up</a>
+        </div>
+
+        <button type="submit" class="login-btn">Log In</button>
+      </form>
+
+      <div id="loginError" class="error-message"></div>
+    </div>
+  </div>
+
+  <!-- 
+       7) APP UI (HIDDEN UNTIL AUTH)
+-->
+  <div id="main-container" style="display:none; height:100vh;">
+    <aside class="sidebar sidebar--light">
+      <div id="maleAnim" class="sidebar-man" aria-hidden="true"></div>
+
+      <ul class="nav-links">
+        <li><a class="nav-animated" href="#" data-section="dashboard"><i class="fas fa-gauge"></i> Dashboard</a></li>
+        <li><a class="nav-animated" href="#" data-section="assistant"><i class="fas fa-robot"></i> Assistant (AI)</a></li>
+        <li><a class="nav-animated" href="#" data-section="activity"><i class="fas fa-list"></i> Activity</a></li>
+        <li><a class="nav-animated" href="#" data-section="budgets"><i class="fas fa-wallet"></i> Budgets</a></li>
+        <li><a class="nav-animated" href="#" data-section="outlook"><i class="fas fa-chart-line"></i> Spending Outlook (AI)</a></li>
+        <li><a class="nav-animated" href="#" data-section="goals"><i class="fas fa-bullseye"></i> Goals</a></li>
+        <li><a class="nav-animated" href="#" data-section="rewards"><i class="fas fa-trophy"></i> Rewards</a></li>
+      </ul>
+
+      <div class="nav-spacer" style="flex:1"></div>
+
+      <ul class="nav-links">
+        <li><a class="nav-animated" href="#" data-section="settings"><i class="fas fa-gear"></i> Settings</a></li>
+        <li><a href="#" id="logoutLink" class="logout-link"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+      </ul>
+    </aside>
+
+    <main id="main-content" class="dashboard-content">
+      <div id="section-shell"></div>
+
+      <div class="section-loading-overlay" aria-hidden="true">
+        <div class="section-loading-pill">Loading…</div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    /* 
+       8) GLOBAL STATE
+    */
+    let __loadId = 0
+    let __currentSection = null
+    let __activeAbort = null
+
+    const __sectionHtmlCache = new Map()
+    const __sectionCssOk = new Map()
+    const __htmlInflight = new Map()
+    const __cssInflight = new Map()
+    const __mounted = new Map()
+    const __modulePreloaded = new Set()
+
+    const __sections = ["dashboard","assistant","activity","budgets","outlook","goals","rewards","settings"]
+
+    window.__sectionApi = window.__sectionApi || {}
+    window.appDateRange = window.appDateRange || "month"
+
+    /* 
+       9) SECTION ROUTING HELPERS
+     */
+    function __validSection(s) {
+      return __sections.includes(s) ? s : "dashboard"
+    }
+
+    function __currentSectionFromHash() {
+      const h = (location.hash || "").trim()
+      const m = h.match(/^#\/([a-z0-9_-]+)$/i)
+      return __validSection(m ? m[1].toLowerCase() : "dashboard")
+    }
+
+    function setDateRange(range) {
+      window.appDateRange = range
+      window.dispatchEvent(new CustomEvent("daterange:change", { detail: { range } }))
+      window.dispatchEvent(new CustomEvent("app:refreshAll", { detail: { reason: "daterange", active: __currentSection } }))
+    }
+
+    /* 
+       10) LOGIN TITLE ANIMATION
+    */
+    function enhanceTitle() {
+      const title = document.getElementById("bwTitle")
+      if (!title) return
+
+      title.querySelectorAll(".bw-word").forEach(wordEl => {
+        const text = wordEl.textContent || ""
+        wordEl.textContent = ""
+        ;[...text].forEach(ch => {
+          const span = document.createElement("span")
+          span.className = "bw-char"
+          span.textContent = ch
+          if (/[gqyp]/i.test(ch) && Math.random() > 0.6) span.classList.add("spin")
+          wordEl.appendChild(span)
+        })
+      })
+    }
+
+    /* 
+       11) LOTTIE BOOT
+  */
+    function bootLoginVisuals() {
+      const welcomeAnimEl = document.getElementById("welcomeAnim")
+      if (welcomeAnimEl && window.lottie) {
+        window.lottie.loadAnimation({
+          container: welcomeAnimEl,
+          renderer: "svg",
+          loop: true,
+          autoplay: true,
+          path: "/assets/animations/Welcome.json"
+        })
+      }
+      enhanceTitle()
+    }
+
+    function bootSidebarVisuals() {
+      const maleAnimEl = document.getElementById("maleAnim")
+      if (maleAnimEl && window.lottie) {
+        window.lottie.loadAnimation({
+          container: maleAnimEl,
+          renderer: "svg",
+          loop: true,
+          autoplay: true,
+          path: "/assets/animations/Male.json"
+        })
+      }
+    }
+
+    /* 
+       12) UI TOGGLES
+    */
+    function showAppUI() {
+      const loginPage = document.getElementById("login-page")
+      const mainContainer = document.getElementById("main-container")
+      if (loginPage) loginPage.style.display = "none"
+      if (mainContainer) mainContainer.style.display = "flex"
+      document.body.classList.remove("login-screen")
+    }
+
+    function showLoginUI() {
+      const loginPage = document.getElementById("login-page")
+      const mainContainer = document.getElementById("main-container")
+      if (mainContainer) mainContainer.style.display = "none"
+      if (loginPage) loginPage.style.display = "block"
+      document.body.classList.add("login-screen")
+    }
+
+    /* 
+       13) AUTH
+       - Clean and quiet: no console errors on 401
+   */
+    async function apiMe() {
+      try {
+        const res = await fetch("/api/auth/me", {
+          credentials: "include",
+          cache: "no-store",
+          headers: { "Accept": "application/json" }
+        })
+
+        if (res.status === 401) return null
+        if (!res.ok) return null
+
+        try {
+          return await res.json()
+        } catch {
+          return {}
+        }
+      } catch {
+        return null
+      }
+    }
+
+    function wireLogout() {
+      const link = document.getElementById("logoutLink")
+      if (!link) return
+
+      link.addEventListener("click", async e => {
+        e.preventDefault()
+        try {
+          await fetch("/api/auth/logout", { method: "POST", credentials: "include" })
+        } catch {}
+
+        location.hash = ""
+        showLoginUI()
+        window.location.reload()
+      })
+    }
+
+/* 
+   Password Toggle Logic
+   - Forces a consistent initial state
+   - Toggles both input type and icon cleanly
+ */
+function wirePasswordToggle() {
+  const togglePassword = document.getElementById("togglePassword")
+  const passwordInput = document.getElementById("password")
+  if (!togglePassword || !passwordInput) return
+
+  const setState = (show) => {
+    passwordInput.setAttribute("type", show ? "text" : "password")
+    togglePassword.classList.toggle("fa-eye", !show)
+    togglePassword.classList.toggle("fa-eye-slash", show)
+    togglePassword.setAttribute("aria-label", show ? "Hide password" : "Show password")
+    togglePassword.setAttribute("role", "button")
+    togglePassword.setAttribute("tabindex", "0")
+  }
+
+  setState(false)
+
+  togglePassword.addEventListener("click", () => {
+    const show = passwordInput.getAttribute("type") === "password"
+    setState(show)
+    passwordInput.focus()
+  })
+
+  togglePassword.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return
+    e.preventDefault()
+    const show = passwordInput.getAttribute("type") === "password"
+    setState(show)
+    passwordInput.focus()
+  })
+
+  passwordInput.addEventListener("blur", () => setState(false))
+} 
+
+    /* 
+       14) SECTION HOST MANAGEMENT
+     */
+    function __ensureSectionHost(section) {
+      const shell = document.getElementById("section-shell")
+      if (!shell) return null
+
+      let host = shell.querySelector(`.section-host[data-section="${section}"]`)
+      if (host) return host
+
+      host = document.createElement("div")
+      host.className = "section-host"
+      host.dataset.section = section
+      host.style.display = "none"
+      shell.appendChild(host)
+      return host
+    }
+
+    /* 
+       15) PREFETCH: HTML + CSS
+    */
+    async function __prefetchHtml(section) {
+      section = __validSection(section)
+      if (__sectionHtmlCache.has(section)) return
+      if (__htmlInflight.has(section)) return __htmlInflight.get(section)
+
+      const p = (async () => {
+        try {
+          const res = await fetch(`/sections/${section}/${section}.html?v=${Date.now()}`)
+          if (!res.ok) return
+          const html = await res.text()
+          __sectionHtmlCache.set(section, html)
+        } catch {}
+        finally {
+          __htmlInflight.delete(section)
+        }
+      })()
+
+      __htmlInflight.set(section, p)
+      return p
+    }
+
+    async function __prefetchCss(section) {
+      section = __validSection(section)
+      if (__sectionCssOk.has(section)) return
+      if (__cssInflight.has(section)) return __cssInflight.get(section)
+
+      const p = (async () => {
+        try {
+          const res = await fetch(`/sections/${section}/${section}.css?v=${Date.now()}`, { cache: "force-cache" })
+          if (res.ok) __sectionCssOk.set(section, true)
+        } catch {}
+        finally {
+          __cssInflight.delete(section)
+        }
+      })()
+
+      __cssInflight.set(section, p)
+      return p
+    }
+
+    /* 
+       16) MODULE PRELOAD
+     */
+    function __modulePreload(section) {
+      section = __validSection(section)
+      if (__modulePreloaded.has(section)) return
+      __modulePreloaded.add(section)
+
+      const link = document.createElement("link")
+      link.rel = "modulepreload"
+      link.href = `/sections/${section}/${section}.js?v=${Date.now()}`
+      document.head.appendChild(link)
+    }
+
+    function warmStartAllSections() {
+      for (const s of __sections) {
+        __prefetchHtml(s)
+        __prefetchCss(s)
+
+        if ("requestIdleCallback" in window) {
+          requestIdleCallback(() => __modulePreload(s), { timeout: 1500 })
+        } else {
+          setTimeout(() => __modulePreload(s), 200)
+        }
+      }
+    }
+
+    /* 
+       17) SECTION CSS HOT-SWAP
+     */
+    async function __ensureSectionCssLoaded(section, bust) {
+      const href = `/sections/${section}/${section}.css?${bust}`
+
+      const cur = document.getElementById("section-css-current")
+      const curBase = cur ? (cur.getAttribute("href") || "").split("?")[0] : ""
+      const nextBase = href.split("?")[0]
+
+      if (cur && curBase === nextBase) return
+
+      const oldNext = document.getElementById("section-css-next")
+      if (oldNext) oldNext.remove()
+
+      const link = document.createElement("link")
+      link.id = "section-css-next"
+      link.rel = "stylesheet"
+      link.href = href
+      document.head.appendChild(link)
+
+      await new Promise(resolve => {
+        link.addEventListener("load", resolve, { once: true })
+        link.addEventListener("error", resolve, { once: true })
+      })
+
+      if (cur) cur.remove()
+      link.id = "section-css-current"
+
+      const strayNext = document.getElementById("section-css-next")
+      if (strayNext) strayNext.remove()
+    }
+
+    /* 
+       18) SECTION JS LOAD (MODULE)
+     */
+    async function __ensureSectionJsLoaded(section) {
+      if (__mounted.get(section)) return
+
+      const script = document.createElement("script")
+      script.type = "module"
+      script.src = `/sections/${section}/${section}.js?v=${Date.now()}`
+      document.body.appendChild(script)
+
+      await new Promise(resolve => {
+        script.addEventListener("load", resolve, { once: true })
+        script.addEventListener("error", resolve, { once: true })
+      })
+
+      __mounted.set(section, true)
+    }
+
+    /* 
+       19) MAIN SECTION LOADER
+     */
+    async function loadSection(section) {
+      const main = document.getElementById("main-content")
+      const shell = document.getElementById("section-shell")
+      if (!main || !shell) return
+
+      section = __validSection(section)
+      const myLoadId = ++__loadId
+      const bust = Date.now()
+
+      if (__activeAbort) { try { __activeAbort.abort() } catch {} }
+      __activeAbort = new AbortController()
+
+      main.classList.add("is-loading")
+
+      try {
+        const nextHost = __ensureSectionHost(section)
+        if (!nextHost) return
+
+        nextHost.style.display = "none"
+
+        let html = __sectionHtmlCache.get(section) || ""
+        if (!html || !nextHost.innerHTML) {
+          const res = await fetch(`/sections/${section}/${section}.html?v=${bust}`, { signal: __activeAbort.signal })
+          if (!res.ok) throw new Error(`Cannot load "${section}"`)
+          html = await res.text()
+          if (myLoadId !== __loadId) return
+          __sectionHtmlCache.set(section, html)
+          nextHost.innerHTML = html
+        } else if (!nextHost.innerHTML) {
+          nextHost.innerHTML = html
+        }
+
+        if (myLoadId !== __loadId) return
+
+        await __ensureSectionCssLoaded(section, bust)
+        if (myLoadId !== __loadId) return
+
+        await __ensureSectionJsLoaded(section)
+        if (myLoadId !== __loadId) return
+
+        shell.querySelectorAll(".section-host").forEach(h => { h.style.display = "none" })
+        nextHost.style.display = "block"
+
+        __currentSection = section
+
+        document.querySelectorAll(".sidebar [data-section]").forEach(a => {
+          a.classList.toggle("active", a.getAttribute("data-section") === section)
+        })
+
+        history.replaceState(null, "", `#/${section}`)
+
+        const detail = { section }
+        window.dispatchEvent(new CustomEvent("section:mounted", { detail }))
+        requestAnimationFrame(() => window.dispatchEvent(new CustomEvent("section:render", { detail })))
+        setTimeout(() => window.dispatchEvent(new CustomEvent("section:render", { detail })), 80)
+        window.dispatchEvent(new CustomEvent("section:show", { detail }))
+      } catch (err) {
+        if (myLoadId !== __loadId) return
+
+        const host = __ensureSectionHost(section)
+        if (host) {
+          host.innerHTML = `<p style="color:#ff6b6b; text-align:center; padding:24px;">${String(err && err.message ? err.message : err)}</p>`
+          shell.querySelectorAll(".section-host").forEach(h => { h.style.display = "none" })
+          host.style.display = "block"
+        }
+      } finally {
+        if (myLoadId === __loadId) main.classList.remove("is-loading")
+      }
+    }
+
+    /* 
+       20) SIDEBAR NAV WIRING
+    */
+    function wireSidebarNav() {
+      document.querySelectorAll(".sidebar [data-section]").forEach(a => {
+        a.addEventListener("mouseenter", () => {
+          const s = __validSection(a.getAttribute("data-section"))
+          __prefetchHtml(s)
+          __prefetchCss(s)
+          __modulePreload(s)
+        })
+
+        a.addEventListener("click", e => {
+          e.preventDefault()
+          const s = __validSection(a.getAttribute("data-section"))
+          if (location.hash !== `#/${s}`) location.hash = `#/${s}`
+          loadSection(s)
+        })
+      })
+
+      window.addEventListener("hashchange", () => loadSection(__currentSectionFromHash()))
+    }
+
+    /* 
+       21) APP STARTUP
+   */
+    async function initAppAfterLogin() {
+      showAppUI()
+      bootSidebarVisuals()
+      wireSidebarNav()
+      wireLogout()
+
+      warmStartAllSections()
+
+      const first = __currentSectionFromHash()
+      await loadSection(first)
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      bootLoginVisuals()
+      wireLogout()
+      wirePasswordToggle()
+
+      const me = await apiMe()
+      if (me) {
+        await initAppAfterLogin()
+      } else {
+        showLoginUI()
+      }
+    })
+
+    window.__initAppAfterLogin = initAppAfterLogin
+  </script>
+</body>
+</html>

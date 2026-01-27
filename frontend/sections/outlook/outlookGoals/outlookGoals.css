@@ -1,0 +1,705 @@
+/* =========================================
+   OUTLOOK GOALS
+   Theme: Match Activity card brightness and sizing
+   Notes:
+   - Colors remain identical to Activity tokens
+   - Panels now match Activity card surface brightness
+   - Removes extra dark overlay from chart surfaces
+   - Makes main panels feel the same size and spacing
+   - Removes the red "not allowed" hover icon on disabled month arrows
+========================================= */
+
+
+/* =========================================
+   1) GOALS ROOT (Theme tokens + page surface)
+========================================= */
+#outlk-goals-root{
+  --bg:#1a2a40;
+  --panel:#1c2f47;
+  --panel-2:#1a2d44;
+  --border:#223553;
+  --text:#e6eef7;
+  --muted:#a2b6cc;
+
+  --color-primary:#3b82f6;
+  --color-accent:#8b5cf6;
+  --color-success:#22c55e;
+  --color-danger:#ef4444;
+  --color-warning:#f59e0b;
+  --color-info:#0ea5e9;
+
+  --goalsLineChartH:495px;
+
+  width:100%;
+  min-height:100vh;
+  background:var(--bg) !important;
+  background-image:none !important;
+  color:var(--text);
+  box-sizing:border-box;
+}
+
+
+/* =========================================
+   2) VIEW SWITCHING + ANIMATIONS
+========================================= */
+.outlk-goals{ width:100%; }
+.outlk-goals-view{ display:none; animation:fadeIn 0.3s ease; }
+.outlk-goals-view.active{ display:block; }
+
+@keyframes fadeIn{
+  from{ opacity:0; transform:translateY(5px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+
+/* =========================================
+   3) HEADER
+========================================= */
+.outlk-goals-head{ margin-bottom:24px; padding:0 4px; }
+.outlk-goals-title{ font-size:1.5rem; font-weight:800; color:#fff; margin-bottom:4px; }
+.outlk-goals-subtitle{ font-size:0.9rem; color:var(--muted); }
+
+
+/* =========================================
+   4) SECTIONS GRID (Goal cards)
+========================================= */
+.outlk-goals-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+  gap:20px;
+}
+
+.outlk-goalcard{
+  position:relative;
+  border-radius:20px;
+  overflow:hidden;
+  cursor:pointer;
+  background:linear-gradient(135deg, var(--panel), var(--panel-2));
+  border:1px solid var(--border);
+  padding:24px;
+  transition:transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  min-height:220px;
+  display:flex;
+  flex-direction:column;
+}
+
+.outlk-goalcard:hover{
+  transform:translateY(-5px);
+  box-shadow:0 15px 40px rgba(0,0,0,0.4);
+  border-color:var(--color-primary);
+  z-index:10;
+}
+
+.outlk-goalcard:hover::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at top right, rgba(59,130,246,0.10), transparent 60%);
+  pointer-events:none;
+}
+
+.outlk-goalcard-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:16px;
+}
+
+.outlk-goalcard-ico{
+  width:48px;
+  height:48px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  font-size:1.5rem;
+  background:rgba(255,255,255,0.05);
+  color:#fff;
+  border:1px solid rgba(255,255,255,0.10);
+}
+
+.outlk-goalcard-badge{
+  background:var(--color-primary);
+  color:#fff;
+  padding:4px 10px;
+  border-radius:99px;
+  font-size:0.8rem;
+  font-weight:700;
+  box-shadow:0 2px 10px rgba(59,130,246,0.4);
+}
+
+.outlk-goalcard-name{
+  font-size:1.2rem;
+  font-weight:700;
+  color:#fff;
+  margin-bottom:4px;
+}
+
+.outlk-goalcard-subline{
+  font-size:0.85rem;
+  color:var(--muted);
+  margin-bottom:20px;
+}
+
+.outlk-goalitems{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:auto;
+}
+
+.outlk-goalitem{ display:grid; gap:4px; }
+
+.outlk-goalitem-row{
+  display:flex;
+  justify-content:space-between;
+  font-size:0.8rem;
+  font-weight:600;
+  color:#e2e8f0;
+}
+
+.outlk-goalitem-meta{
+  font-size:0.75rem;
+  color:var(--muted);
+}
+
+.outlk-goalbar{
+  height:6px;
+  background:rgba(255,255,255,0.10);
+  border-radius:99px;
+  overflow:hidden;
+}
+
+.outlk-goalbar > div{
+  height:100%;
+  border-radius:99px;
+  background:var(--color-success);
+  box-shadow:0 0 10px var(--color-success);
+  transition:width 0.5s ease;
+}
+
+
+/* =========================================
+   5) ANALYSIS VIEW TOPBAR
+========================================= */
+.outlk-goals-topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.outlk-goals-meta{
+  color:#fff;
+  font-weight:700;
+  font-size:1.1rem;
+}
+
+
+/* =========================================
+   6) ANALYSIS GRID LAYOUT
+   Fix: consistent sizing feel across panels
+========================================= */
+.outlk-goals-ana-grid{
+  display:grid;
+  grid-template-columns:1.8fr 1fr;
+  gap:24px;
+} 
+
+@media (max-width:1100px){
+  .outlk-goals-ana-grid{ grid-template-columns:1fr; }
+}
+
+
+/* =========================================
+   7) PANELS (Match Activity card brightness + padding)
+========================================= */
+.outlk-panel{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+/* Match Activity head spacing */
+.outlk-panel-head{
+  padding:20px 24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,0.02);
+}
+
+.outlk-panel-title{
+  font-weight:700;
+  font-size:1.1rem;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.outlk-panel-title i{ color:var(--color-primary); }
+
+/* Match Activity body spacing */
+.outlk-panel-body{ padding:24px; flex:1; }
+
+/* Consistent perceived height between left and right panels */
+.outlk-goals-left,
+.outlk-goals-right{
+  min-height:520px;
+}
+
+
+/* =========================================
+   8) MONTH + YEAR CONTROLS
+========================================= */
+.outlk-goals-controls{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.outlk-monthnav{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:var(--panel-2);
+  padding:4px;
+  border-radius:8px;
+  border:1px solid var(--border);
+}
+
+.outlk-nav{
+  background:transparent;
+  border:none;
+  color:var(--muted);
+  width:28px;
+  height:28px;
+  cursor:pointer;
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.outlk-nav:hover{
+  background:rgba(255,255,255,0.10);
+  color:#fff;
+}
+
+/* FIX: remove the red "not allowed" hover indicator */
+.outlk-nav:disabled{
+  opacity:0.45;
+  cursor:default;
+}
+
+.outlk-monthlabel{
+  font-weight:700;
+  min-width:50px;
+  text-align:center;
+  user-select:none;
+}
+
+.outlk-pill{
+  background:rgba(15,23,42,0.55);
+  border:1px solid rgba(148,163,184,0.28);
+  color:#fff;
+  padding:6px 14px;
+  border-radius:20px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:0.9rem;
+}
+
+.outlk-pill:hover{ border-color:var(--color-primary); }
+
+
+/* =========================================
+   9) CHART WRAPPERS
+   Fix: remove extra dark overlay so Goals matches Activity brightness
+========================================= */
+
+/* Shared chart surface */
+.outlk-chart-wrap{
+  width:100%;
+  position:relative;
+  border-radius:12px;
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.02);
+  overflow:hidden;
+}
+
+/* BAR CHART WRAP */
+.outlk-chart-wrap:not(.outlk-chart-rings){
+  height:var(--goalsLineChartH);
+}
+
+.outlk-chart-fixed{
+  height:100%;
+}
+
+/* Only force size for the BAR chart canvas */
+#outlk-goals-bar{
+  width:100% !important;
+  height:100% !important;
+  display:block;
+}
+
+/* RINGS WRAP */
+.outlk-chart-rings{
+  height:260px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+}
+
+/* Keep rings canvas size */
+#outlk-goals-rings{
+  width:220px;
+  height:220px;
+  display:block;
+}
+
+/* Center overlay locked to the same 220x220 box */
+.outlk-chart-wrap.outlk-chart-rings .outlk-goals-donutcenter{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:220px;
+  height:220px;
+  transform:translate(-50%, -50%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+  z-index:5;
+}
+
+.outlk-big-num{
+  font-size:2.5rem;
+  font-weight:800;
+  color:#fff;
+  line-height:1;
+  text-shadow:0 0 15px rgba(255,255,255,0.2);
+}
+
+
+/* =========================================
+   10) AI TERMINAL (Inside panel)
+   Fix: panel surface matches others, terminal remains terminal-dark
+========================================= */
+.ai-terminal-window{
+  background:#09090b;
+  border:1px solid #27272a;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+
+.terminal-header{
+  background:#18181b;
+  padding:8px 12px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  border-bottom:1px solid #27272a;
+}
+
+.dot{ width:10px; height:10px; border-radius:50%; }
+.dot.red{ background:#ef4444; }
+.dot.yellow{ background:#f59e0b; }
+.dot.green{ background:#22c55e; }
+
+.terminal-title{
+  margin-left:10px;
+  font-size:0.8rem;
+  color:#71717a;
+  font-family:monospace;
+}
+
+.terminal-content{
+  padding:20px;
+  min-height:120px;
+  color:#e4e4e7;
+  font-size:0.9rem;
+  line-height:1.6;
+}
+
+.typewriter-text{
+  font-family:"Fira Code", monospace;
+  color:#a78bfa;
+  margin:0;
+  white-space:pre-wrap;
+}
+
+.cursor-blink{
+  animation:blink 1s infinite;
+  color:#a78bfa;
+}
+
+@keyframes blink{
+  0%, 100%{ opacity:1; }
+  50%{ opacity:0; }
+}
+
+
+/* =========================================
+   11) LEGEND + SUMMARIES
+========================================= */
+.outlk-goals-legend{
+  margin-top:16px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+#outlk-goals-root{
+  --goalDetailsMinH: 590px; /* change this number to push it lower */
+}
+
+#outlk-goals-root .outlk-goals-right .outlk-panel-body{
+  display:flex;
+  flex-direction:column;
+  min-height:var(--goalDetailsMinH);
+}
+
+#outlk-goals-root #outlk-goals-ahead{
+  margin-top:auto; /* this is the key */
+  width:100%;
+}
+
+.outlk-legrow{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(255,255,255,0.03);
+  padding:10px 12px;
+  border-radius:8px;
+  border:1px solid var(--border);
+}
+
+.outlk-legleft{ display:flex; align-items:center; gap:10px; }
+.outlk-legdot{ width:10px; height:10px; border-radius:50%; }
+.outlk-legtext{ display:flex; flex-direction:column; }
+.outlk-legtitle{ font-weight:700; color:#fff; font-size:0.85rem; }
+.outlk-legsub{ font-size:0.75rem; color:var(--muted); }
+.outlk-legright{ font-weight:700; color:#fff; }
+
+.outlk-summary-wrapper{ margin-top:280000px; }
+
+.outlk-summary{
+  padding:16px;
+  border-radius:12px;
+  border:1px solid transparent;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  margin-bottom:30; /* ⬅ makes it go lower */
+ 
+  
+}
+
+
+
+.outlk-summary.good{
+  background:rgba(34,197,94,0.10);
+  border-color:rgba(34,197,94,0.30);
+}
+
+.outlk-summary.bad{
+  background:rgba(239,68,68,0.10);
+  border-color:rgba(239,68,68,0.30);
+}
+
+.outlk-summary-head{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:800;
+  font-size:1rem;
+  color:#fff;
+  text-transform:uppercase;
+}
+
+.outlk-summary-sub{
+  font-size:0.85rem;
+  color:rgba(255,255,255,0.80);
+}
+
+
+/* =========================================
+   12) MODALS (Select Goal, Select Year)
+========================================= */
+.outlk-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.80);
+  backdrop-filter:blur(5px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:200;
+  border:none;
+  padding:0;
+}
+
+.outlk-modal[open],
+.outlk-modal[aria-hidden="false"],
+.outlk-modal.open{
+  display:flex;
+}
+
+.outlk-modal-wide{
+  background:var(--panel) !important;
+  border:1px solid var(--border) !important;
+  border-radius:18px;
+  width:450px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.60);
+}
+
+.outlk-modal-wide-head{
+  padding:16px 24px;
+  border-bottom:1px solid var(--border) !important;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.outlk-modal-wide-body{
+  padding:30px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
+}
+
+.outlk-modal-wide-actions{
+  padding:16px 24px;
+  border-top:1px solid var(--border) !important;
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+}
+
+
+/* =========================================
+   13) YEAR PICKER UI
+========================================= */
+.outlk-yearbig{
+  font-size:3rem;
+  font-weight:800;
+  color:#fff;
+  text-align:center;
+  margin:0 20px;
+}
+
+.outlk-yearnav{
+  background:var(--panel-2);
+  border:1px solid var(--border);
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  color:#fff;
+  cursor:pointer;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.outlk-yearnav:hover{
+  border-color:var(--color-primary);
+  background:rgba(255,255,255,0.10);
+}
+
+
+/* =========================================
+   14) GOAL PICKER ROWS
+========================================= */
+.outlk-goalpick{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);
+  cursor:pointer;
+  margin-bottom:8px;
+  transition:all 0.2s;
+}
+
+.outlk-goalpick:hover{
+  background:rgba(255,255,255,0.08);
+  border-color:#fff;
+  transform:translateX(4px);
+}
+
+.outlk-goalpick-left{ display:flex; align-items:center; gap:12px; }
+
+.outlk-goalpick-ico{
+  width:40px;
+  height:40px;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  font-weight:700;
+  color:#fff;
+}
+
+.outlk-goalpick-title{ font-weight:700; color:#fff; }
+.outlk-goalpick-sub{ font-size:0.8rem; color:var(--muted); }
+.outlk-goalpick-right{ font-weight:700; color:#fff; font-size:1.1rem; }
+
+
+/* =========================================
+   15) BUTTONS
+========================================= */
+.icon-btn-close{
+  background:rgba(255,255,255,0.10);
+  color:#e5e7eb;
+  border:none;
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.icon-btn-close:hover{
+  background:rgba(255,255,255,0.20);
+  color:#fff;
+}
+
+.outlk-btn{
+  padding:8px 16px;
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
+  border:1px solid transparent;
+  transition:filter 0.15s ease, transform 0.15s ease;
+}
+
+.outlk-btn.primary{
+  background:linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  color:#fff;
+}
+
+.outlk-btn.ghost{
+  background:transparent;
+  border-color:var(--border);
+  color:#fff;
+}
+
+.outlk-btn:hover{
+  filter:brightness(1.08);
+  transform:translateY(-1px);
+}

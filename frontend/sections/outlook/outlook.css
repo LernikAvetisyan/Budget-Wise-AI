@@ -1,0 +1,366 @@
+/* =========================================
+   OUTLOOK CSS
+   Solid background everywhere to eliminate
+   any left vs right brightness differences
+   ========================================= */
+
+/* ---------- Theme Tokens ---------- */
+:root{
+--bg:#1a2a40;
+--panel:#1c2f47;
+--panel-2:#1a2d44;
+--panel-3:#182a40;
+
+  --muted:#90a6bc;
+  --text:#e6eef7;
+  --border:#1e2a3a;
+  --ring:#25374f;
+
+  /* Fixed invalid rgba alpha values */
+  --shadow-sm:0 4px 12px rgba(0,0,0,0.25);
+  --shadow-md:0 8px 26px rgba(0,0,0,0.35);
+
+  --blue:#3b82f6;
+  --green:#22c55e;
+  --purple:#8b5cf6;
+}
+
+/* =========================================
+   LAYOUT FRAME REMOVAL
+   Removes any outer dashboard frame, borders,
+   and pseudo element overlays that can cause
+   background seams or dark edges
+   ========================================= */
+.dashboard-content{
+  padding:0 !important;
+  background: var(--bg) !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.dashboard-content::before,
+.dashboard-content::after{
+  content:none !important;
+  display:none !important;
+}
+
+.dashboard-main,
+.main-content,
+.page-content{
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* ---------- Base Reset ---------- */
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+
+/* =========================================
+   SOLID BACKGROUND ENFORCEMENT
+   Guarantees one flat background color for
+   HUB and all 3 cards so no gradient seams
+   appear anywhere on the page
+   ========================================= */
+html, body{
+  background: var(--bg) !important;
+}
+
+/* Main Outlook shell wrapper */
+.outlk-shell{
+  width:100%;
+  min-height:100vh;
+  padding:0;
+  margin:0;
+  box-sizing:border-box;
+  overflow-y:auto;
+
+  background: var(--bg) !important;
+  background-image: none !important;
+}
+
+/* Inner wrap where hub or section content is injected */
+.outlk-wrap{
+  width:100%;
+  min-height:100vh;
+  padding:24px 32px;
+  box-sizing:border-box;
+  overflow-y:auto;
+
+  background: var(--bg) !important;
+  background-image: none !important;
+  background-attachment: initial !important;
+  background-size: auto !important;
+
+  max-width:none;
+  margin:0;
+}
+
+/* Force section roots to the same solid background */
+#outlk-activity-root,
+#outlk-budgets-root,
+#outlk-goals-root{
+  background: var(--bg) !important;
+  background-image: none !important;
+}
+
+/* =========================================
+   TOP BAR
+   Header area with back button and titles
+   ========================================= */
+.outlk-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom: 18px;
+}
+
+.outlk-top-left{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+}
+
+/* Back button */
+.outlk-back{
+  width:40px;
+  height:40px;
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,0.45);
+  background: rgba(15,23,42,0.95);
+  color: var(--text);
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.12s ease;
+}
+
+/* Hide back button on hub */
+.outlk-on-hub .outlk-back{
+  display:none;
+}
+
+.outlk-back:hover{
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(96,165,250,0.22),
+      rgba(15,23,42,0.98));
+  border-color: rgba(96,165,250,0.95);
+  box-shadow:
+    0 10px 24px rgba(15,23,42,1),
+    0 0 0 1px rgba(96,165,250,0.9);
+  transform: translateY(-1px);
+}
+
+/* Page title */
+.outlk-title{
+  font-size: 2rem;
+  font-weight: 700;
+  margin:0;
+  display:inline-block;
+  background: linear-gradient(90deg,#0b1220,#06b6d4,#6f42c1,#0b1220);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: outlkTitleMove 6s linear infinite;
+  letter-spacing: .2px;
+  line-height: 1.15;
+}
+
+/* Title shine animation */
+@keyframes outlkTitleMove{
+  0%{ background-position: 0% 50%; }
+  100%{ background-position: 300% 50%; }
+}
+
+/* Subtitle */
+.outlk-sub{
+  margin-top: 4px;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* Main content holder */
+.outlk-main{ min-height: 520px; }
+
+/* =========================================
+   HUB GRID
+   3-card launcher layout for Activity, Budgets,
+   and Goals
+   ========================================= */
+.outlk-hub-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+
+/* Hub card */
+.outlk-hubcard{
+  border-radius:18px;
+  padding: 18px 18px 16px;
+  cursor:pointer;
+  text-align:left;
+  color: var(--text);
+  border:1px solid rgba(148,163,184,0.35);
+  box-shadow: 0 14px 32px rgba(15,23,42,0.9);
+
+  /* NOTE: card background can keep gradient safely
+     because it is inside the solid page background */
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(56,189,248,0.18),
+      rgba(15,23,42,0.96) 55%),
+    radial-gradient(circle at 90% 100%,
+      rgba(139,92,246,0.18),
+      rgba(15,23,42,0.99) 70%);
+
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+}
+
+.outlk-hubcard:hover{
+  transform: translateY(-2px);
+  border-color: rgba(96,165,250,0.9);
+  box-shadow: 0 22px 52px rgba(15,23,42,1);
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(59,130,246,0.26),
+      rgba(15,23,42,0.99) 60%),
+    radial-gradient(circle at 90% 100%,
+      rgba(139,92,246,0.22),
+      rgba(15,23,42,1) 70%);
+}
+
+/* Card header row */
+.outlk-hubcard-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+/* Icon box */
+.outlk-hubcard-icon{
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display:grid;
+  place-items:center;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(148,163,184,0.18);
+  box-shadow: 0 10px 22px rgba(15,23,42,0.85);
+}
+
+.outlk-hubcard-icon svg{
+  width: 22px;
+  height: 22px;
+  fill: #ffffff;
+  opacity: 0.92;
+}
+
+/* Right meta column */
+.outlk-hubcard-meta{
+  margin-left:auto;
+  text-align:right;
+  min-width: 150px;
+}
+
+/* Tag and mini text */
+.outlk-hubcard-tag{
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: .2px;
+}
+
+.outlk-hubcard-mini{
+  margin-top: 2px;
+  font-size: 12px;
+  color: rgba(230,238,247,0.78);
+  font-weight: 650;
+}
+
+/* Main title and description */
+.outlk-hubcard-title{
+  font-weight: 900;
+  font-size: 22px;
+  margin-top: 2px;
+}
+
+.outlk-hubcard-desc{
+  margin-top: 8px;
+  color: var(--muted);
+  font-weight: 650;
+  font-size: 13px;
+  line-height: 1.45;
+  min-height: 40px;
+}
+
+/* Link row */
+.outlk-hubcard-link{
+  margin-top: 14px;
+  font-weight: 900;
+  font-size: 13px;
+  display:inline-flex;
+  align-items:center;
+  gap: 6px;
+}
+
+.outlk-hubcard-chevron{
+  font-size: 16px;
+  line-height: 1;
+  transform: translateY(1px);
+}
+
+/* Color variants */
+.outlk-hubcard-blue .outlk-hubcard-tag,
+.outlk-hubcard-blue .outlk-hubcard-link{
+  color: #60a5fa;
+}
+.outlk-hubcard-blue .outlk-hubcard-icon{
+  background: rgba(59,130,246,0.18);
+  border-color: rgba(59,130,246,0.28);
+}
+
+.outlk-hubcard-green .outlk-hubcard-tag,
+.outlk-hubcard-green .outlk-hubcard-link{
+  color: #22c55e;
+}
+.outlk-hubcard-green .outlk-hubcard-icon{
+  background: rgba(34,197,94,0.18);
+  border-color: rgba(34,197,94,0.28);
+}
+
+.outlk-hubcard-purple .outlk-hubcard-tag,
+.outlk-hubcard-purple .outlk-hubcard-link{
+  color: #a78bfa;
+}
+.outlk-hubcard-purple .outlk-hubcard-icon{
+  background: rgba(139,92,246,0.18);
+  border-color: rgba(139,92,246,0.28);
+}
+
+/* Injected section content container */
+.outlk-content{
+  margin-top: 14px;
+}
+
+/* Utility */
+.outlk-hidden{ display:none !important; }
+
+/* =========================================
+   RESPONSIVE
+   Converts hub grid to a single column on
+   smaller screens
+   ========================================= */
+@media (max-width: 980px){
+  .outlk-shell{ padding: 20px 18px; }
+  .outlk-hub-grid{ grid-template-columns: 1fr; }
+  .outlk-hubcard-meta{ min-width: 0; }
+}

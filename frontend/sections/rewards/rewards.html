@@ -1,0 +1,262 @@
+<section class="rewards-section" id="rewards-root">
+  <header class="rw-hero">
+    <div class="rw-hero-content">
+      <div class="rw-hero-icon-box">
+        <i class="fas fa-trophy"></i>
+      </div>
+      <div class="rw-hero-text">
+        <h1 class="rw-hero-title">Rewards Center</h1>
+        <p class="rw-hero-sub">Complete daily tasks, earn XP, and master your financial habits.</p>
+      </div>
+    </div>
+
+    <div class="rw-hero-stats">
+      <div class="rw-badge-pill">
+        <i class="fas fa-bolt"></i>
+        <span id="rw-total-xp">0</span> XP
+      </div>
+      <div class="rw-badge-pill secondary">
+        <i class="fas fa-fire"></i>
+        <span id="rw-stat-streak">0</span> Day Streak
+      </div>
+    </div>
+  </header>
+
+  <div class="rw-dashboard-grid">
+    <article class="rw-card rw-level-card">
+      <div class="rw-card-header">
+        <h3><i class="fas fa-crown"></i> Current Status</h3>
+      </div>
+
+      <div class="rw-level-body">
+        <div class="circular-progress-container">
+          <svg class="progress-ring" width="160" height="160">
+            <circle class="progress-ring__circle-bg" stroke="currentColor" stroke-width="12" fill="transparent" r="70" cx="80" cy="80"></circle>
+            <circle class="progress-ring__circle" id="xp-ring-circle" stroke="currentColor" stroke-width="12" fill="transparent" r="70" cx="80" cy="80"></circle>
+          </svg>
+          <div class="level-indicator-center">
+            <span class="lvl-label">LEVEL</span>
+            <span class="lvl-num" id="rw-level-current">1</span>
+          </div>
+        </div>
+
+        <div class="level-details">
+          <div class="level-row">
+            <span class="text-muted">Current XP</span>
+            <span class="text-bold" id="rw-level-current-xp">0</span>
+          </div>
+          <div class="level-row">
+            <span class="text-muted">Next Level</span>
+            <span class="text-bold"><span id="rw-level-xp-cap">1000</span> XP</span>
+          </div>
+          <div class="xp-bar-container">
+            <div class="xp-bar-fill" id="xp-bar-fill"></div>
+          </div>
+          <p class="xp-remain-text"><span id="rw-stat-xp-to-next">1000</span> XP needed to level up</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="rw-card rw-chart-card">
+      <div class="rw-card-header">
+        <h3><i class="fas fa-chart-bar"></i> XP History (Last 7 Days)</h3>
+      </div>
+      <div class="chart-container-inner">
+        <canvas id="xp-history-chart"></canvas>
+      </div>
+    </article>
+  </div>
+
+  <section class="rw-tasks-section">
+    <div class="rw-section-head">
+      <div>
+        <h2 class="section-title">Daily Tasks</h2>
+        <p class="section-sub"><span id="rw-tasks-completed-small">0</span>/8 completed today</p>
+      </div>
+      <div class="rw-earn-badge">
+        <i class="fas fa-star"></i> Earn Bonus XP
+      </div>
+    </div>
+
+    <div class="rw-tasks-grid">
+      <div class="rw-task-card" data-task-id="ask-ai" data-xp="100">
+        <div class="task-icon green"><i class="fas fa-robot"></i></div>
+        <div class="task-info">
+          <div class="task-head">
+            <h4>Ask the AI Assistant</h4>
+            <span class="xp-tag">+100 XP</span>
+          </div>
+          <div class="task-meta-row">
+            <span class="rw-tag">Daily</span>
+            <p>Ask a question in the Assistant (AI) section.</p>
+          </div>
+        </div>
+        <div class="task-status"><i class="fas fa-check"></i></div>
+      </div>
+
+      <div class="rw-task-card" data-task-id="what-if" data-xp="100">
+        <div class="task-icon cyan"><i class="fas fa-calculator"></i></div>
+        <div class="task-info">
+          <div class="task-head">
+            <h4>Use the What-If Calculator</h4>
+            <span class="xp-tag">+100 XP</span>
+          </div>
+          <div class="task-meta-row">
+            <span class="rw-tag">Daily</span>
+            <p>Run a What-If scenario in the Goals section.</p>
+          </div>
+        </div>
+        <div class="task-status"><i class="fas fa-check"></i></div>
+      </div>
+
+      <div class="rw-task-card" data-task-id="outlook-all" data-xp="100">
+        <div class="task-icon purple"><i class="fas fa-chart-pie"></i></div>
+        <div class="task-info">
+          <div class="task-head">
+            <h4>Check Spending Outlook</h4>
+            <span class="xp-tag">+100 XP</span>
+          </div>
+          <div class="task-meta-row">
+            <span class="rw-tag">Daily</span>
+            <p>Visit the Spending Outlook section to review your insights.</p>
+          </div>
+        </div>
+        <div class="task-status"><i class="fas fa-check"></i></div>
+      </div>
+
+      <div class="rw-task-card" data-task-id="visit-budgets" data-xp="100">
+        <div class="task-icon orange"><i class="fas fa-wallet"></i></div>
+        <div class="task-info">
+          <div class="task-head">
+            <h4>Visit Budgets</h4>
+            <span class="xp-tag">+100 XP</span>
+          </div>
+          <div class="task-meta-row">
+            <span class="rw-tag">Daily</span>
+            <p>Open the Budgets section and review your limits.</p>
+          </div>
+        </div>
+        <div class="task-status"><i class="fas fa-check"></i></div>
+      </div>
+
+      <div class="rw-task-card" data-task-id="goal-deposit-manual" data-xp="100">
+        <div class="task-icon pink"><i class="fas fa-piggy-bank"></i></div>
+        <div class="task-info">
+          <div class="task-head">
+            <h4>Manual Goal Deposit</h4>
+            <span class="xp-tag">+100 XP</span>
+          </div>
+          <div class="task-meta-row">
+            <span class="rw-tag">Daily</span>
+            <p>Make a manual deposit in the Goals section.</p>
+          </div>
+        </div>
+        <div class="task-status"><i class="fas fa-check"></i></div>
+      </div>
+
+      <div class="rw-task-card" data-task-id="visit-dashboard" data-xp="100">
+        <div class="task-icon blue"><i class="fas fa-columns"></i></div>
+        <div class="task-info">
+          <div class="task-head">
+            <h4>Visit Dashboard</h4>
+            <span class="xp-tag">+100 XP</span>
+          </div>
+          <div class="task-meta-row">
+            <span class="rw-tag">Daily</span>
+            <p>Open the Dashboard section to view your overview.</p>
+          </div>
+        </div>
+        <div class="task-status"><i class="fas fa-check"></i></div>
+      </div>
+
+      <div class="rw-task-card" data-task-id="open-account" data-xp="100">
+        <div class="task-icon red"><i class="fas fa-university"></i></div>
+        <div class="task-info">
+          <div class="task-head">
+            <h4>Open Accounts</h4>
+            <span class="xp-tag">+100 XP</span>
+          </div>
+          <div class="task-meta-row">
+            <span class="rw-tag">Daily</span>
+            <p>Be active today to keep your streak going.</p>
+          </div>
+        </div>
+        <div class="task-status"><i class="fas fa-check"></i></div>
+      </div>
+
+      <div class="rw-task-card bonus-card" data-task-id="complete-daily" data-xp="300">
+        <div class="task-icon gold"><i class="fas fa-gem"></i></div>
+        <div class="task-info">
+          <div class="task-head">
+            <h4>Daily Grand Bonus</h4>
+            <span class="xp-tag gold">+300 XP</span>
+          </div>
+          <div class="task-meta-row">
+            <span class="rw-tag gold">Daily</span>
+            <p>Complete all 7 daily tasks.</p>
+          </div>
+        </div>
+        <div class="task-status"><i class="fas fa-check"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rw-milestones-section">
+    <div class="rw-card rw-milestones-card">
+      <div class="rw-card-header">
+        <h3><i class="fas fa-map-signs"></i> Mastery Path</h3>
+      </div>
+      <div class="rw-milestones-track">
+        <div class="milestone-item" data-level="1">
+          <div class="ms-circle"><i class="fas fa-seedling"></i></div>
+          <span class="ms-label">Novice</span>
+        </div>
+
+        <div class="milestone-item" data-level="2">
+          <div class="ms-circle"><i class="fas fa-bolt"></i></div>
+          <span class="ms-label">Active</span>
+        </div>
+
+        <div class="milestone-item" data-level="3">
+          <div class="ms-circle"><i class="fas fa-shield-alt"></i></div>
+          <span class="ms-label">Secure</span>
+        </div>
+
+        <div class="milestone-item" data-level="4">
+          <div class="ms-circle"><i class="fas fa-medal"></i></div>
+          <span class="ms-label">Pro</span>
+        </div>
+
+        <div class="milestone-item" data-level="5">
+          <div class="ms-circle"><i class="fas fa-trophy"></i></div>
+          <span class="ms-label">Winner</span>
+        </div>
+
+        <div class="milestone-item" data-level="6">
+          <div class="ms-circle"><i class="fas fa-crown"></i></div>
+          <span class="ms-label">Elite</span>
+        </div>
+
+        <div class="milestone-item" data-level="7">
+          <div class="ms-circle"><i class="fas fa-gem"></i></div>
+          <span class="ms-label">Master</span>
+        </div>
+
+        <div class="milestone-item" data-level="8">
+          <div class="ms-circle"><i class="fas fa-diamond"></i></div>
+          <span class="ms-label">Grand</span>
+        </div>
+
+        <div class="milestone-item" data-level="9">
+          <div class="ms-circle"><i class="fas fa-rocket"></i></div>
+          <span class="ms-label">Legend</span>
+        </div>
+
+        <div class="milestone-item" data-level="10">
+          <div class="ms-circle"><i class="fas fa-dragon"></i></div>
+          <span class="ms-label">Mythic</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>

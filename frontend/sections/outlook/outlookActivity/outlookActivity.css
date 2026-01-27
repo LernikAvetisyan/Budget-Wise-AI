@@ -1,0 +1,599 @@
+/* =========================================
+   OUTLOOK ACTIVITY
+   Solid, brighter background to match Outlook
+   No gradients, no left-right difference
+   ========================================= */
+
+/* =========================================
+   SECTION THEME TOKENS
+   Scoped to Activity only
+   ========================================= */
+#outlk-activity-root{
+  --bg:#1a2a40;
+  --panel:#1c2f47;
+  --panel-2:#1a2d44;
+  --border:#223553;
+  --text:#e6eef7;
+  --muted:#a2b6cc;
+
+  --color-primary:#3b82f6;
+  --color-accent:#8b5cf6;
+  --color-success:#22c55e;
+  --color-danger:#ef4444;
+  --color-warning:#f59e0b;
+}
+
+/* =========================================
+   PAGE WRAPPER
+   Full section background, fixed solid color
+   ========================================= */
+.outlook-section{
+  width:100%;
+  min-height:100vh;
+  padding:24px 32px;
+  box-sizing:border-box;
+
+  background:var(--bg) !important;
+  background-image:none !important;
+
+  font-family:"Inter", sans-serif;
+  color:var(--text);
+}
+
+/* =========================================
+   HEADER
+   Spending Outlook title area and year button
+   ========================================= */
+.ol-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:32px;
+}
+
+.ol-header-content{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.ol-icon-box{
+  width:52px;
+  height:52px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.5rem;
+  color:#fff;
+  box-shadow:0 4px 15px rgba(59,130,246,0.4);
+}
+
+.shine-title{
+  margin:0;
+  font-size:1.8rem;
+  font-weight:700;
+  background:linear-gradient(90deg,#fff,#93c5fd);
+  background-clip:text;
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.ol-header-text p{
+  margin:4px 0 0;
+  color:var(--muted);
+}
+
+.ol-year-btn{
+  background:rgba(15,23,42,0.55);
+  border:1px solid rgba(148,163,184,0.28);
+  color:#fff;
+  padding:10px 20px;
+  border-radius:50px;
+  font-size:1rem;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.2s;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.ol-year-btn:hover{
+  border-color:var(--color-primary);
+  box-shadow:0 0 15px rgba(59,130,246,0.3);
+  transform:translateY(-1px);
+}
+
+/* =========================================
+   MAIN GRID
+   Left chart card, right categories card
+   ========================================= */
+.ol-grid{
+  display:grid;
+  grid-template-columns:1.2fr 0.8fr;
+  gap:24px;
+  margin-bottom:24px;
+}
+
+@media (max-width:992px){
+  .ol-grid{ grid-template-columns:1fr; }
+}
+
+/* =========================================
+   GENERIC CARD
+   Container style for all main cards
+   ========================================= */
+.ol-card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+.ol-card-head{
+  padding:20px 24px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(255,255,255,0.02);
+}
+
+.ol-card-head h3{
+  margin:0;
+  font-size:1.1rem;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.ol-card-head h3 i{
+  color:var(--color-primary);
+}
+
+.ol-card-body{
+  padding:24px;
+  flex:1;
+}
+
+.ol-tag{
+  font-size:0.75rem;
+  background:rgba(34,197,94,0.15);
+  color:#4ade80;
+  padding:4px 8px;
+  border-radius:6px;
+  font-weight:600;
+  border:1px solid rgba(34,197,94,0.2);
+}
+
+/* =========================================
+   CHART AREA
+   Canvas container sizing
+   ========================================= */
+.ol-chart-wrap{
+  position:relative;
+  height:320px;
+  width:100%;
+}
+
+/* =========================================
+   MONTH NAVIGATION
+   Prev and next month controls on Categories card
+   ========================================= */
+.ol-month-nav{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:var(--panel-2);
+  padding:4px;
+  border-radius:8px;
+  border:1px solid var(--border);
+}
+
+.nav-icon-btn{
+  background:transparent;
+  border:none;
+  color:var(--muted);
+  width:24px;
+  height:24px;
+  cursor:pointer;
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.nav-icon-btn:hover{
+  background:rgba(255,255,255,0.1);
+  color:#fff;
+}
+
+.ol-month-label{
+  font-size:0.9rem;
+  font-weight:700;
+  min-width:80px;
+  text-align:center;
+}
+
+/* =========================================
+   CATEGORY LIST
+   Scrollable rows of income and expense categories
+   ========================================= */
+.ol-cat-list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  max-height:240px;
+  overflow-y:auto;
+  padding-right:6px;
+  margin-bottom:20px;
+}
+
+.ol-cat-list::-webkit-scrollbar{ width:6px; }
+.ol-cat-list::-webkit-scrollbar-thumb{
+  background:var(--border);
+  border-radius:10px;
+}
+
+.outlk-catrow{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px;
+  border-radius:12px;
+  background:var(--panel-2);
+  border:1px solid var(--border);
+  transition:all 0.2s;
+}
+
+.outlk-catrow:hover{
+  transform:translateX(4px);
+  border-color:var(--color-primary);
+  background:linear-gradient(90deg,var(--panel-2),rgba(59,130,246,0.05));
+}
+
+.outlk-catleft{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.outlk-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  box-shadow:0 0 8px currentColor;
+}
+
+.outlk-dot.green{ color:var(--color-success); background:currentColor; }
+.outlk-dot.red{ color:var(--color-danger); background:currentColor; }
+
+.outlk-catname{
+  font-weight:600;
+  font-size:0.95rem;
+  color:#fff;
+}
+
+.outlk-catsub{
+  font-size:0.75rem;
+  color:var(--muted);
+}
+
+.outlk-catamt{
+  font-weight:700;
+  color:#fff;
+}
+
+.outlk-catamt.green{ color:var(--color-success); }
+.outlk-catamt.red{ color:var(--color-danger); }
+
+/* =========================================
+   SUMMARY PILLS
+   Income TX and Expense TX counters
+   ========================================= */
+.ol-summary-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.ol-stat-pill{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid transparent;
+}
+
+.ol-stat-pill.green{
+  background:rgba(34,197,94,0.1);
+  border-color:rgba(34,197,94,0.2);
+}
+
+.ol-stat-pill.red{
+  background:rgba(239,68,68,0.1);
+  border-color:rgba(239,68,68,0.2);
+}
+
+.pill-icon{
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.ol-stat-pill.green .pill-icon{
+  background:rgba(34,197,94,0.2);
+  color:#4ade80;
+}
+
+.ol-stat-pill.red .pill-icon{
+  background:rgba(239,68,68,0.2);
+  color:#f87171;
+}
+
+.pill-info{
+  display:flex;
+  flex-direction:column;
+}
+
+.pill-val{
+  font-weight:800;
+  font-size:1.1rem;
+  color:#fff;
+}
+
+.pill-lbl{
+  font-size:0.7rem;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  opacity:0.7;
+}
+
+/* =========================================
+   AI ANALYST CARD
+   Terminal style analysis output area
+   ========================================= */
+.ol-ai-card{
+  margin-top:0;
+  border-color:rgba(139,92,246,0.3);
+}
+
+.ol-ai-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:700;
+  color:#fff;
+}
+
+.ai-badge{
+  background:#8b5cf6;
+  color:#fff;
+  font-size:0.65rem;
+  padding:2px 6px;
+  border-radius:4px;
+}
+
+.ai-terminal-window{
+  background:#09090b;
+  border:1px solid #27272a;
+  border-radius:12px;
+  font-family:"Fira Code", monospace;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+
+.terminal-header{
+  background:#18181b;
+  padding:8px 12px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  border-bottom:1px solid #27272a;
+}
+
+.dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+}
+
+.dot.red{ background:#ef4444; }
+.dot.yellow{ background:#f59e0b; }
+.dot.green{ background:#22c55e; }
+
+.terminal-title{
+  margin-left:10px;
+  font-size:0.8rem;
+  color:#71717a;
+}
+
+.terminal-content{
+  padding:20px;
+  color:#e4e4e7;
+  font-size:0.9rem;
+  line-height:1.6;
+  min-height:120px;
+}
+
+.typewriter-text{
+  white-space:pre-wrap;
+  margin:0;
+  color:#a78bfa;
+  text-shadow:0 0 5px rgba(167,139,250,0.4);
+}
+
+.cursor-blink{
+  animation:blink 1s infinite;
+  color:#a78bfa;
+}
+
+@keyframes blink{
+  0%,100%{ opacity:1; }
+  50%{ opacity:0; }
+}
+
+/* =========================================
+   YEAR MODAL
+   Year selection popup and backdrop
+   ========================================= */
+.ol-modal{
+  border:none;
+  background:transparent;
+}
+
+.ol-modal::backdrop{
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(5px);
+}
+
+.ol-modal-form{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  width:400px;
+  padding:0;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  color:var(--text);
+}
+
+.ol-modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 24px;
+  border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,0.02);
+}
+
+.ol-modal-header h3{
+  margin:0;
+  color:#fff;
+}
+
+.icon-btn-close{
+  background:transparent;
+  border:none;
+  color:var(--muted);
+  cursor:pointer;
+  font-size:1.1rem;
+}
+
+.ol-modal-body{
+  padding:24px;
+  text-align:center;
+}
+
+.year-selector{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  margin-bottom:20px;
+}
+
+.year-display-large{
+  font-size:2.5rem;
+  font-weight:800;
+  color:#fff;
+  text-shadow:0 0 20px rgba(59,130,246,0.5);
+}
+
+.nav-arrow{
+  background:var(--panel-2);
+  border:1px solid var(--border);
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  color:#fff;
+  cursor:pointer;
+}
+
+.nav-arrow:hover{
+  border-color:var(--color-primary);
+  background:rgba(59,130,246,0.2);
+}
+
+/* If this grid is no longer used, it will stay hidden by JS */
+.year-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-top:10px;
+}
+
+.year-grid button{
+  border:1px solid var(--border);
+  background:var(--panel-2);
+  color:#fff;
+  border-radius:10px;
+  padding:10px 0;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.year-grid button:hover{ border-color:var(--color-primary); }
+
+.year-grid button.active{
+  border-color:var(--color-primary);
+  box-shadow:0 0 0 2px rgba(59,130,246,0.25) inset;
+}
+
+.ol-modal-footer{
+  padding:16px 24px;
+  border-top:1px solid var(--border);
+  display:flex;
+  justify-content:flex-end;
+  gap:12px;
+  background:rgba(0,0,0,0.2);
+}
+
+/* =========================================
+   BUTTONS
+   Primary and secondary actions
+   ========================================= */
+.btn{
+  padding:10px 20px;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
+  border:none;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.btn.primary{
+  background:linear-gradient(135deg,var(--color-primary),var(--color-accent));
+  color:#fff;
+}
+
+.btn.primary:hover{
+  box-shadow:0 0 15px rgba(59,130,246,0.5);
+  transform:translateY(-1px);
+}
+
+.btn.secondary{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text);
+}
+
+.btn.secondary:hover{
+  border-color:var(--color-primary);
+}
+
+/* =========================================
+   UTILITIES
+   ========================================= */
+.outlk-hidden{ display:none; }

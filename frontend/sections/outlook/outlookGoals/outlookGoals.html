@@ -1,0 +1,187 @@
+<div id="outlk-goals-root" class="outlk-goals">
+
+  <!-- ======================================================
+       1) SECTIONS VIEW (Goal sections grid)
+  ======================================================= -->
+  <section id="outlk-goals-sections-view" class="outlk-goals-view active">
+
+    <div class="outlk-goals-head">
+      <div class="outlk-goals-title">Your Goal Sections</div>
+      <div class="outlk-goals-subtitle">Select a section to view details and progress.</div>
+    </div>
+
+    <div id="outlk-goals-empty" class="outlk-goals-empty" style="display:none">
+      <div class="outlk-goals-empty-title">No goal sections found</div>
+      <div class="outlk-goals-empty-text">
+        Create a section in your Goals section first, then come back here to see your progress analysis.
+      </div>
+    </div>
+
+    <div id="outlk-goals-sections-grid" class="outlk-goals-grid"></div>
+  </section>
+
+  <!-- ======================================================
+       2) ANALYSIS VIEW (Charts + Details + AI)
+  ======================================================= -->
+  <section id="outlk-goals-analysis-view" class="outlk-goals-view">
+
+    <div class="outlk-goals-topbar">
+      <button id="outlk-goals-back" class="outlk-btn ghost" type="button">
+        <i class="fas fa-arrow-left"></i> Back
+      </button>
+      <div class="outlk-goals-meta" id="outlk-goals-details-meta"></div>
+    </div>
+
+    <!-- ======================================================
+         3) ANALYSIS GRID
+         FIX:
+         - YEAR (2026) stays on Monthly Deposit Performance (LEFT)
+         - MONTH (Jan) stays on Goal Details (RIGHT)
+    ======================================================= -->
+    <div class="outlk-goals-ana-grid">
+
+      <!-- ======================================================
+           3.1) LEFT PANEL: Monthly Deposit Performance (YEAR ONLY)
+      ======================================================= -->
+      <section class="outlk-panel outlk-goals-left">
+        <div class="outlk-panel-head">
+          <div class="outlk-panel-title">
+            <i class="fas fa-chart-bar"></i> Monthly Deposit Performance
+          </div>
+
+          <div class="outlk-goals-controls">
+            <button id="outlk-goals-year" type="button" class="outlk-pill">
+              <span id="outlk-goals-year-label">Year</span> <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="outlk-panel-body">
+          <div class="outlk-chart-wrap outlk-chart-fixed">
+            <canvas id="outlk-goals-bar"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================
+           3.2) RIGHT PANEL: Goal Details (MONTH ONLY)
+      ======================================================= -->
+      <section class="outlk-panel outlk-goals-right">
+        <div class="outlk-panel-head">
+          <div class="outlk-panel-title">
+            <i class="fas fa-bullseye"></i> Goal Details
+          </div>
+
+          <div class="outlk-goals-controls">
+            <div class="outlk-monthnav">
+              <button id="outlk-goals-prev" class="outlk-nav" type="button">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+
+              <div id="outlk-goals-month" class="outlk-monthlabel">Jan</div>
+
+              <button id="outlk-goals-next" class="outlk-nav" type="button">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="outlk-panel-body flex-col-spread">
+          <div class="outlk-chart-wrap outlk-chart-rings">
+            <canvas id="outlk-goals-rings" width="220" height="220"></canvas>
+            <div class="outlk-goals-donutcenter">
+              <div id="outlk-goals-txcount" class="outlk-big-num">0</div>
+            </div>
+          </div>
+
+          <div id="outlk-goals-legend" class="outlk-goals-legend"></div>
+
+          <div id="outlk-goals-ahead" class="outlk-summary-wrapper"></div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ======================================================
+         4) AI ANALYST PANEL
+    ======================================================= -->
+    <section class="outlk-panel outlk-ai-panel" style="margin-top: 24px;">
+      <div class="outlk-panel-head">
+        <div class="outlk-panel-title">
+          <i class="fas fa-robot"></i> AI Analyst <span class="ai-badge">BETA</span>
+        </div>
+        <button id="outlk-goals-ai-btn" class="outlk-btn primary glow-effect" type="button">
+          <i class="fas fa-magic"></i> Generate Analysis
+        </button>
+      </div>
+      <div class="outlk-panel-body">
+        <div class="ai-terminal-window">
+          <div class="terminal-header">
+            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            <span class="terminal-title">ai_analysis.exe</span>
+          </div>
+          <div class="terminal-content">
+            <pre id="outlk-goals-ai-out" class="typewriter-text"></pre>
+            <span class="cursor-blink">_</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </section>
+
+  <!-- ======================================================
+       5) GOAL PICKER MODAL
+  ======================================================= -->
+  <div id="outlk-goals-modal" class="outlk-modal" aria-hidden="true">
+    <div class="outlk-modal-backdrop" data-close="1"></div>
+
+    <div class="outlk-modal-wide">
+      <div class="outlk-modal-wide-head">
+        <div class="outlk-modal-wide-title">Select a Goal</div>
+        <button id="outlk-goals-modal-x" class="outlk-x icon-btn-close" type="button" data-close="1">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="outlk-modal-wide-body" style="display:block; padding:0;">
+        <div id="outlk-goals-modal-sub" class="outlk-modal-sub" style="padding:16px 24px 0;"></div>
+        <div id="outlk-goals-modal-list" class="outlk-goals-modallist" style="padding:16px 24px 24px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================
+       6) YEAR PICKER MODAL
+  ======================================================= -->
+  <div id="outlk-goals-yearmodal" class="outlk-modal" aria-hidden="true">
+    <div class="outlk-modal-backdrop" data-close="1"></div>
+
+    <div class="outlk-modal-wide">
+      <div class="outlk-modal-wide-head">
+        <div class="outlk-modal-wide-title">Select Year</div>
+        <button id="outlk-goals-yearmodal-x" class="outlk-x icon-btn-close" type="button" data-close="1">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="outlk-modal-wide-body">
+        <button id="outlk-goals-yearprev" class="outlk-yearnav" type="button">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <div id="outlk-goals-yeardisplay" class="outlk-yearbig">2025</div>
+
+        <button id="outlk-goals-yearnext" class="outlk-yearnav" type="button">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <div class="outlk-modal-wide-actions">
+        <button id="outlk-goals-yearapply" class="outlk-btn primary" type="button">Apply</button>
+      </div>
+    </div>
+  </div>
+
+</div>

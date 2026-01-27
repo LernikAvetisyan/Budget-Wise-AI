@@ -1,0 +1,318 @@
+<section id="settings-root" class="settings-section">
+
+  <header class="settings-header">
+    <div class="settings-header-left">
+      <button id="st-back" class="icon-btn" type="button" aria-label="Back">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <div class="settings-header-text">
+        <h2 class="shine-title">Settings and Preferences</h2>
+        <p>Manage your account security, notifications, and connections.</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="st-hero-card">
+    <div class="st-hero-bg"></div>
+    <div class="st-hero-content">
+      <div class="st-avatar-container">
+        <div class="st-avatar" id="st-profile-initials">U</div>
+        <div class="st-avatar-badge"><i class="fas fa-check"></i></div>
+      </div>
+      <div class="st-hero-info">
+        <h3 id="st-hero-name">Loading...</h3>
+        <p id="st-hero-username">@username</p>
+        <div class="st-hero-meta">
+          <span class="st-chip secondary">Active</span>
+        </div>
+      </div>
+      <div class="st-hero-actions">
+        <button id="st-edit-profile" class="btn primary" type="button">
+          <i class="fas fa-pen"></i> Edit Profile
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-grid">
+    
+    <div class="settings-col">
+      <div class="settings-card st-notifications">
+        <div class="st-card-head">
+          <div class="st-icon purple"><i class="fas fa-bell"></i></div>
+          <div class="st-card-head-text">
+            <h3>Notifications</h3>
+            <p>Control what alerts you receive</p>
+          </div>
+        </div>
+
+        <div class="st-card-body">
+          <div class="st-toggle-row">
+            <div class="st-toggle-text">
+              <h4>Budget Alerts</h4>
+              <p>Get notified near budget limits</p>
+            </div>
+            <label class="toggle-switch">
+              <input id="st-notif-budget" type="checkbox">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="st-toggle-row">
+            <div class="st-toggle-text">
+              <h4>Weekly Summary</h4>
+              <p>Receive weekly spending reports</p>
+            </div>
+            <label class="toggle-switch">
+              <input id="st-notif-weekly" type="checkbox">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="st-toggle-row">
+            <div class="st-toggle-text">
+              <h4>Goal Completed</h4>
+              <p>Celebrate finishing a goal</p>
+            </div>
+            <label class="toggle-switch">
+              <input id="st-notif-goal-finished" type="checkbox">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="st-toggle-row">
+            <div class="st-toggle-text">
+              <h4>Missed Deposit</h4>
+              <p>Alerts for missed savings</p>
+            </div>
+            <label class="toggle-switch">
+              <input id="st-notif-missed-deposit" type="checkbox">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="st-toggle-row">
+            <div class="st-toggle-text">
+              <h4>Over Budget</h4>
+              <p>Alert when exceeding limits</p>
+            </div>
+            <label class="toggle-switch">
+              <input id="st-notif-overbudget" type="checkbox">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="st-toggle-row">
+            <div class="st-toggle-text">
+              <h4>Successful Month</h4>
+              <p>End of month recap</p>
+            </div>
+            <label class="toggle-switch">
+              <input id="st-notif-success-month" type="checkbox">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-col">
+      
+      <div class="settings-card st-security">
+        <div class="st-card-head">
+          <div class="st-icon blue"><i class="fas fa-shield-alt"></i></div>
+          <div class="st-card-head-text">
+            <h3>Security</h3>
+            <p>Password & Username</p>
+          </div>
+        </div>
+        <div class="st-card-body st-security-body">
+          <button id="st-change-password" class="btn secondary full-width" type="button">
+            <i class="fas fa-key"></i> Change Password
+          </button>
+          <button id="st-change-username" class="btn secondary full-width" type="button">
+            <i class="fas fa-user-tag"></i> Change Username
+          </button>
+        </div>
+      </div>
+
+      <div class="settings-card st-accounts">
+        <div class="st-card-head">
+          <div class="st-icon green"><i class="fas fa-link"></i></div>
+          <div class="st-card-head-text">
+            <h3>Data Connections</h3>
+            <p>Linked financial sources</p>
+          </div>
+        </div>
+
+        <div class="st-card-body">
+          <div class="st-account-list">
+            <div class="st-account-card" id="st-acc-checking" data-type="checking">
+              <div class="st-acc-icon"><i class="fas fa-university"></i></div>
+              <div class="st-account-info">
+                <h4>Checking</h4>
+                <p class="st-acc-status">Not connected</p>
+              </div>
+              <button class="btn tertiary small st-acc-btn" data-action="connect" data-id="" disabled>
+                Connect
+              </button>
+            </div>
+
+            <div class="st-account-card" id="st-acc-credit" data-type="credit">
+              <div class="st-acc-icon"><i class="fas fa-credit-card"></i></div>
+              <div class="st-account-info">
+                <h4>Credit Card</h4>
+                <p class="st-acc-status">Not connected</p>
+              </div>
+              <button class="btn tertiary small st-acc-btn" data-action="connect" data-id="" disabled>
+                Connect
+              </button>
+            </div>
+          </div>
+
+          <div class="st-card-actions">
+            <button id="st-connect-freedom" class="btn primary add-account-btn" type="button">
+              <i class="fas fa-plus"></i> Connect Freedom Bank
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <dialog id="st-edit-profile-modal" class="st-modal">
+    <form method="dialog" class="st-modal-form">
+      <div class="st-modal-header">
+        <h3>Edit Personal Information</h3>
+        <button class="icon-btn st-close-modal" type="button"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="st-modal-body">
+        <div class="st-field">
+          <label>First Name</label>
+          <input id="st-edit-first" type="text" placeholder="Jane">
+        </div>
+        <div class="st-field">
+          <label>Last Name</label>
+          <input id="st-edit-last" type="text" placeholder="Doe">
+        </div>
+      </div>
+      <div class="st-modal-footer">
+        <button id="st-edit-profile-save" class="btn primary" type="button">Save Changes</button>
+        <button class="btn secondary st-close-modal" type="button">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+<dialog id="st-password-modal" class="st-modal">
+  <form method="dialog" class="st-modal-form">
+    <div class="st-modal-header">
+      <h3>Change Password</h3>
+      <button class="icon-btn st-close-modal" type="button"><i class="fas fa-times"></i></button>
+    </div>
+
+    <div class="st-modal-body">
+      <div class="st-field">
+        <label>Old Password</label>
+        <input id="st-old-pass" type="password">
+        <div id="st-old-pass-status" class="st-status-icon"></div>
+      </div>
+
+      <div class="st-field">
+        <label>New Password</label>
+        <input id="st-new-pass" type="password">
+        <div id="st-new-pass-status" class="st-status-icon"></div>
+      </div>
+
+      <div class="st-pass-req-list" style="display:none;">
+        <p id="req-length" class="req-item">8+ characters</p>
+        <p id="req-upper" class="req-item">Uppercase letter</p>
+        <p id="req-lower" class="req-item">Lowercase letter</p>
+        <p id="req-num" class="req-item">Number</p>
+        <p id="req-symbol" class="req-item">Symbol</p>
+      </div>
+
+      <div class="st-field">
+        <label>Confirm Password</label>
+        <input id="st-confirm-pass" type="password">
+        <div id="st-confirm-pass-status" class="st-status-icon"></div>
+      </div>
+    </div>
+
+    <div class="st-modal-footer">
+      <button id="st-password-save" class="btn primary" type="button">Update Password</button>
+      <button class="btn secondary st-close-modal" type="button">Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+  <dialog id="st-username-modal" class="st-modal">
+    <form method="dialog" class="st-modal-form">
+      <div class="st-modal-header">
+        <h3>Change Username</h3>
+        <button class="icon-btn st-close-modal" type="button"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="st-modal-body">
+        <div class="st-field">
+          <label>Current Username</label>
+          <input id="st-current-username" type="text" disabled>
+        </div>
+        <div class="st-field">
+          <label>New Username</label>
+          <input id="st-new-username" type="text" placeholder="New handle">
+          <div id="st-username-status" class="st-status-icon"></div>
+        </div>
+      </div>
+      <div class="st-modal-footer">
+        <button id="st-username-save" class="btn primary" type="button">Save Username</button>
+        <button class="btn secondary st-close-modal" type="button">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="st-connect-fb-modal" class="st-modal">
+    <form method="dialog" class="st-modal-form">
+      <div class="st-modal-header">
+        <h3>Connect Freedom Bank</h3>
+        <button class="icon-btn st-close-modal" type="button"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="st-modal-body">
+        <p class="st-modal-helper-text">Securely link your bank to sync transactions.</p>
+        <div class="st-field">
+          <label>Email</label>
+          <input id="st-connect-email" type="email">
+        </div>
+        <div class="st-field">
+          <label>Password</label>
+          <input id="st-connect-password" type="password">
+        </div>
+        <p id="st-connect-message" class="st-status-message"></p>
+      </div>
+      <div class="st-modal-footer">
+        <button id="st-connect-submit" class="btn primary" type="button">Connect</button>
+        <button class="btn secondary st-close-modal" type="button">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="st-disconnect-modal" class="st-modal">
+    <form method="dialog" class="st-modal-form">
+      <div class="st-modal-header">
+        <h3>Disconnect Freedom Bank Account</h3>
+        <button class="icon-btn st-close-modal" type="button"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="st-modal-body">
+        <p class="st-modal-helper-text">
+          Are you sure? New transactions will stop syncing.
+        </p>
+        <p id="st-disconnect-message" class="st-status-message"></p>
+      </div>
+      <div class="st-modal-footer">
+        <button id="st-disconnect-confirm" class="btn danger" type="button">Disconnect</button>
+        <button id="st-disconnect-cancel" class="btn secondary st-close-modal" type="button">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+</section>

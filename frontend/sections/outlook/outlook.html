@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Outlook</title>
+
+  <link rel="stylesheet" href="./outlook.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="outlk-shell outlk-on-hub">
+  <section class="outlk-wrap">
+    <header class="outlk-top">
+      <div class="outlk-top-left">
+        <button id="outlk-back" class="outlk-back" type="button" aria-label="Back">
+          <span class="outlk-back-ic">←</span>
+        </button>
+
+        <div class="outlk-top-txt">
+          <div id="outlk-title" class="outlk-title">Spending Outlook</div>
+          <div id="outlk-sub" class="outlk-sub">Analyze your financial patterns across different areas</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="outlk-main">
+      <div id="outlk-hub" class="outlk-hub">
+        <div class="outlk-hub-grid">
+          <button id="outlk-card-activity" class="outlk-hubcard outlk-hubcard-blue" type="button">
+            <div class="outlk-hubcard-top">
+              <div class="outlk-hubcard-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M4 17h2.6l4.05-5.4 3.2 3.2L19.6 7H22v2h-1.6l-6.55 8.2-3.35-3.35L7.2 19H4v-2z"></path>
+                </svg>
+              </div>
+
+              <div class="outlk-hubcard-meta">
+                <div class="outlk-hubcard-tag">Income &amp; Expenses</div>
+                <div class="outlk-hubcard-mini">12 months tracking</div>
+              </div>
+            </div>
+
+            <div class="outlk-hubcard-title">Activity</div>
+            <div class="outlk-hubcard-desc">
+              View income and expense trends throughout the year with detailed category breakdowns
+            </div>
+
+            <div class="outlk-hubcard-link">
+              View Analysis <span class="outlk-hubcard-chevron">›</span>
+            </div>
+          </button>
+
+          <button id="outlk-card-budgets" class="outlk-hubcard outlk-hubcard-green" type="button">
+            <div class="outlk-hubcard-top">
+              <div class="outlk-hubcard-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M20 8H4V6h16v2zm0 3H4v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7zm-3 3h-6v2h6v-2z"></path>
+                </svg>
+              </div>
+
+              <div class="outlk-hubcard-meta">
+                <div class="outlk-hubcard-tag">Categories &amp; Cards</div>
+                <div class="outlk-hubcard-mini">Track spending</div>
+              </div>
+            </div>
+
+            <div class="outlk-hubcard-title">Budgets</div>
+            <div class="outlk-hubcard-desc">
+              Track budget performance, category spending, and credit card debt analysis
+            </div>
+
+            <div class="outlk-hubcard-link">
+              View Analysis <span class="outlk-hubcard-chevron">›</span>
+            </div>
+          </button>
+
+          <button id="outlk-card-goals" class="outlk-hubcard outlk-hubcard-purple" type="button">
+            <div class="outlk-hubcard-top">
+              <div class="outlk-hubcard-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M12 2a10 10 0 1 0 10 10A10.01 10.01 0 0 0 12 2zm0 2a8 8 0 1 1-8 8 8.01 8.01 0 0 1 8-8zm0 3a5 5 0 1 0 5 5 5.01 5.01 0 0 0-5-5zm0 2a3 3 0 1 1-3 3 3.01 3.01 0 0 1 3-3z"></path>
+                </svg>
+              </div>
+
+              <div class="outlk-hubcard-meta">
+                <div class="outlk-hubcard-tag">Progress Tracking</div>
+                <div class="outlk-hubcard-mini">5 goal sections</div>
+              </div>
+            </div>
+
+            <div class="outlk-hubcard-title">Goals</div>
+            <div class="outlk-hubcard-desc">
+              Monitor progress towards your financial goals with deposit tracking and AI insights
+            </div>
+
+            <div class="outlk-hubcard-link">
+              View Analysis <span class="outlk-hubcard-chevron">›</span>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div id="outlk-content" class="outlk-content"></div>
+    </main>
+  </section>
+
+  <script src="./outlook.js"></script>
+</body>
+</html>

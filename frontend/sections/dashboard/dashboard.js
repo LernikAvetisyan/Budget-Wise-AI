@@ -361,20 +361,32 @@ function availableBalanceFromTransactions() {
   }
 
   function buildGoalsGridData() {
+    // 1) Goals dashboard grid
+    //    Shows up to 5 sections, each with up to 3 ACTIVE goals only (no completed goals)
+
     const MAX_SECTIONS = 5
     const MAX_GOALS = 3
 
     const sections = Array.isArray(state.goalSections) ? state.goalSections : []
     const map = state.goalsBySectionId
 
+    const isActiveGoal = (g) => {
+      if (!g) return false
+      const st = String(g.status || "active").toLowerCase()
+      if (st !== "active") return false
+      if (g.depositPaused) return false
+      return true
+    }
+
     const out = []
     for (let i = 0; i < MAX_SECTIONS; i++) {
       const sec = sections[i] || null
       const secName = sec ? safeText(sec.name || "Not added") : "Not added"
 
-      const goals = sec ? (map.get(sec.id) || []) : []
-      const items = []
+      const rawGoals = sec ? (map.get(sec.id) || []) : []
+      const goals = rawGoals.filter(isActiveGoal)
 
+      const items = []
       for (let j = 0; j < MAX_GOALS; j++) {
         const g = goals[j] || null
         if (!g) {
@@ -386,7 +398,9 @@ function availableBalanceFromTransactions() {
         items.push({
           name: safeText(g.name || "Not added"),
           amount: Number(g.minMonthlyDeposit) || 0,
-          time: dt ? `${dt.toLocaleDateString(undefined, { month: "short", day: "numeric" })} ${dt.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })}` : ""
+          time: dt
+            ? `${dt.toLocaleDateString(undefined, { month: "short", day: "numeric" })} ${dt.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })}`
+            : ""
         })
       }
 
@@ -395,6 +409,7 @@ function availableBalanceFromTransactions() {
 
     return out
   }
+
 
   function computeActivityChartSeries() {
     const rows = Array.isArray(state.activity) ? state.activity : []

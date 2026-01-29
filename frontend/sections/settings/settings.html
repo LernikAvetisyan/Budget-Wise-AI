@@ -212,33 +212,42 @@
       <button class="icon-btn st-close-modal" type="button"><i class="fas fa-times"></i></button>
     </div>
 
-    <div class="st-modal-body">
-      <div class="st-field">
-        <label>Old Password</label>
-        <input id="st-old-pass" type="password">
-        <div id="st-old-pass-status" class="st-status-icon"></div>
-      </div>
+<div class="st-modal-body">
+  <div class="st-field">
+    <label>Old Password</label>
+    <input id="st-old-pass" type="password" autocomplete="current-password">
+    <button id="st-old-pass-eye" class="st-eye-btn" type="button" aria-label="Show password">
+      <i class="fas fa-eye"></i>
+    </button>
+    <div id="st-old-pass-status" class="st-status-icon"></div>
+  </div>
 
-      <div class="st-field">
-        <label>New Password</label>
-        <input id="st-new-pass" type="password">
-        <div id="st-new-pass-status" class="st-status-icon"></div>
-      </div>
+  <div class="st-field">
+    <label>New Password</label>
+    <input id="st-new-pass" type="password" autocomplete="new-password">
+    <button id="st-new-pass-eye" class="st-eye-btn" type="button" aria-label="Show password">
+      <i class="fas fa-eye"></i>
+    </button>
+    <div id="st-new-pass-status" class="st-status-icon"></div>
+  </div>
 
-      <div class="st-pass-req-list" style="display:none;">
-        <p id="req-length" class="req-item">8+ characters</p>
-        <p id="req-upper" class="req-item">Uppercase letter</p>
-        <p id="req-lower" class="req-item">Lowercase letter</p>
-        <p id="req-num" class="req-item">Number</p>
-        <p id="req-symbol" class="req-item">Symbol</p>
-      </div>
+  <div class="st-pass-req-list" style="display:none;">
+    <p id="req-length" class="req-item">8+ characters</p>
+    <p id="req-upper" class="req-item">Uppercase letter</p>
+    <p id="req-lower" class="req-item">Lowercase letter</p>
+    <p id="req-num" class="req-item">Number</p>
+    <p id="req-symbol" class="req-item">Symbol</p>
+  </div>
 
-      <div class="st-field">
-        <label>Confirm Password</label>
-        <input id="st-confirm-pass" type="password">
-        <div id="st-confirm-pass-status" class="st-status-icon"></div>
-      </div>
-    </div>
+  <div class="st-field">
+    <label>Confirm Password</label>
+    <input id="st-confirm-pass" type="password" autocomplete="new-password">
+    <button id="st-confirm-pass-eye" class="st-eye-btn" type="button" aria-label="Show password">
+      <i class="fas fa-eye"></i>
+    </button>
+    <div id="st-confirm-pass-status" class="st-status-icon"></div>
+  </div>
+</div>
 
     <div class="st-modal-footer">
       <button id="st-password-save" class="btn primary" type="button">Update Password</button>

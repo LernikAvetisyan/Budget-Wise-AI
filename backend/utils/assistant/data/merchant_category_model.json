@@ -1482,6 +1482,17 @@
           }
         }
       }
+    },
+    "goal finished (refund): car": {
+      "total": 1,
+      "categories": {
+        "Goals": {
+          "count": 1,
+          "users": {
+            "assdd": 1
+          }
+        }
+      }
     }
   },
   "v": 1

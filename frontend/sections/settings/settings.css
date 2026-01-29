@@ -451,3 +451,54 @@ input:checked + .slider:before {
   .st-hero-card { padding: 22px; }
   .st-modal-form { width: 92vw; }
 }
+
+/* Hide browser built-in password reveal buttons (Edge/Chromium variants) */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-contacts-auto-fill-button {
+  visibility: hidden;
+  display: none;
+  pointer-events: none;
+}
+
+/* Eye button for password fields in Settings modals */
+.st-field { position: relative; }
+
+/* Make room for: [status icon] + [eye] */
+#st-old-pass,
+#st-new-pass,
+#st-confirm-pass {
+  padding-right: 84px;
+}
+
+/* Shift existing status icons left so they do not overlap the eye */
+#st-old-pass-status,
+#st-new-pass-status,
+#st-confirm-pass-status {
+  right: 44px;
+}
+ 
+/* Custom eye button */ 
+.st-eye-btn {
+  position: absolute;
+  right: 12px;
+  top: 29px; /* was 36px, moved up */
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0;
+}
+
+
+.st-eye-btn:hover { color: #fff; }
+.st-eye-btn:focus { outline: none; }
+.st-eye-btn i { font-size: 1rem; pointer-events: none; }

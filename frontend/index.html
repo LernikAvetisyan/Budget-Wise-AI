@@ -221,26 +221,30 @@
        13) AUTH
        - Clean and quiet: no console errors on 401
    */
-    async function apiMe() {
-      try {
-        const res = await fetch("/api/auth/me", {
-          credentials: "include",
-          cache: "no-store",
-          headers: { "Accept": "application/json" }
-        })
+async function apiMe() {
+  try {
+    const res = await fetch("/api/auth/me", {
+      credentials: "include",
+      cache: "no-store",
+      headers: { "Accept": "application/json" }
+    })
 
-        if (res.status === 401) return null
-        if (!res.ok) return null
+    if (!res.ok) return null
 
-        try {
-          return await res.json()
-        } catch {
-          return {}
-        }
-      } catch {
-        return null
-      }
-    }
+    const data = await res.json().catch(() => null)
+    if (!data) return null
+
+    if (data.authenticated === false) return null
+
+    // Allow both shapes just in case
+    if (data.user && data.user.username) return data.user
+    if (data.username) return data
+
+    return null
+  } catch {
+    return null
+  }
+}
 
     function wireLogout() {
       const link = document.getElementById("logoutLink")
@@ -277,24 +281,34 @@ function wirePasswordToggle() {
     togglePassword.setAttribute("tabindex", "0")
   }
 
-  setState(false)
-
-  togglePassword.addEventListener("click", () => {
+  const toggle = () => {
     const show = passwordInput.getAttribute("type") === "password"
     setState(show)
-    passwordInput.focus()
-  })
+    passwordInput.focus({ preventScroll: true })
+  }
+
+  setState(false)
+
+  // Prevent the icon click from blurring the password input
+  const preventBlur = (e) => {
+    e.preventDefault()
+  }
+  togglePassword.addEventListener("pointerdown", preventBlur)
+  togglePassword.addEventListener("mousedown", preventBlur)
+  togglePassword.addEventListener("touchstart", preventBlur, { passive: false })
+
+  togglePassword.addEventListener("click", toggle)
 
   togglePassword.addEventListener("keydown", (e) => {
     if (e.key !== "Enter" && e.key !== " ") return
     e.preventDefault()
-    const show = passwordInput.getAttribute("type") === "password"
-    setState(show)
-    passwordInput.focus()
+    toggle()
   })
 
+  // Still hide when user clicks away from the password field
   passwordInput.addEventListener("blur", () => setState(false))
-} 
+}
+
 
     /* 
        14) SECTION HOST MANAGEMENT

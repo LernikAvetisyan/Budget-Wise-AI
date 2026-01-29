@@ -505,6 +505,10 @@
       setStatus($("#st-new-pass-status"), "", "")
     }
 
+   const resetOldEye = wireEyeToggle("st-old-pass-eye", "st-old-pass")
+   const resetNewEye = wireEyeToggle("st-new-pass-eye", "st-new-pass")
+   const resetConfirmEye = wireEyeToggle("st-confirm-pass-eye", "st-confirm-pass")
+
     // Open change password modal.
     const changePassBtn = $("#st-change-password")
     if (changePassBtn) {
@@ -519,6 +523,10 @@
 
         ensureInlineStatusAfterInput(np, "st-new-pass-status")
         ensureInlineStatusAfterInput(cp, "st-confirm-pass-status")
+
+       resetOldEye()
+       resetNewEye()
+       resetConfirmEye()
 
         resetPasswordUI()
         openModal("#st-password-modal")
@@ -818,6 +826,50 @@
       })
       return res.ok
     }
+
+    // Password Eye Toggle (Settings)
+// Same behavior as Signup: click toggles show/hide, blur always hides
+function wireEyeToggle(btnId, inputId) {
+  const btn = document.getElementById(btnId)
+  const input = document.getElementById(inputId)
+  if (!btn || !input) return () => {}
+
+  const icon = btn.querySelector("i")
+
+  const setState = (show) => {
+    input.setAttribute("type", show ? "text" : "password")
+    if (icon) {
+      icon.classList.toggle("fa-eye", !show)
+      icon.classList.toggle("fa-eye-slash", show)
+    }
+    btn.setAttribute("aria-label", show ? "Hide password" : "Show password")
+  }
+
+  const toggle = () => {
+    const show = input.getAttribute("type") === "password"
+    setState(show)
+    input.focus({ preventScroll: true })
+  }
+
+  setState(false)
+
+  const preventBlur = (e) => { e.preventDefault() }
+  btn.addEventListener("pointerdown", preventBlur)
+  btn.addEventListener("mousedown", preventBlur)
+  btn.addEventListener("touchstart", preventBlur, { passive: false })
+
+  btn.addEventListener("click", toggle)
+  btn.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return
+    e.preventDefault()
+    toggle()
+  })
+
+  input.addEventListener("blur", () => setState(false))
+
+  return () => setState(false)
+}
+
 
     // Per-card connect or disconnect controls.
     document.querySelectorAll(".st-acc-btn").forEach(btn => {

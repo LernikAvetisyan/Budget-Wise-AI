@@ -29,5 +29,14 @@ logs/
 !**/.env.example
 
 
+
+# Merchant category model artifacts
+merchant_category_model.json
+merchant_category_model.lock
+**/merchant_category_model.json
+**/merchant_category_model.lock
+
+
 # Optional: keep reports private if they contain sensitive info
 # REPORT/
+

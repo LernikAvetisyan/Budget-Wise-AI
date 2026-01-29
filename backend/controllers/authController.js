@@ -146,19 +146,42 @@ exports.checkUsername = async (req, res) => {
 // ─────────────────────────────────────────────
 exports.getMe = async (req, res) => {
   try {
-    const user = await User.findByUsername(req.user.username);
-    if (!user) return res.status(404).json({ error: "User not found" });
+    let token = (req.cookies && (req.cookies.bt_token || req.cookies.token)) || ""
 
-    res.json({
+    if (!token) {
+      const authHeader = req.headers.authorization || ""
+      const [scheme, bearer] = authHeader.split(" ")
+      if (scheme === "Bearer" && bearer) token = bearer
+    }
+
+    if (!token) return res.status(200).json({ authenticated: false })
+
+    let payload = null
+    try {
+      payload = jwt.verify(token, JWT_SECRET)
+    } catch {
+      return res.status(200).json({ authenticated: false })
+    }
+
+    const username = payload && payload.username
+    if (!username) return res.status(200).json({ authenticated: false })
+
+    const user = await User.findByUsername(username)
+    if (!user) return res.status(200).json({ authenticated: false })
+
+    return res.status(200).json({
+      authenticated: true,
       username: user.username,
       firstName: user.firstName,
       lastName: user.lastName
-    });
+    })
   } catch (err) {
-    console.error("getMe error:", err);
-    res.status(500).json({ error: "Server error" });
+    console.error("getMe error:", err)
+    return res.status(200).json({ authenticated: false })
   }
 };
+
+
 
 // ─────────────────────────────────────────────
 // Update profile

@@ -185,3 +185,60 @@ body {
 .availability-message.invalid {
   color: #f97373;
 }
+
+/* Hide browser built-in password reveal icons (Edge/IE style) */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+/* Hide some Chromium autofill UI buttons that can appear inside inputs */
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-contacts-auto-fill-button {
+  visibility: hidden;
+  display: none;
+  pointer-events: none;
+}
+
+/* Signup password field layout (match Settings: status + eye on the right) */
+.password-wrapper {
+  position: relative;
+}
+
+/* Eye icon on the far right inside the input */
+.password-wrapper .toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  color: rgba(15, 23, 42, 0.55);
+}
+
+.password-wrapper .toggle-password:hover {
+  color: rgba(15, 23, 42, 0.85);
+}
+
+/* Give space so text doesn't go under [status + eye] */
+.password-wrapper input {
+  padding-right: 84px;
+}
+
+/* Make the form-group the positioning anchor for the status icon */
+.form-group {
+  position: relative;
+}
+
+/* Status icon sits just left of the eye (same idea as Settings) */
+#signup-pass-status,
+#signup-confirm-pass-status {
+  position: absolute;
+  right: 44px;              /* eye uses right: 12px, so this sits left of it */
+  top: 3.45rem;             /* aligns with input center under the label */
+  transform: translateY(-50%);
+  font-size: 16px;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}

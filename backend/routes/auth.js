@@ -11,7 +11,7 @@ router.post("/logout", auth.logout);
 router.get('/check-username', auth.checkUsername);
 
 // Protected (requires login)
-router.get('/me', auth.verifyToken, auth.getMe);
+router.get('/me', auth.getMe);
 router.put('/me/profile', auth.verifyToken, auth.updateProfile);
 router.put('/me/password', auth.verifyToken, auth.changePassword);
 router.put('/me/username', auth.verifyToken, auth.changeUsername);

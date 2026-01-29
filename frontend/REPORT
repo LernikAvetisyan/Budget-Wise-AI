@@ -1,5 +1,0 @@
- "C:\Program Files\MySQL\MySQL Server 8.4\bin\mysql.exe" -u root -p -e "CREATE DATABASE IF NOT EXISTS budgettracker DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
-
-"C:\Program Files\MySQL\MySQL Server 8.4\bin\mysql.exe" -u root -p budgettracker < "C:\Users\.....\budgettracker_schema.sql"
-
-

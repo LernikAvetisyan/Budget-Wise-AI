@@ -1803,31 +1803,126 @@ async function renderAnalytics(sectionId) {
   currentId = currentId == null ? null : String(currentId)
 
 function setDefaultFilterForGoal(goal) {
-  // Default to CURRENT half-year based on real "today"
-  // (not goal.startDate, which can be Dec 2025 and force Jul–Dec 2025)
-  const base = new Date()
+  // Goals Analytics default range:
+  // - Active goals: current half-year (Jan-Jun or Jul-Dec) based on today
+  // - Completed goals (when opened from Completed Goals): choose a half-year window based on real deposit activity.
+  //   We anchor on the last executed deposit date (fallback: finish/end date).
+  //   If that anchor lands in Jan-Jun, we prefer the previous Jul-Dec window ONLY if it actually contains deposits.
+  //   Otherwise, we use the Jan-Jun window of the anchor year.
+  //   If the anchor lands in Jul-Dec, we use Jul-Dec of the anchor year.
+
+  const fromCompleted = !!(__ana && __ana.fromCompleted)
+  const statusCompleted = String(goal?.status || "").trim().toLowerCase() === "completed"
+  const isCompletedContext = fromCompleted || statusCompleted
+
+  const executed = (() => {
+    try { return executedDeposits(goal, { includePlanned: false }) || [] } catch { return [] }
+  })()
+
+  const pickLastDate = () => {
+    let last = null
+
+    for (const ev of executed) {
+      const stamp =
+        ev?.date ||
+        ev?.executedAt || ev?.executed_at ||
+        ev?.createdAt  || ev?.created_at  ||
+        ev?.timestamp  || ev?.timeStamp   ||
+        null
+
+      let d = stamp instanceof Date ? stamp : pISO(stamp)
+      if (!(d instanceof Date) || !Number.isFinite(d.getTime())) continue
+
+      if (typeof ev?.time === "string" && /^([01]\d|2[0-3]):([0-5]\d)$/.test(ev.time)) {
+        const hh = Number(ev.time.slice(0, 2))
+        const mm = Number(ev.time.slice(3, 5))
+        d = new Date(d.getFullYear(), d.getMonth(), d.getDate(), hh, mm, 0, 0)
+      }
+
+      if (!last || d > last) last = d
+    }
+
+    if (!last) {
+      const f = pISO(goal?.finishDate || goal?.endDate || null)
+      if (f instanceof Date && Number.isFinite(f.getTime())) last = f
+    }
+
+    return last
+  }
+
+  const hasAnyInRange = (start, end) => {
+    if (!(start instanceof Date) || !(end instanceof Date)) return false
+    if (!Number.isFinite(start.getTime()) || !Number.isFinite(end.getTime())) return false
+
+    for (const ev of executed) {
+      const d = ev?.date instanceof Date ? ev.date : pISO(ev?.date)
+      if (!(d instanceof Date) || !Number.isFinite(d.getTime())) continue
+      if (d >= start && d < end) return true
+    }
+    return false
+  }
+
+  const now = new Date()
+  const base = (isCompletedContext ? pickLastDate() : null) || now
 
   const y = base.getFullYear()
   const m = base.getMonth()
+
   let start, end
 
+  if (!isCompletedContext) {
+    // Active goals: always current half-year based on today
+    const yy = now.getFullYear()
+    const mm = now.getMonth()
+    if (mm < 6) {
+      start = new Date(yy, 0, 1)
+      end   = new Date(yy, 6, 1)
+    } else {
+      start = new Date(yy, 6, 1)
+      end   = new Date(yy + 1, 0, 1)
+    }
+    __ana.dateFilter = { start, end }
+    return
+  }
+
+  // Completed context
   if (m < 6) {
-    start = new Date(y, 0, 1)
-    end   = new Date(y, 6, 1)
+    const prevStart = new Date(y - 1, 6, 1) // Jul 1 previous year
+    const prevEnd   = new Date(y, 0, 1)     // Jan 1 this year
+
+    const curStart  = new Date(y, 0, 1)     // Jan 1 this year
+    const curEnd    = new Date(y, 6, 1)     // Jul 1 this year
+
+    if (hasAnyInRange(prevStart, prevEnd)) {
+      start = prevStart
+      end   = prevEnd
+    } else {
+      start = curStart
+      end   = curEnd
+    }
   } else {
-    start = new Date(y, 6, 1)
-    end   = new Date(y + 1, 0, 1)
+    start = new Date(y, 6, 1)     // Jul 1 this year
+    end   = new Date(y + 1, 0, 1) // Jan 1 next year
   }
 
   __ana.dateFilter = { start, end }
 }
+
 
   if (goals.length) {
     const firstGoal = goals.find(g => String(g.id) === String(currentId)) || goals[0]
     currentId = String(firstGoal.id)
     __ana.currentGoalId = currentId
 
-   if (!__ana.userSetDateFilter) setDefaultFilterForGoal(firstGoal)
+const shouldAutoDefault =
+  !__ana.userSetDateFilter ||
+  String(__ana.userSetDateFilterGoalId || "") !== String(firstGoal.id) ||
+  !!__ana.userSetDateFilterFromCompleted !== !!(__ana && __ana.fromCompleted)
+
+if (shouldAutoDefault) {
+  __ana.userSetDateFilter = false
+  setDefaultFilterForGoal(firstGoal)
+}
   } else {
     __ana.dateFilter = null
     __ana.currentGoalId = null
@@ -1894,54 +1989,71 @@ function setDefaultFilterForGoal(goal) {
     $("#whatif-close-x", dlg)?.addEventListener("click", close)
   })()
 
-  const openWhatIf = async () => {
-    const dlg = $("#whatif-modal")
-    const mb  = $(".modal-body", dlg)
+ const openWhatIf = async () => {
+  const dlg = $("#whatif-modal")
+  const mb  = $(".modal-body", dlg)
 
-    if (mb) {
-      mb.style.display = "grid"
-      mb.style.gridTemplateColumns = "minmax(0,1.1fr) minmax(0,1fr)"
-      mb.style.gap = "28px"
-    }
-
-    dlg?.showModal()
-
-    try { await renderWhatIf() } catch (e) { console.error("renderWhatIf failed:", e) }
-
-    const left = document.getElementById("whatif-left")
-    if (left) {
-      const table = left.querySelector("table")
-      const rows  = table ? table.querySelectorAll("tbody tr") : left.querySelectorAll("tbody tr")
-
-      rows.forEach(row => {
-        const cells = row.querySelectorAll("td")
-        if (!cells.length) return
-
-        const catCell = cells[0]
-        const labelText = (catCell.textContent || "")
-          .replace(/\s+/g, " ")
-          .toLowerCase()
-          .trim()
-
-        if (labelText.includes("savings goal")) {
-          row.remove()
-          return
-        }
-
-        const newLimitCell = cells[cells.length - 1]
-        const input =
-          newLimitCell.querySelector('input[type="number"]') ||
-          newLimitCell.querySelector("input")
-
-        if (input) {
-          input.value = ""
-          if (!input.placeholder) input.placeholder = "$0"
-        }
-      })
-    }
-
-    try { wireAIAnalyze() } catch (e) { console.error("wireAIAnalyze failed:", e) }
+  if (mb) {
+    mb.style.display = "grid"
+    mb.style.gridTemplateColumns = "minmax(0,1.1fr) minmax(0,1fr)"
+    mb.style.gap = "28px"
   }
+
+  dlg?.showModal()
+
+  try { await renderWhatIf() } catch (e) { console.error("renderWhatIf failed:", e) }
+
+  const left = document.getElementById("whatif-left")
+  if (left) {
+    const table = left.querySelector("table")
+    const rows  = table ? table.querySelectorAll("tbody tr") : left.querySelectorAll("tbody tr")
+
+    rows.forEach(row => {
+      const cells = row.querySelectorAll("td")
+      if (!cells.length) return
+
+      const catCell = cells[0]
+      const labelText = (catCell.textContent || "")
+        .replace(/\s+/g, " ")
+        .toLowerCase()
+        .trim()
+
+      if (labelText.includes("savings goal")) {
+        row.remove()
+        return
+      }
+
+      const newLimitCell = cells[cells.length - 1]
+      const input =
+        newLimitCell.querySelector('input[type="number"]') ||
+        newLimitCell.querySelector("input")
+
+      if (input) {
+        input.value = ""
+        if (!input.placeholder) input.placeholder = "$0"
+      }
+    })
+  }
+
+  const out = $("#ai-output")
+  if (out) {
+    if (!__ana.whatIfCache) __ana.whatIfCache = {}
+    if (__ana.whatIfPlaceholder == null) __ana.whatIfPlaceholder = out.innerHTML
+
+    const goalId = String((__ana && __ana.goal && __ana.goal.id) || (__ana && __ana.currentGoalId) || "")
+    const cached = goalId ? __ana.whatIfCache[goalId] : null
+
+    if (cached) {
+      out.classList.remove("empty")
+      out.innerHTML = cached
+    } else {
+      out.classList.add("empty")
+      out.innerHTML = __ana.whatIfPlaceholder
+    }
+  }
+
+  try { wireAIAnalyze() } catch (e) { console.error("wireAIAnalyze failed:", e) }
+}
 
   $("#open-whatif-modal")?.addEventListener("click", openWhatIf)
   $("#go-ai-stage")?.addEventListener("click", openWhatIf)
@@ -2688,11 +2800,12 @@ function openDateFilterModal(section) {
 
 $('#go-date-filter-confirm').onclick = () => {
   __ana.userSetDateFilter = true;
+  __ana.userSetDateFilterGoalId = __ana.currentGoalId;
+  __ana.userSetDateFilterFromCompleted = !!__ana.fromCompleted;
   __ana.dateFilter = tempFilter;
   renderAnalytics(__ana.section.id);
   modal.close();
 };
-
   modal.showModal();
 }
 
@@ -2726,19 +2839,89 @@ function renderRibbonChart(goal, section) {
       </span>`
   }
 
-  // If no filter is set yet, default to the CURRENT half-year:
-  // Jan–Jun when current month is 0..5, Jul–Dec when current month is 6..11.
-  if (!__ana.dateFilter || !__ana.dateFilter.start || !__ana.dateFilter.end) {
-    const now = new Date()
-    const y = now.getFullYear()
-    const h2 = now.getMonth() >= 6
 
-    const start = new Date(y, h2 ? 6 : 0, 1)
-    const end = h2 ? new Date(y + 1, 0, 1) : new Date(y, 6, 1)
+  const fromCompleted = !!(__ana && __ana.fromCompleted)
+  const statusCompleted = String(goal?.status || "").trim().toLowerCase() === "completed"
+  const isCompleted = fromCompleted || statusCompleted
+
+  if (!__ana.dateFilter || !__ana.dateFilter.start || !__ana.dateFilter.end) {
+    const executed = (() => {
+      try { return executedDeposits(goal, { includePlanned: false }) || [] } catch { return [] }
+    })()
+
+    const hasAnyInRange = (start, end) => {
+      if (!(start instanceof Date) || !(end instanceof Date)) return false
+      if (!Number.isFinite(start.getTime()) || !Number.isFinite(end.getTime())) return false
+
+      for (const ev of executed) {
+        const d = ev?.date instanceof Date ? ev.date : pISO(ev?.date)
+        if (!(d instanceof Date) || !Number.isFinite(d.getTime())) continue
+        if (d >= start && d < end) return true
+      }
+      return false
+    }
+
+    let base = new Date()
+
+    if (isCompleted) {
+      let last = null
+
+      for (const ev of executed) {
+        const stamp =
+          ev?.date ||
+          ev?.executedAt || ev?.executed_at ||
+          ev?.createdAt  || ev?.created_at  ||
+          ev?.timestamp  || ev?.timeStamp   ||
+          null
+
+        let d = stamp instanceof Date ? stamp : pISO(stamp)
+        if (!(d instanceof Date) || !Number.isFinite(d.getTime())) continue
+
+        if (typeof ev?.time === "string" && /^([01]\d|2[0-3]):([0-5]\d)$/.test(ev.time)) {
+          const hh = Number(ev.time.slice(0, 2))
+          const mm = Number(ev.time.slice(3, 5))
+          d = new Date(d.getFullYear(), d.getMonth(), d.getDate(), hh, mm, 0, 0)
+        }
+
+        if (!last || d > last) last = d
+      }
+
+      if (!last) {
+        const f = pISO(goal?.finishDate || goal?.endDate || null)
+        if (f instanceof Date && Number.isFinite(f.getTime())) last = f
+      }
+
+      if (last) base = last
+    }
+
+    const y = base.getFullYear()
+    const m = base.getMonth()
+    let start, end
+
+    if (isCompleted && m < 6) {
+      const prevStart = new Date(y - 1, 6, 1)
+      const prevEnd   = new Date(y, 0, 1)
+
+      const curStart  = new Date(y, 0, 1)
+      const curEnd    = new Date(y, 6, 1)
+
+      if (hasAnyInRange(prevStart, prevEnd)) {
+        start = prevStart
+        end   = prevEnd
+      } else {
+        start = curStart
+        end   = curEnd
+      }
+    } else if (m < 6) {
+      start = new Date(y, 0, 1)
+      end   = new Date(y, 6, 1)
+    } else {
+      start = new Date(y, 6, 1)
+      end   = new Date(y + 1, 0, 1)
+    }
 
     __ana.dateFilter = { start, end }
   }
-
 
   if (!__ana.chartObserver) {
     __ana.chartObserver = new ResizeObserver(() => {
@@ -2830,7 +3013,7 @@ function renderRibbonChart(goal, section) {
   if (!(finish instanceof Date) || !Number.isFinite(finish.getTime())) finish = null
 
   const upcoming = []
-  if (minMonthly > 0 && goal.depositDate && !goal.depositPaused && amountRemaining > 0) {
+  if (!isCompleted && minMonthly > 0 && goal.depositDate && !goal.depositPaused && amountRemaining > 0) {
     const pad2 = n => String(n).padStart(2, "0")
 
     let hh = 8, mm = 0
@@ -3083,11 +3266,6 @@ function renderRibbonChart(goal, section) {
   cvs.addEventListener('mousemove',  moveHandler)
   cvs.addEventListener('mouseleave', leaveHandler)
 }
-
-
-
-
-
 
 // ensureLottieLib: lazy-loads lottie-web
 function ensureLottieLib(cb) {
@@ -4375,9 +4553,6 @@ async function renderWhatIf() {
   calc()
 }
 
-
-
-
 function wireAIAnalyze() {
   const btn = $("#ai-analyze")
   if (!btn) return
@@ -4456,12 +4631,7 @@ function wireAIAnalyze() {
       const raw = hasNumber ? Number(rawStr) : NaN
       const newLimit = hasNumber ? Math.min(Math.max(raw, spent), max) : spent
 
-      return {
-        category,
-        spent,
-        currentLimit: max,
-        newLimit
-      }
+      return { category, spent, currentLimit: max, newLimit }
     }).filter(Boolean)
 
     const surplusText = $("#wi-surplus")?.textContent || "$0.00"
@@ -4503,7 +4673,6 @@ function wireAIAnalyze() {
     let text = ""
     try {
       const headers = { "Content-Type": "application/json", "Accept": "application/json" }
-
 
       const res = await fetch("/api/ai/whatif", {
         method: "POST",
@@ -4581,6 +4750,11 @@ function wireAIAnalyze() {
     }
 
     out.innerHTML = text.replace(/\n/g, "<br>")
+
+    if (!__ana.whatIfCache) __ana.whatIfCache = {}
+    const goalId = String(goal.id || "")
+    if (goalId) __ana.whatIfCache[goalId] = out.innerHTML
+
     rewardTaskReady("what-if")
   }
 }

@@ -1028,67 +1028,75 @@ function applyCardsToTopRightUI() {
      14) Tabs: Financial Overview rendering
   ========================================= */
 
-  function switchTab(tab) {
-    state.tab = tab
+function switchTab(tab) {
+  state.tab = tab
 
-    document.querySelectorAll(".toggle-btn").forEach((t) => t.classList.remove("active"))
-    const active = document.querySelector(`[data-tab="${tab}"]`)
-    if (active) active.classList.add("active")
+  document.querySelectorAll(".toggle-btn").forEach((t) => t.classList.remove("active"))
+  const active = document.querySelector(`[data-tab="${tab}"]`)
+  if (active) active.classList.add("active")
 
-    const mainContent = $("dash-overview-content")
-    if (!mainContent) return
+  const mainContent = $("dash-overview-content")
+  if (!mainContent) return
 
-    if (tab === "transactions") {
-      const avail = availableBalanceFromTransactions()
-      const stats = computeActivityChartSeries()
+  if (tab === "transactions") {
+    const avail = availableBalanceFromTransactions()
+    const stats = computeActivityChartSeries()
 
-      setMainMeta({ label: "Available Balance", amountText: fmtMoney(avail), rightHTML: "" })
-      mainContent.innerHTML = getTxHTML(stats)
+    setMainMeta({ label: "Available Balance", amountText: fmtMoney(avail), rightHTML: "" })
+    mainContent.innerHTML = getTxHTML(stats)
 
-      setTimeout(() => {
-        renderChart("transactions", {
-          points: stats.points,
-          tickDays: stats.tickDays,
-          radiusDays: stats.radiusDays,
-          xMax: stats.xMax
-        })
-      }, 50)
-
-      return
-    }
-
-    if (tab === "budgets") {
-      const avail = availableBalanceFromTransactions()
-      const b = computeBudgets()
-
-      setMainMeta({
-        label: "Available Balance",
-        amountText: fmtMoney(avail),
-        rightHTML: `<div class="daily-stat-box"><div class="daily-val">${fmtMoney(b.dailyAvg)}/day</div><span class="daily-sub">avg for ${b.days}d</span></div>`
+    requestAnimationFrame(() => {
+      renderChart("transactions", {
+        points: stats.points,
+        tickDays: stats.tickDays,
+        radiusDays: stats.radiusDays,
+        xMax: stats.xMax
       })
-
-      mainContent.innerHTML = getBudHTML(b)
-      return
-    }
-
-    if (tab === "goals") {
-      const g = computeGoalsMeta()
-      const grid = buildGoalsGridData()
-
-      setMainMeta({
-        label: "Monthly Commitments",
-        amountText: fmtMoney(g.totalMonthly),
-        rightHTML: `<div class="next-pay-box"><div class="pay-time"><i class="fas fa-clock pay-icon"></i> ${safeText(g.nextPayment)}</div><span class="pay-sub">Next payment</span></div>`
+      requestAnimationFrame(() => {
+        if (state.pulseChart && typeof state.pulseChart.resize === "function") state.pulseChart.resize()
       })
+    })
 
-      mainContent.innerHTML = getGoalsHTML(grid)
-
-      const pay = buildGoalsPaymentSeries()
-      setTimeout(() => renderChart("goals", { points: pay.points, radiusDays: pay.radiusDays, xMax: pay.xMax }), 50)
-
-      return
-    }
+    return
   }
+
+  if (tab === "budgets") {
+    const avail = availableBalanceFromTransactions()
+    const b = computeBudgets()
+
+    setMainMeta({
+      label: "Available Balance",
+      amountText: fmtMoney(avail),
+      rightHTML: `<div class="daily-stat-box"><div class="daily-val">${fmtMoney(b.dailyAvg)}/day</div><span class="daily-sub">avg for ${b.days}d</span></div>`
+    })
+
+    mainContent.innerHTML = getBudHTML(b)
+    return
+  }
+
+  if (tab === "goals") {
+    const g = computeGoalsMeta()
+    const grid = buildGoalsGridData()
+
+    setMainMeta({
+      label: "Monthly Commitments",
+      amountText: fmtMoney(g.totalMonthly),
+      rightHTML: `<div class="next-pay-box"><div class="pay-time"><i class="fas fa-clock pay-icon"></i> ${safeText(g.nextPayment)}</div><span class="pay-sub">Next payment</span></div>`
+    })
+
+    mainContent.innerHTML = getGoalsHTML(grid)
+
+    const pay = buildGoalsPaymentSeries()
+    requestAnimationFrame(() => {
+      renderChart("goals", { points: pay.points, radiusDays: pay.radiusDays, xMax: pay.xMax })
+      requestAnimationFrame(() => {
+        if (state.pulseChart && typeof state.pulseChart.resize === "function") state.pulseChart.resize()
+      })
+    })
+
+    return
+  }
+}
 
   function setupTabs() {
     document.querySelectorAll(".toggle-btn").forEach((btn) => {

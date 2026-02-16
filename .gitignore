@@ -36,6 +36,9 @@ merchant_category_model.lock
 **/merchant_category_model.json
 **/merchant_category_model.lock
 
+Video/
+*.mp4
+
 
 # Optional: keep reports private if they contain sensitive info
 # REPORT/

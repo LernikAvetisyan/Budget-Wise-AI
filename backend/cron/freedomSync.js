@@ -163,21 +163,21 @@ async function importTransactions(username, items, accountId) {
 
 async function runFreedomRefreshJob() {
   try {
-      const [rows] = await pool.query(
-        `
-        SELECT
-          id,
-          username,
-          email,
-          account_type,
-          fb_refresh_token,
-          fb_uid
-        FROM accounts
-        WHERE bank_name = 'Freedom Bank'
-          AND fb_refresh_token IS NOT NULL
-          AND status = 'connected'
-        `
-      );
+    const [rows] = await pool.query(
+      `
+      SELECT
+        id,
+        username,
+        email,
+        account_type,
+        fb_refresh_token,
+        fb_uid
+      FROM accounts
+      WHERE bank_name = 'Freedom Bank'
+        AND fb_refresh_token IS NOT NULL
+        AND status = 'connected'
+      `
+    );
 
     if (!rows.length) {
       return;
@@ -218,25 +218,52 @@ async function runFreedomRefreshJob() {
             const items = await fetchFreedomTransactions(idToken, acctType);
             await importTransactions(username, items, acc.id);
           } catch (err) {
+            const code = err && (err.code || (err.cause && err.cause.code));
             console.error(
               'cron fetch/import error for user=',
               username,
               'type=',
               acctType,
+              'message=',
+              err && err.message,
+              'code=',
+              code,
+              'cause=',
+              err && err.cause,
+              'raw=',
               err
             );
           }
         }
       } catch (err) {
+        const code = err && (err.code || (err.cause && err.cause.code));
         console.error(
           'cron refreshIdToken error for user=',
           username,
-          err.message || err
+          'message=',
+          err && err.message,
+          'code=',
+          code,
+          'cause=',
+          err && err.cause,
+          'raw=',
+          err
         );
       }
     }
   } catch (err) {
-    console.error('runFreedomRefreshJob top-level error:', err);
+    const code = err && (err.code || (err.cause && err.cause.code));
+    console.error(
+      'runFreedomRefreshJob top-level error:',
+      'message=',
+      err && err.message,
+      'code=',
+      code,
+      'cause=',
+      err && err.cause,
+      'raw=',
+      err
+    );
   }
 }
 

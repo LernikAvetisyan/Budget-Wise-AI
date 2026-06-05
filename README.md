@@ -29,7 +29,7 @@ The project connects with a companion simulated banking system called **Freedom 
 - **Simulated Bank Sync:** Import realistic checking and credit card transactions from Freedom Bank.
 - **AI-Assisted Insights:** Generate financial summaries, spending outlooks, goal analysis, and what-if recommendations.
 - **Gamification:** Encourage financial habits with XP, daily tasks, streaks, levels, and a mastery path.
-- **Modern Dashboard:** Use Chart.js visualizations, KPI cards, alerts, filters, and dynamic dashboard panels.
+- **Modern Dashboard:** Chart.js visualizations, KPI cards, alerts, filters, and dynamic dashboard panels.
 
 ---
 

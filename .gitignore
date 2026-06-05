@@ -1,21 +1,20 @@
-# Node
+# Node / dependencies
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Env files
+# Environment files
 .env
 .env.*
-**/.env
-**/.env.*
+!.env.example
 
 # Build output
 dist/
 build/
 out/
 
-# OS and editor
+# OS / editor
 .DS_Store
 Thumbs.db
 .vscode/
@@ -25,21 +24,19 @@ Thumbs.db
 logs/
 *.log
 
-!.env.example
-!**/.env.example
+# Runtime / temp files
+backend/logs/
+backend/uploads/
+backend/tmp/
 
-
-
-# Merchant category model artifacts
+# Local AI/category model artifacts
 merchant_category_model.json
 merchant_category_model.lock
 **/merchant_category_model.json
 **/merchant_category_model.lock
 
-Video/
+# Videos / large local media
 *.mp4
 
-
-# Optional: keep reports private if they contain sensitive info
-# REPORT/
-
+# Reports that may contain sensitive info
+REPORT/

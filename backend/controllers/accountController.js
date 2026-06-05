@@ -59,16 +59,19 @@ async function fetchWithRetry(url, options = {}, tries = 3, timeoutMs = 15000) {
 ========================================================= */
 
 async function setFreedomLinkedFlag(uid, linked) {
-  const base =
-    process.env.FREEDOM_BANK_API_BASE || "https://us-central1-freedom-bank-9c209.cloudfunctions.net"
+  const rawBase =
+    process.env.FREEDOM_BANK_API_BASE || "https://us-central1-freedom-bank-9c209.cloudfunctions.net/api"
 
   const key = process.env.FREEDOM_SERVER_API_KEY || process.env.FREEDOM_BANK_API_KEY || ""
-  if (!uid || !key) return
+  const cleanUid = String(uid || "").trim()
 
-  const url = base.replace(/\/+$/, "") + "/linkBudgetWise"
+  if (!cleanUid || !key) return false
+
+  const base = String(rawBase).replace(/\/+$/, "").replace(/\/api$/, "")
+  const url = base + "/api/linkBudgetWise"
 
   try {
-    await fetchWithRetry(
+    const res = await fetchWithRetry(
       url,
       {
         method: "POST",
@@ -76,13 +79,22 @@ async function setFreedomLinkedFlag(uid, linked) {
           "Content-Type": "application/json",
           Authorization: "Bearer " + key
         },
-        body: JSON.stringify({ uid: String(uid), linked: !!linked })
+        body: JSON.stringify({ uid: cleanUid, linked: !!linked })
       },
       2,
       15000
     )
+
+    if (!res.ok) {
+      const text = await res.text().catch(() => "")
+      console.error("setFreedomLinkedFlag http error:", res.status, text, "url=", url)
+      return false
+    }
+
+    return true
   } catch (e) {
-    console.error("setFreedomLinkedFlag error:", e && (e.message || e))
+    console.error("setFreedomLinkedFlag error:", e && (e.message || e), "url=", url)
+    return false
   }
 }
 
@@ -203,7 +215,6 @@ async function updateAccountStatus(req, res) {
         if (tokenRow && tokenRow.refreshToken) {
           const { idToken, refreshToken: newRefreshToken } = await refreshIdToken(tokenRow.refreshToken)
 
-          // Update tokens on existing rows, never insert new rows here
           await Account.updateFreedomTokensForUser(username, newRefreshToken, tokenRow.uid || null)
 
           const updatedAcc = await Account.findById(id)
@@ -407,9 +418,13 @@ async function freedomConnect(req, res) {
       return res.status(status).json({ error: "Invalid Freedom Bank credentials" })
     }
 
-    const { idToken, refreshToken, uid } = authInfo
-    console.log("Freedom Bank sign-in ok for uid:", uid)
-    await setFreedomLinkedFlag(uid, true)
+    const { idToken, refreshToken, uid } = authInfo;
+    console.log("Freedom Bank sign-in ok for uid:", uid);
+
+    const linkedFlagOk = await setFreedomLinkedFlag(uid, true);
+    if (!linkedFlagOk) {
+      console.warn("Freedom Bank linked, but linked flag sync failed for uid:", uid);
+    }
 
     const existingRows = await Account.findByUser(username)
     const existingByType = new Map()
@@ -536,11 +551,13 @@ async function freedomDisconnect(req, res) {
     const username = req.user.username
     const rows = await Account.findByUser(username)
     const freedomRow = rows.find((a) => String(a.bankName || "").toLowerCase().includes("freedom") && a.uid)
-    const uid = freedomRow ? freedomRow.uid : null
+    const uid = freedomRow ? String(freedomRow.uid).trim() : ""
+
+    if (uid) {
+      await setFreedomLinkedFlag(uid, false)
+    }
 
     await Account.disconnectAllForUser(username)
-
-    if (uid) await setFreedomLinkedFlag(uid, false)
 
     return res.status(200).json({
       success: true,
@@ -642,7 +659,6 @@ async function getMysqlAvailableBalance(req, res) {
     return res.status(500).json({ error: "Balance calculation failed" })
   }
 }
-
 
 /* =========================================================
    10) EXPORTS

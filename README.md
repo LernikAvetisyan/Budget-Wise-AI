@@ -2,6 +2,8 @@
 
 > Full-stack personal finance dashboard with transaction tracking, budgets, savings goals, AI-assisted insights, rewards, and simulated bank synchronization.
 
+> COMP 491/L Senior Design Project II and Lab - Spring 2026.
+
 ![Node.js](https://img.shields.io/badge/Backend-Node.js-green)
 ![Express](https://img.shields.io/badge/API-Express.js-black)
 ![MySQL](https://img.shields.io/badge/Database-MySQL-blue)

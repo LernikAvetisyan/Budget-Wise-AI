@@ -2,6 +2,8 @@
 
 > Full-stack personal finance dashboard with transaction tracking, budgets, savings goals, AI-assisted insights, rewards, and simulated bank synchronization.
 
+> University portfolio project with a companion Freedom Bank simulator for safe demo banking data.
+
 ![Node.js](https://img.shields.io/badge/Backend-Node.js-green)
 ![Express](https://img.shields.io/badge/API-Express.js-black)
 ![MySQL](https://img.shields.io/badge/Database-MySQL-blue)
@@ -9,15 +11,61 @@
 ![OpenAI](https://img.shields.io/badge/AI-OpenAI_API-purple)
 ![Chart.js](https://img.shields.io/badge/Charts-Chart.js-red)
 
+![BudgetWise AI Dashboard](screenshots/dashboard-activity-panel.png)
+
 ---
 
 ## About
 
-BudgetWise AI is a full-stack personal finance web application designed to help users track transactions, manage category-based budgets, create savings goals, view financial dashboards, and receive AI-assisted financial insights.
+**BudgetWise AI** is a full-stack personal finance web application designed to help users track transactions, manage category-based budgets, create savings goals, view financial dashboards, and receive AI-assisted financial insights.
 
 The project connects with a companion simulated banking system called **Freedom Bank**, which generates realistic checking and credit card activity for safe demo usage. BudgetWise AI can link simulated accounts, import transactions, prevent duplicates, and use the imported data for dashboards, budgets, goals, and analytics.
 
-> This is an educational/demo personal finance project. It is not a real banking platform, payment processor, or production financial system.
+> This is an educational/demo personal finance project. It is not a real banking platform, payment processor, financial advisor, or production financial system.
+
+---
+
+## Screenshots
+
+### Login
+
+![Login](screenshots/login.png)
+
+### Dashboard Overview
+
+![Dashboard Overview](screenshots/dashboard-activity-panel.png)
+
+### AI Assistant
+
+![AI Assistant](screenshots/assistant-panel.png)
+
+### Activity and Transactions
+
+![Activity and Transactions](screenshots/activity-transactions.png)
+
+### Budget Management
+
+![Budget Management](screenshots/budgets-page.png)
+
+### Spending Outlook
+
+![Spending Outlook](screenshots/spending-outlook.png)
+
+### Goals Overview
+
+![Goals Overview](screenshots/goals-overview.png)
+
+### Goal Progress Details
+
+![Goal Progress Details](screenshots/goal-details.png)
+
+### Rewards System
+
+![Rewards System](screenshots/rewards-page.png)
+
+### Settings and Bank Connection
+
+![Settings and Bank Connection](screenshots/settings-page.png)
 
 ---
 
@@ -93,7 +141,8 @@ Budgeting-Tracker/
 │   │   └── settings/        # Profile/settings UI
 │   └── index.html           # SPA-style shell
 │
-├── MySQL scheme/            # Database schema files
+├── MySQL schema/            # Database schema files
+├── screenshots/             # README screenshots
 ├── .gitignore
 └── README.md
 ```
@@ -106,6 +155,8 @@ Budgeting-Tracker/
 
 The dashboard provides a high-level financial overview with balance cards, checking/credit account summaries, recent transactions, financial alerts, and rotating Activity/Budgets/Goals panels.
 
+The rotating dashboard panels help summarize different financial areas without forcing the user to navigate away from the main dashboard.
+
 ### Assistant AI
 
 The AI assistant supports financial questions, budget help, goal planning, and transaction drafting. Some common financial questions are grounded in stored user data.
@@ -114,6 +165,8 @@ The AI assistant supports financial questions, budget help, goal planning, and t
 
 The activity section displays transaction history with filters, financial KPI cards, spending breakdown charts, and add-transaction tools.
 
+Users can review income and expenses, inspect categories, and analyze spending patterns using the transaction feed and visual chart summary.
+
 ### Budgets
 
 The budgets section tracks category-level spending against monthly limits, supports budget editing, and allows users to view transaction history for each category.
@@ -121,6 +174,8 @@ The budgets section tracks category-level spending against monthly limits, suppo
 ### Spending Outlook
 
 The Spending Outlook section provides analytics for activity, budgets, cards, and goals. It includes charts, category summaries, and AI-generated analysis reports.
+
+The screenshots folder includes additional outlook views for activity, budgets, cards, checking, credit, goal data, and goals.
 
 ### Goals
 
@@ -176,8 +231,10 @@ Known limitations:
 - Passwords should be hashed before any production use.
 - Secrets must be stored in `.env` and never committed.
 - `JWT_SECRET` should be set to a long private value.
+- OpenAI and Freedom Bank API keys must never be committed.
 - Refresh tokens and financial data require stronger production-grade protection.
 - CSRF protection, rate limiting, and automated tests should be added before real deployment.
+- AI-generated insights should not be treated as professional financial advice.
 
 ---
 
@@ -225,7 +282,7 @@ Then edit `backend/.env` with your local MySQL credentials, JWT secret, Freedom 
 
 ### 4. Set up MySQL
 
-Create the MySQL database and import the schema from the `MySQL scheme/` folder.
+Create the MySQL database and import the schema from the `MySQL schema/` folder.
 
 ### 5. Start the server
 
@@ -261,4 +318,4 @@ Built a full-stack personal finance dashboard using Node.js, Express, MySQL, and
 
 ## Disclaimer
 
-BudgetWise AI is a student/portfolio project using simulated financial data. It is not a real banking system, real payment processor, or production-grade financial platform.
+BudgetWise AI is a student/portfolio project using simulated financial data. It is not a real banking system, real payment processor, financial advisor, or production-grade financial platform.

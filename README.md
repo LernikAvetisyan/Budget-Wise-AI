@@ -319,3 +319,16 @@ Built a full-stack personal finance dashboard using Node.js, Express, MySQL, and
 ## Disclaimer
 
 BudgetWise AI is a student/portfolio project using simulated financial data. It is not a real banking system, real payment processor, financial advisor, or production-grade financial platform.
+
+---
+
+## License, Usage, and Academic Integrity Notice
+
+Copyright (c) 2026 Lernik Avetisyan. All rights reserved.
+
+This project is publicly available for educational review, portfolio review, and demonstration purposes only. Viewing or accessing this repository does not grant permission to copy, modify, distribute, publish, submit, sublicense, sell, or use this project, in whole or in part, without prior written approval from the author.
+
+Copying, reusing, submitting, or claiming any part of this project as someone else's work is strictly prohibited, including for academic coursework, personal projects, or commercial purposes.
+
+No license is granted for commercial use, redistribution, derivative works, or incorporation into other software or projects without prior written permission from the author.
+
